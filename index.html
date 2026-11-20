@@ -6,11 +6,11 @@
   <title>PKBM Bintang Inklusif — Sistem Digital Pendidikan, Arsip & Presensi</title>
 
   <!-- PWA Manifest via Data URI (1 File Mandate) -->
-  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22PKBM%20Bintang%20Inklusif%22%2C%22short_name%22%3A%22PKBM%20Bintang%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F4F7FB%22%2C%22theme_color%22%3A%22%230D9488%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2724%27%20fill%3D%27%230D9488%27%2F%3E%3Ctext%20x%3D%2750%27%20y%3D%2766%27%20font-size%3D%2752%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27bold%27%3EB%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
+  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22PKBM%20Bintang%20Inklusif%22%2C%22short_name%22%3A%22PKBM%20Bintang%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%23F4F7FB%22%2C%22theme_color%22%3A%22%230D9488%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Crect%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2724%27%20fill%3D%27%230D9488%27%2F%3E%3Ctext%20x%3D%2750%27%20y%3D%2766%27%20font-size%3D%2752%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%20font-family%3D%27sans-serif%27%20font-weight%3D%27bold%27%3EB%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
   <meta name="theme-color" content="#0D9488" />
-
-  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PKBM Bintang" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
 
@@ -39,7 +39,6 @@
       --custom-bg: none;
     }
 
-    /* Full-page override untuk kompatibilitas Blogger tanpa edit XML */
     #pkbm-app-root {
       position: relative;
       min-height: 100vh;
@@ -60,7 +59,6 @@
       color: #F1F5F9;
     }
 
-    /* Glassmorphism Utilities */
     .glass-panel {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(16px);
@@ -73,13 +71,11 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Sidebar Dark Elegant */
     .sidebar-elegant {
       background: linear-gradient(180deg, #111827 0%, #0F172A 100%);
       border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Hero Gradient & Stat Card Gradients */
     .hero-gradient {
       background: linear-gradient(135deg, #0B2447 0%, #19376D 55%, #0D9488 100%);
     }
@@ -88,12 +84,10 @@
     .stat-card-rose { background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%); }
     .stat-card-amber { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 9999px; }
 
-    /* Print Styles untuk Kop Surat Dinamis & Cetak Kuitansi */
     @media print {
       body * { visibility: hidden; }
       #printable-area, #printable-area * { visibility: visible; }
@@ -119,7 +113,6 @@
   <!-- BAGIAN 1: HALAMAN PUBLIK SEKOLAH (LANDING PAGE MODERN EDTECH)         -->
   <!-- ===================================================================== -->
   <div id="public-view" class="block">
-    <!-- Top Floating Navbar -->
     <header class="sticky top-0 z-50 glass-panel shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
         <div class="flex items-center gap-3.5 cursor-pointer" onclick="scrollToTop()">
@@ -141,9 +134,9 @@
         </nav>
 
         <div class="flex items-center gap-2.5">
-          <button id="btn-install-pwa" onclick="triggerInstallPWA()" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold bg-teal-600/15 text-teal-700 dark:text-teal-300 hover:bg-teal-600/25 transition" title="Instal Aplikasi di Laptop/HP">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i>
-            <span>Instal App</span>
+          <button id="btn-install-pwa" onclick="triggerInstallPWA()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold bg-teal-600/15 text-teal-700 dark:text-teal-300 hover:bg-teal-600/25 transition" title="Instal Aplikasi di HP / Laptop">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+            <span>Instal di HP</span>
           </button>
 
           <button onclick="toggleThemePanel()" class="p-2.5 rounded-full glass-panel hover:scale-105 transition text-slate-700 dark:text-slate-200" title="Ganti Tema & Background">
@@ -163,9 +156,7 @@
     </header>
 
     <!-- Pengumuman Berjalan / Info Terkini -->
-    <div id="public-announcement-banner" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5">
-      <div class="glass-panel rounded-2xl px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-l-4 border-l-teal-600 shadow-sm"></div>
-    </div>
+    <div id="public-announcement-banner" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5"></div>
 
     <!-- HERO BANNER -->
     <section class="relative overflow-hidden hero-gradient text-white pt-12 pb-24 sm:pt-16 sm:pb-28 mt-5 mx-2 sm:mx-6 rounded-[2rem] shadow-2xl">
@@ -240,7 +231,7 @@
       </div>
     </section>
 
-    <!-- 4 KARTU PROGRAM UNGGULAN (PAKET A, B, C & INKLUSI/HOMESCHOOLING) -->
+    <!-- 4 KARTU PROGRAM UNGGULAN -->
     <section id="program" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="text-center max-w-2xl mx-auto mb-10">
         <span class="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400">Program Pendidikan Resmi</span>
@@ -291,7 +282,7 @@
       </div>
     </section>
 
-    <!-- METODE PEMBELAJARAN (ONLINE / OFFLINE / HOMESCHOOLING) -->
+    <!-- METODE PEMBELAJARAN -->
     <section id="jalur-belajar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="glass-panel rounded-3xl p-8 sm:p-10 shadow-xl">
         <div class="text-center max-w-2xl mx-auto mb-8">
@@ -318,7 +309,7 @@
       </div>
     </section>
 
-    <!-- VISI & MISI SEKOLAH (DINAMIS DARI DATABASE) -->
+    <!-- VISI & MISI SEKOLAH -->
     <section id="visi-misi" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="glass-panel rounded-3xl p-8 shadow-lg border-l-4 border-l-teal-600">
@@ -438,7 +429,8 @@
           <h4 class="font-bold text-white text-sm mb-3">Akses Sistem</h4>
           <ul class="space-y-2 text-xs text-slate-400">
             <li><button onclick="openLoginModal()" class="hover:text-teal-400">Portal Peserta Didik & Orang Tua</button></li>
-            <li><button onclick="openLoginModal()" class="hover:text-teal-400">Presensi & Pengajuan Izin Guru</button></li>
+            <li><button onclick="openLoginModal()" class="hover:text-teal-400">Presensi GPS & Pengajuan Izin Guru</button></li>
+            <li><button onclick="openLoginModal()" class="hover:text-teal-400">Bendahara Keuangan & SPP</button></li>
             <li><button onclick="openLoginModal()" class="hover:text-teal-400">Sistem Digital Arsip & Super Admin</button></li>
           </ul>
         </div>
@@ -501,7 +493,7 @@
       </div>
 
       <div class="grid grid-cols-2 gap-2 p-1 rounded-full bg-slate-200/70 dark:bg-slate-800 mb-5 text-xs font-bold">
-        <button id="tab-login-portal" onclick="switchLoginMode('portal')" class="py-2 rounded-full bg-teal-600 text-white shadow transition">Guru / Siswa / Ortu</button>
+        <button id="tab-login-portal" onclick="switchLoginMode('portal')" class="py-2 rounded-full bg-teal-600 text-white shadow transition">Guru / Bendahara / Siswa / Ortu</button>
         <button id="tab-login-admin" onclick="switchLoginMode('admin')" class="py-2 rounded-full text-slate-600 dark:text-slate-300 transition">Super Admin</button>
       </div>
 
@@ -571,9 +563,22 @@
             </select>
           </div>
         </div>
-        <div>
-          <label class="font-semibold block mb-1">Nomor WhatsApp Orang Tua / Wali (Format: 628xxx)</label>
-          <input type="tel" id="ppdb-wa" required placeholder="6281234567890" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold block mb-1">Agama</label>
+            <select id="ppdb-agama" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+              <option value="Islam">Islam</option>
+              <option value="Kristen Protestan">Kristen Protestan</option>
+              <option value="Katolik">Katolik</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Buddha">Buddha</option>
+              <option value="Khonghucu">Khonghucu</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold block mb-1">No. WA Orang Tua (628xxx)</label>
+            <input type="tel" id="ppdb-wa" required placeholder="6281234567890" class="w-full px-3.5 py-2.5 rounded-xl bg-white/90 dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+          </div>
         </div>
         <button type="submit" class="w-full py-3 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm shadow-lg mt-2">
           Kirim Pendaftaran Sekarang
@@ -586,7 +591,6 @@
   <!-- BAGIAN 5: DASHBOARD INTERNAL TERPADU (RESPONSIVE SIDEBAR & BOTTOM BAR)-->
   <!-- ===================================================================== -->
   <div id="dashboard-view" class="hidden min-h-screen">
-    <!-- DESKTOP FIXED SIDEBAR (Dark Elegant dengan Sub-Menu Accordion) -->
     <aside class="hidden lg:flex flex-col fixed top-0 left-0 bottom-0 w-72 sidebar-elegant text-slate-300 z-40 p-4">
       <div class="flex items-center gap-3 pb-4 border-b border-slate-800">
         <div id="sidebar-logo-container" class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-lg overflow-hidden">
@@ -598,10 +602,8 @@
         </div>
       </div>
 
-      <!-- Menu Navigasi Accordion -->
       <nav id="desktop-sidebar-nav" class="flex-1 overflow-y-auto space-y-1.5 py-4 pr-1 text-xs"></nav>
 
-      <!-- Footer Sidebar -->
       <div class="pt-3 border-t border-slate-800 space-y-2">
         <button onclick="backToPublicHome()" class="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 font-semibold text-xs flex items-center justify-center gap-2 transition">
           <i data-lucide="globe" class="w-3.5 h-3.5 text-teal-400"></i>
@@ -614,9 +616,7 @@
       </div>
     </aside>
 
-    <!-- AREA KONTEN UTAMA DASHBOARD -->
     <main class="lg:pl-72 pb-24 lg:pb-12">
-      <!-- Top Bar Dashboard -->
       <header class="sticky top-0 z-30 glass-panel px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3 shadow-sm">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-2xl bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
@@ -643,12 +643,10 @@
         </div>
       </header>
 
-      <!-- Container Konten Dinamis per Tab -->
-      <div id="dashboard-content-area" class="max-w-7xl mx-auto px-4 sm:px-8 pt-6 space-y-6"></div>
+      <div id="dashboard-content-area" class="max-w-7xl mx-auto px-3 sm:px-8 pt-5 space-y-6"></div>
     </main>
 
-    <!-- MOBILE FLOATING BOTTOM NAVIGATION BAR -->
-    <nav id="mobile-bottom-nav" class="lg:hidden fixed bottom-3 left-3 right-3 z-50 glass-panel rounded-full px-2 py-2 shadow-2xl border border-slate-300/60 dark:border-slate-700 flex items-center justify-around"></nav>
+    <nav id="mobile-bottom-nav" class="lg:hidden fixed bottom-2.5 left-2.5 right-2.5 z-50 glass-panel rounded-full px-2 py-1.5 shadow-2xl border border-slate-300/60 dark:border-slate-700 flex items-center justify-around overflow-x-auto"></nav>
   </div>
 </div>
 
@@ -673,7 +671,7 @@
   // Registrasi Service Worker PWA
   if ('serviceWorker' in navigator) {
     const swCode = `
-      const CACHE_NAME = 'pkbm-bintang-v3';
+      const CACHE_NAME = 'pkbm-bintang-v5';
       self.addEventListener('install', e => self.skipWaiting());
       self.addEventListener('activate', e => self.clients.claim());
       self.addEventListener('fetch', e => {
@@ -698,12 +696,12 @@
       await deferredInstallPrompt.userChoice;
       deferredInstallPrompt = null;
     } else {
-      showToast("Gunakan menu Browser (⋮) -> 'Install App / Tambahkan ke Layar Utama' untuk menginstal di Laptop/HP.", "info");
+      showToast("Untuk menginstal di HP: Ketuk ikon Bagikan (iOS Safari) atau Titik Tiga ⋮ (Android Chrome) → pilih 'Tambahkan ke Layar Utama / Install App'.", "info");
     }
   };
 
   // =========================================================================
-  // 2. DATA INISIAL BERSIH (TANPA DATA DUMMY SISWA/GURU AGAR TAMPILAN BERSIH)
+  // 2. DATA INISIAL BERSIH
   // =========================================================================
   const INITIAL_SEED_DATA = {
     pengaturan: {
@@ -714,6 +712,7 @@
       nip_pj: "19820412 200901 2 004",
       periode_aktif: "November 2026",
       pengumuman_publik: "Pendaftaran Warga Belajar Baru Paket A, B, C & Program Inklusi Tahun Ajaran 2026/2027 telah dibuka! Tersedia kelas Online, Offline & Homeschooling.",
+      pengumuman_guru: "Kepada seluruh Tutor & Staf: Harap melengkapi Jurnal Mengajar harian dan mengunggah perangkat ajar ke folder Google Drive masing-masing sebelum akhir pekan.",
       visi: "Menjadi lembaga pendidikan nonformal dan inklusif unggulan yang melahirkan generasi mandiri, berakhlak mulia, adaptif terhadap teknologi, serta setara dalam kesempatan berkarya.",
       misi: [
         "Menyelenggarakan layanan pendidikan kesetaraan Paket A, B, dan C yang aksesibel bagi seluruh lapisan masyarakat termasuk anak berkebutuhan khusus.",
@@ -726,11 +725,22 @@
       jam_pulang_guru: "15:00",
       batas_telat_sp: 5,
       batas_izin_sp1: 3,
+      lokasi_lat: -0.3055,
+      lokasi_lng: 100.3692,
+      radius_absen_meter: 50,
+      gemini_api_key: "",
+      apps_script_url: "",
+      kop_template_img: "",
+      ttd_kepsek_url: "",
+      stempel_url: "",
+      link_template_media: "https://www.canva.com/education/",
+      link_template_bahan_ajar: "https://docs.google.com/",
+      link_template_modul_rpp: "https://drive.google.com/",
       wa_api_token: "",
       wa_templates: {
-        telat_30m: "Assalamu'alaikum {nama}, sistem presensi PKBM Bintang Inklusif mencatat keterlambatan Anda {menit_telat} menit pada {tanggal} (Jadwal: {jam_masuk} WIB). Mohon menjadi perhatian.",
-        spp_lunas: "Assalamu'alaikum Bapak/Ibu Wali dari {nama} ({paket}). Pembayaran SPP bulan {bulan} sebesar Rp {nominal} telah TERVERIFIKASI LUNAS. Terima kasih - PKBM Bintang Inklusif.",
-        izin_cuti: "Assalamu'alaikum {nama}, pengajuan {jenis_surat} Anda pada tanggal {tanggal} berstatus: {status}. Terima kasih."
+        telat_30m: "{salam} {nama}, sistem presensi PKBM Bintang Inklusif mencatat keterlambatan Anda {menit_telat} menit pada {tanggal} (Jadwal: {jam_masuk} WIB). Mohon menjadi perhatian.",
+        spp_lunas: "{salam} Bapak/Ibu Wali dari {nama} ({paket}). Pembayaran SPP bulan {bulan} sebesar Rp {nominal} telah TERVERIFIKASI LUNAS oleh Bendahara. Terima kasih - PKBM Bintang Inklusif.",
+        izin_cuti: "{salam} {nama}, pengajuan {jenis_surat} Anda pada tanggal {tanggal} telah diperiksa Kepala PKBM dengan status: {status}. Silakan cetak berkas berstempel resmi di portal."
       },
       kop_surat_html: `<div style="text-align:center; border-bottom:3px double #000; padding-bottom:10px; margin-bottom:20px;">
         <h2 style="margin:0; font-size:17px; font-weight:bold;">YAYASAN BINTANG HARAPAN INKLUSI</h2>
@@ -747,7 +757,7 @@
     },
     pengguna: [],
     jadwal_kerja: [
-      { id: "jdw-1", tipe: "Jadwal Kerja Reguler", nama_jadwal: "Shift Pagi Tutor & Staf", hari: "Senin - Jumat", jam_masuk: "08:00", jam_pulang: "15:00", keterangan: "Toleransi alert WA otomatis +30 menit" }
+      { id: "jdw-1", tipe: "Jadwal Kerja Reguler", nama_jadwal: "Shift Pagi Tutor & Staf", hari: "Senin - Jumat", jam_masuk: "08:00", jam_pulang: "15:00", keterangan: "Geofencing GPS maks 50m & toleransi WA +30 menit" }
     ],
     galeri: [
       { id: "g-1", judul: "Pembelajaran Digital & Coding Paket C", tipe: "foto", url_media: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80", kategori: "Akademik" },
@@ -763,12 +773,15 @@
       }
     ],
     materi: [],
+    jurnal_guru: [],
+    notifikasi_internal: [],
     nilai: [],
     spp: [],
+    keuangan: [],
     persuratan: [],
     absensi_guru: [],
     log_aktivitas: [
-      { id: "log-1", waktu: new Date().toISOString().slice(0, 16).replace('T', ' '), aktor: "Sistem", aksi: "Sistem diinisialisasi dalam keadaan bersih siap pakai." }
+      { id: "log-1", waktu: new Date().toISOString().slice(0, 16).replace('T', ' '), aktor: "Sistem", aksi: "Sistem diinisialisasi dengan AI Surat Gemini, Jurnal Guru, Perangkat Ajar Drive & Salam Inklusif." }
     ]
   };
 
@@ -779,7 +792,7 @@
     suratFilter: 'Semua',
     editingMateriId: null,
     editingUserId: null,
-    data: JSON.parse(localStorage.getItem('pkbm_bintang_clean_v3')) || structuredClone(INITIAL_SEED_DATA)
+    data: JSON.parse(localStorage.getItem('pkbm_bintang_clean_v5')) || structuredClone(INITIAL_SEED_DATA)
   };
 
   function saveLocalState(logAksi = null) {
@@ -791,7 +804,7 @@
         aksi: logAksi
       });
     }
-    localStorage.setItem('pkbm_bintang_clean_v3', JSON.stringify(appState.data));
+    localStorage.setItem('pkbm_bintang_clean_v5', JSON.stringify(appState.data));
     updateHeaderBadges();
     renderLogoElements();
   }
@@ -828,6 +841,7 @@
           nip_pj: cfg.nip_pj,
           periode_aktif: cfg.periode_aktif,
           pengumuman_publik: cfg.pengumuman_publik,
+          pengumuman_guru: cfg.pengumuman_guru,
           visi: cfg.visi,
           misi: cfg.misi,
           jam_masuk_guru: cfg.jam_masuk_guru,
@@ -848,6 +862,7 @@
   // =========================================================================
   window.showToast = (message, type = 'info') => {
     const container = document.getElementById('toast-container');
+    if (!container) return;
     const colors = {
       success: 'bg-emerald-600 text-white',
       warning: 'bg-amber-500 text-slate-950',
@@ -855,16 +870,24 @@
       info: 'bg-slate-900 text-white dark:bg-teal-600'
     };
     const toast = document.createElement('div');
-    toast.className = `pointer-events-auto px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center justify-between gap-3 transition-all duration-300 ${colors[type] || colors.info}`;
-    toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="opacity-75 hover:opacity-100">✕</button>`;
+    toast.className = `pointer-events-auto px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center justify-between gap-3 ${colors[type] || colors.info}`;
+    toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="opacity-75 hover:opacity-100 font-bold">✕</button>`;
     container.appendChild(toast);
-    setTimeout(() => toast.remove(), 5000);
+    setTimeout(() => { if (toast.parentElement) toast.remove(); }, 6500);
   };
 
-  function formatWaTemplate(templateKey, vars = {}) {
+  function formatSalamInklusif(agama) {
+    if (!agama || agama.toLowerCase() === 'islam') {
+      return "Assalamu'alaikum Warahmatullahi Wabarakatuh,";
+    }
+    return "Salam Sejahtera untuk";
+  }
+
+  function formatWaTemplate(templateKey, vars = {}, agama = 'Islam') {
     let tpl = appState.data.pengaturan.wa_templates?.[templateKey] || "";
-    Object.keys(vars).forEach(k => {
-      tpl = tpl.replaceAll(`{${k}}`, vars[k]);
+    const allVars = { salam: formatSalamInklusif(agama), ...vars };
+    Object.keys(allVars).forEach(k => {
+      tpl = tpl.replaceAll(`{${k}}`, allVars[k]);
     });
     return tpl;
   }
@@ -991,6 +1014,7 @@
     const nama = document.getElementById('ppdb-nama').value.trim();
     const paket = document.getElementById('ppdb-paket').value;
     const jalur = document.getElementById('ppdb-jalur').value;
+    const agama = document.getElementById('ppdb-agama').value;
     const no_wa = document.getElementById('ppdb-wa').value.trim();
     const usernameBaru = 'siswa' + Math.floor(1000 + Math.random() * 9000);
 
@@ -1002,6 +1026,7 @@
       role: 'siswa',
       paket,
       jalur_belajar: jalur,
+      agama,
       no_wa
     };
 
@@ -1023,16 +1048,18 @@
     renderLogoElements();
 
     document.getElementById('public-announcement-banner').innerHTML = `
-      <div class="flex items-start sm:items-center gap-3.5">
-        <div class="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center shrink-0">
-          <i data-lucide="megaphone" class="w-5 h-5"></i>
+      <div class="glass-panel rounded-2xl px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-l-4 border-l-teal-600 shadow-sm">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center shrink-0">
+            <i data-lucide="megaphone" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400">Pengumuman Resmi • ${cfg.periode_aktif}</span>
+            <p class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 mt-0.5 leading-relaxed">${cfg.pengumuman_publik}</p>
+          </div>
         </div>
-        <div>
-          <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-600 dark:text-teal-400">Pengumuman Resmi • ${cfg.periode_aktif}</span>
-          <p class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 mt-0.5 leading-relaxed">${cfg.pengumuman_publik}</p>
-        </div>
+        <button onclick="openDaftarModal('Paket C')" class="px-5 py-2.5 rounded-full bg-teal-600 text-white text-xs font-bold shrink-0 self-start sm:self-center shadow-sm">Info PPDB</button>
       </div>
-      <button onclick="openDaftarModal('Paket C')" class="px-5 py-2.5 rounded-full bg-teal-600 text-white text-xs font-bold shrink-0 self-start sm:self-center shadow-sm">Info PPDB</button>
     `;
 
     document.getElementById('public-misi-list').innerHTML = cfg.misi.map((item, idx) => `
@@ -1154,6 +1181,7 @@
     const role = appState.currentUser?.role || 'siswa';
     const isAdmin = role === 'admin';
     const isGuru = role === 'guru';
+    const isBendahara = role === 'bendahara';
 
     let sidebarHtml = `
       <button onclick="switchDashboardTab('overview')" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold transition ${appState.activeTab === 'overview' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/25' : 'text-slate-300 hover:bg-slate-800/70'}">
@@ -1162,30 +1190,30 @@
       </button>
     `;
 
-    if (isAdmin || isGuru) {
+    if (isAdmin || isGuru || isBendahara) {
       sidebarHtml += `
         <div class="pt-2">
           <button onclick="toggleSidebarGroup('surat')" class="w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-slate-300 hover:bg-slate-800/70 font-semibold">
-            <span class="flex items-center gap-2.5"><i data-lucide="mail" class="w-4 h-4 text-emerald-400"></i> Transaksi & Agenda Surat</span>
+            <span class="flex items-center gap-2.5"><i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i> Surat AI & Arsip Resmi</span>
             <i data-lucide="${appState.expandedMenus.surat ? 'chevron-down' : 'chevron-left'}" class="w-3.5 h-3.5"></i>
           </button>
           ${appState.expandedMenus.surat ? `
             <div class="pl-6 pr-1 py-1 space-y-1">
-              <button onclick="switchDashboardTab('surat_transaksi')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'surat_transaksi' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Buat Surat / Ajukan Izin & Cuti</button>
-              <button onclick="switchDashboardTab('surat_agenda')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'surat_agenda' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Agenda & Persetujuan Izin/Cuti</button>
-              <button onclick="switchDashboardTab('surat_galeri')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'surat_galeri' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Galeri Semua Surat & Kop</button>
+              <button onclick="switchDashboardTab('surat_transaksi')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'surat_transaksi' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Generator Surat AI & Izin</button>
+              <button onclick="switchDashboardTab('surat_agenda')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'surat_agenda' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Persetujuan Kepsek (TTD & Cap)</button>
+              <button onclick="switchDashboardTab('surat_galeri')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'surat_galeri' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Galeri Surat & Kop Template</button>
             </div>
           ` : ''}
         </div>
 
         <div class="pt-1">
           <button onclick="toggleSidebarGroup('absensi')" class="w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-slate-300 hover:bg-slate-800/70 font-semibold">
-            <span class="flex items-center gap-2.5"><i data-lucide="calendar-check" class="w-4 h-4 text-emerald-400"></i> Absensi & Kedisiplinan</span>
+            <span class="flex items-center gap-2.5"><i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> Absensi GPS & Kedisiplinan</span>
             <i data-lucide="${appState.expandedMenus.absensi ? 'chevron-down' : 'chevron-left'}" class="w-3.5 h-3.5"></i>
           </button>
           ${appState.expandedMenus.absensi ? `
             <div class="pl-6 pr-1 py-1 space-y-1">
-              <button onclick="switchDashboardTab('absen_transaksi')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'absen_transaksi' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Transaksi & Sinkron Absen</button>
+              <button onclick="switchDashboardTab('absen_transaksi')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'absen_transaksi' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Absensi GPS (Max ${appState.data.pengaturan.radius_absen_meter || 50}m)</button>
               <button onclick="switchDashboardTab('absen_jadwal')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'absen_jadwal' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Jadwal Kerja, Khusus & Libur</button>
               <button onclick="switchDashboardTab('absen_sp')" class="w-full text-left px-3 py-1.5 rounded-lg transition flex items-center justify-between ${appState.activeTab === 'absen_sp' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">
                 <span>• Penilaian Telat & Hitung SP1</span>
@@ -1199,15 +1227,29 @@
 
     sidebarHtml += `
       <div class="pt-2">
-        <p class="px-3.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Akademik & Keuangan</p>
-        <button onclick="switchDashboardTab('elearning')" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-xl transition ${appState.activeTab === 'elearning' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800/70'}">
-          <i data-lucide="book-open-check" class="w-4 h-4"></i>
-          <span>Materi & Tugas G-Drive</span>
-        </button>
+        <p class="px-3.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Akademik, Perangkat Guru & Keuangan</p>
+        ${(isAdmin || isGuru) ? `
+          <button onclick="switchDashboardTab('jurnal_guru')" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-xl transition ${appState.activeTab === 'jurnal_guru' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800/70'}">
+            <i data-lucide="notebook-pen" class="w-4 h-4"></i>
+            <span>Jurnal Guru & Perangkat Drive</span>
+          </button>
+        ` : ''}
+        ${!isBendahara ? `
+          <button onclick="switchDashboardTab('elearning')" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-xl mt-1 transition ${appState.activeTab === 'elearning' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800/70'}">
+            <i data-lucide="book-open-check" class="w-4 h-4"></i>
+            <span>Materi & Tugas G-Drive</span>
+          </button>
+        ` : ''}
         <button onclick="switchDashboardTab('spp')" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-xl mt-1 transition ${appState.activeTab === 'spp' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800/70'}">
           <i data-lucide="wallet" class="w-4 h-4"></i>
           <span>Pembayaran SPP & WA</span>
         </button>
+        ${(isAdmin || isBendahara) ? `
+          <button onclick="switchDashboardTab('keuangan')" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-xl mt-1 transition ${appState.activeTab === 'keuangan' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-300 hover:bg-slate-800/70'}">
+            <i data-lucide="landmark" class="w-4 h-4"></i>
+            <span>Laporan Keuangan Bendahara</span>
+          </button>
+        ` : ''}
       </div>
     `;
 
@@ -1215,14 +1257,14 @@
       sidebarHtml += `
         <div class="pt-2">
           <button onclick="toggleSidebarGroup('pengaturan')" class="w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-slate-300 hover:bg-slate-800/70 font-semibold">
-            <span class="flex items-center gap-2.5"><i data-lucide="settings" class="w-4 h-4 text-emerald-400"></i> Pengaturan & WhatsApp</span>
+            <span class="flex items-center gap-2.5"><i data-lucide="settings" class="w-4 h-4 text-emerald-400"></i> Pengaturan & Integrasi</span>
             <i data-lucide="${appState.expandedMenus.pengaturan ? 'chevron-down' : 'chevron-left'}" class="w-3.5 h-3.5"></i>
           </button>
           ${appState.expandedMenus.pengaturan ? `
             <div class="pl-6 pr-1 py-1 space-y-1">
-              <button onclick="switchDashboardTab('set_instansi')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_instansi' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Instansi, Logo & Instagram</button>
-              <button onclick="switchDashboardTab('set_user')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_user' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Kelola Akun Guru, Siswa & Ortu</button>
-              <button onclick="switchDashboardTab('set_wa')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_wa' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Notifikasi & Template WA</button>
+              <button onclick="switchDashboardTab('set_instansi')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_instansi' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Instansi, GPS, TTD & Stempel</button>
+              <button onclick="switchDashboardTab('set_user')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_user' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Akun Guru, Bendahara, Siswa & Ortu</button>
+              <button onclick="switchDashboardTab('set_wa')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_wa' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• API Gemini, Fonnte WA & Sheets</button>
               <button onclick="switchDashboardTab('set_log')" class="w-full text-left px-3 py-1.5 rounded-lg transition ${appState.activeTab === 'set_log' ? 'bg-slate-800 text-emerald-400 font-bold' : 'text-slate-400 hover:text-white'}">• Log Aktivitas Sistem</button>
             </div>
           ` : ''}
@@ -1232,21 +1274,18 @@
 
     document.getElementById('desktop-sidebar-nav').innerHTML = sidebarHtml;
 
-    const mobileTabs = [
-      { id: 'overview', label: 'Beranda', icon: 'home' },
-      { id: 'elearning', label: 'Materi', icon: 'book-open' },
-      { id: 'spp', label: 'SPP', icon: 'wallet' }
-    ];
-    if (isAdmin || isGuru) {
-      mobileTabs.push({ id: 'absen_transaksi', label: 'Absen', icon: 'clock' });
-      mobileTabs.push({ id: 'surat_transaksi', label: 'Surat', icon: 'mail' });
-    }
-    if (isAdmin) {
-      mobileTabs.push({ id: 'set_user', label: 'Akun', icon: 'users' });
+    const mobileTabs = [{ id: 'overview', label: 'Beranda', icon: 'home' }];
+    if (isAdmin || isGuru) mobileTabs.push({ id: 'jurnal_guru', label: 'Jurnal', icon: 'notebook-pen' });
+    if (!isBendahara) mobileTabs.push({ id: 'elearning', label: 'Materi', icon: 'book-open' });
+    mobileTabs.push({ id: 'spp', label: 'SPP', icon: 'wallet' });
+    if (isAdmin || isBendahara) mobileTabs.push({ id: 'keuangan', label: 'Kas', icon: 'landmark' });
+    if (isAdmin || isGuru || isBendahara) {
+      mobileTabs.push({ id: 'absen_transaksi', label: 'GPS', icon: 'map-pin' });
+      mobileTabs.push({ id: 'surat_transaksi', label: 'Surat', icon: 'sparkles' });
     }
 
     document.getElementById('mobile-bottom-nav').innerHTML = mobileTabs.map(m => `
-      <button onclick="switchDashboardTab('${m.id}')" class="flex flex-col items-center justify-center px-3 py-1.5 rounded-full transition ${appState.activeTab === m.id ? 'bg-emerald-600 text-white shadow' : 'text-slate-600 dark:text-slate-300'}">
+      <button onclick="switchDashboardTab('${m.id}')" class="flex flex-col items-center justify-center px-2.5 py-1.5 rounded-full transition shrink-0 ${appState.activeTab === m.id ? 'bg-emerald-600 text-white shadow' : 'text-slate-600 dark:text-slate-300'}">
         <i data-lucide="${m.icon}" class="w-4 h-4"></i>
         <span class="text-[10px] font-bold mt-0.5">${m.label}</span>
       </button>
@@ -1267,22 +1306,25 @@
 
     const titles = {
       overview: 'Dashboard Analitik & Ringkasan',
-      surat_transaksi: 'Buat Surat Resmi & Pengajuan Izin / Cuti',
-      surat_agenda: 'Agenda Surat & Persetujuan Izin / Cuti',
-      surat_galeri: 'Galeri Semua Surat & Kop Surat Dinamis',
-      absen_transaksi: 'Transaksi Presensi Guru & Sinkronisasi',
+      jurnal_guru: 'Jurnal Mengajar Guru & Pusat Perangkat Drive',
+      surat_transaksi: 'Generator Surat AI (Gemini) & Pengajuan Resmi',
+      surat_agenda: 'Persetujuan Kepala Sekolah (Otomatis TTD & Stempel)',
+      surat_galeri: 'Galeri Semua Surat & Upload Template Kop',
+      absen_transaksi: 'Absensi GPS Geofencing (Radius Maksimal 50 Meter)',
       absen_jadwal: 'Manajemen Jadwal Kerja, Khusus & Libur',
       absen_sp: 'Penilaian Telat, Hitung SP1 Izin/Sakit & Pelanggaran',
       elearning: 'E-Learning Materi & Tugas Google Drive',
-      spp: 'Pembayaran SPP & Notifikasi WhatsApp Orang Tua',
-      set_instansi: 'Pengaturan Instansi, Logo Sekolah & Feed Instagram',
-      set_user: 'Manajemen Akun Guru, Peserta Didik & Orang Tua',
-      set_wa: 'Konfigurasi Gateway & Template Pesan WhatsApp',
+      spp: 'Pembayaran SPP & Verifikasi Bendahara / WA',
+      keuangan: 'Laporan Keuangan Bendahara (Pemasukan & Pengeluaran)',
+      set_instansi: 'Pengaturan Instansi, Titik GPS, TTD Kepsek & Stempel',
+      set_user: 'Manajemen Akun Guru, Bendahara, Siswa & Orang Tua',
+      set_wa: 'Integrasi Gemini AI, WhatsApp Fonnte & Google Apps Script',
       set_log: 'Audit Trail & Log Aktivitas Sistem'
     };
     titleEl.textContent = titles[tabId] || 'Dashboard';
 
     if (tabId === 'overview') renderOverviewTab(area);
+    else if (tabId === 'jurnal_guru') renderJurnalGuruTab(area);
     else if (tabId === 'surat_transaksi') renderSuratTransaksiTab(area);
     else if (tabId === 'surat_agenda') renderSuratAgendaTab(area);
     else if (tabId === 'surat_galeri') renderSuratGaleriTab(area);
@@ -1291,6 +1333,7 @@
     else if (tabId === 'absen_sp') renderAbsenSpTab(area);
     else if (tabId === 'elearning') renderElearningTab(area);
     else if (tabId === 'spp') renderSppTab(area);
+    else if (tabId === 'keuangan') renderKeuanganTab(area);
     else if (tabId === 'set_instansi') renderSetInstansiTab(area);
     else if (tabId === 'set_user') renderSetUserTab(area);
     else if (tabId === 'set_wa') renderSetWaTab(area);
@@ -1300,141 +1343,230 @@
   }
 
   // =========================================================================
-  // MODUL 1: OVERVIEW DASHBOARD
+  // MODUL 1: BERANDA ANALITIK & PENGUMUMAN KHUSUS GURU
   // =========================================================================
   function renderOverviewTab(container) {
-    const gurus = appState.data.pengguna.filter(u => u.role === 'guru');
+    const role = appState.currentUser.role;
+    const isAdmin = role === 'admin';
+    const isGuru = role === 'guru';
+    const gurus = appState.data.pengguna.filter(u => u.role === 'guru' || u.role === 'bendahara');
     const siswas = appState.data.pengguna.filter(u => u.role === 'siswa');
-    const totalTelat = appState.data.absensi_guru.filter(a => a.status === 'Terlambat').length;
-    const pendingIzin = appState.data.persuratan.filter(s => s.status_persetujuan === 'Menunggu').length;
-    const suratBulanIni = appState.data.persuratan.length;
-    const sppLunas = appState.data.spp.filter(s => s.status === 'Lunas').reduce((a, b) => a + Number(b.nominal), 0);
-
-    const totalAbsen = appState.data.absensi_guru.length;
-    const tepatCount = appState.data.absensi_guru.filter(a => a.status === 'Tepat Waktu').length;
-    const persenTepat = totalAbsen > 0 ? Math.round((tepatCount / totalAbsen) * 100) : 100;
+    const hadirCount = appState.data.absensi_guru.length;
+    const telatCount = appState.data.absensi_guru.filter(a => a.status === 'Terlambat').length;
+    const pendingSurat = appState.data.persuratan.filter(s => s.status_persetujuan === 'Menunggu');
+    const totalSurat = appState.data.persuratan.length;
+    const sppLunas = appState.data.spp.filter(s => s.status === 'Lunas').reduce((sum, s) => sum + Number(s.nominal), 0);
+    const persenTepat = hadirCount > 0 ? Math.round(((hadirCount - telatCount) / hadirCount) * 100) : 100;
+    const notifUser = (appState.data.notifikasi_internal || []).filter(n => n.target_nama.toLowerCase() === appState.currentUser.nama_lengkap.toLowerCase());
 
     container.innerHTML = `
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div onclick="switchDashboardTab('set_user')" class="cursor-pointer stat-card-teal text-white rounded-3xl p-5 shadow-lg shadow-teal-600/20 hover:-translate-y-1 transition">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-teal-100">Total Tutor & Siswa</span>
-            <i data-lucide="users" class="w-5 h-5 text-teal-100"></i>
+      ${(isGuru || isAdmin) ? `
+        <div class="glass-panel rounded-3xl p-5 shadow-md border-l-4 border-l-amber-500 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="bell-ring" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600">Pengumuman Khusus Internal Guru & Tutor</span>
+              <p class="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 mt-0.5 leading-relaxed">${appState.data.pengaturan.pengumuman_guru || 'Belum ada pengumuman khusus guru.'}</p>
+            </div>
           </div>
-          <p class="font-display font-extrabold text-3xl mt-2">${gurus.length} Tutor • ${siswas.length} Siswa</p>
-          <p class="text-[11px] text-teal-100 mt-2">Klik untuk kelola akun pengguna</p>
+          <div class="flex gap-2 shrink-0">
+            <button onclick="switchDashboardTab('jurnal_guru')" class="px-4 py-2 rounded-full bg-teal-600 text-white font-bold text-xs">Buka Jurnal & Drive Guru</button>
+            ${isAdmin ? `<button onclick="switchDashboardTab('set_instansi')" class="px-3.5 py-2 rounded-full bg-slate-800 text-white font-bold text-xs">Edit Info</button>` : ''}
+          </div>
+        </div>
+      ` : ''}
+
+      ${notifUser.length > 0 ? `
+        <div class="glass-panel rounded-3xl p-5 shadow-md border-l-4 border-l-emerald-500 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Notifikasi Pengesahan Surat Resmi Anda</span>
+            <button onclick="bersihkanNotifInternal()" class="text-[11px] text-slate-400 hover:underline">Tandai Dibaca</button>
+          </div>
+          ${notifUser.map(n => `
+            <div class="p-3 rounded-2xl bg-emerald-500/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span>${n.pesan}</span>
+              <button onclick="cetakSuratDariGaleri('${n.surat_id}')" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold text-[11px]">Cetak Surat Berstempel</button>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="stat-card-teal text-white rounded-3xl p-6 shadow-lg relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-teal-100">Kehadiran Staf & Tutor</span>
+            <i data-lucide="user-check" class="w-5 h-5 text-teal-100"></i>
+          </div>
+          <p class="font-display font-extrabold text-3xl mt-2">${hadirCount} / ${gurus.length}</p>
+          <p class="text-[11px] text-teal-100 mt-2">${telatCount} terlambat • GPS Geofencing ${appState.data.pengaturan.radius_absen_meter}m</p>
         </div>
 
-        <div onclick="switchDashboardTab('surat_agenda')" class="cursor-pointer stat-card-blue text-white rounded-3xl p-5 shadow-lg shadow-blue-600/20 hover:-translate-y-1 transition">
+        <div class="stat-card-blue text-white rounded-3xl p-6 shadow-lg relative overflow-hidden cursor-pointer" onclick="switchDashboardTab('surat_agenda')">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold text-blue-100">Pengajuan Menunggu</span>
             <i data-lucide="hourglass" class="w-5 h-5 text-blue-100"></i>
           </div>
-          <p class="font-display font-extrabold text-3xl mt-2">${pendingIzin}</p>
-          <p class="text-[11px] text-blue-100 mt-2">Surat Izin & Cuti perlu diproses</p>
+          <p class="font-display font-extrabold text-3xl mt-2">${pendingSurat.length}</p>
+          <p class="text-[11px] text-blue-100 mt-2">Surat izin, cuti & pengesahan Kepsek</p>
         </div>
 
-        <div onclick="switchDashboardTab('surat_galeri')" class="cursor-pointer stat-card-rose text-white rounded-3xl p-5 shadow-lg shadow-rose-600/20 hover:-translate-y-1 transition">
+        <div class="stat-card-rose text-white rounded-3xl p-6 shadow-lg relative overflow-hidden cursor-pointer" onclick="switchDashboardTab('surat_galeri')">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-rose-100">Agenda Surat Bulan Ini</span>
-            <i data-lucide="folder-open" class="w-5 h-5 text-rose-100"></i>
+            <span class="text-xs font-semibold text-rose-100">Arsip Surat Bulan Ini</span>
+            <i data-lucide="mail" class="w-5 h-5 text-rose-100"></i>
           </div>
-          <p class="font-display font-extrabold text-3xl mt-2">${suratBulanIni}</p>
-          <p class="text-[11px] text-rose-100 mt-2">Masuk, Keluar, Izin & Cuti</p>
+          <p class="font-display font-extrabold text-3xl mt-2">${totalSurat}</p>
+          <p class="text-[11px] text-rose-100 mt-2">Surat AI, Masuk, Keluar & Dapodik</p>
         </div>
 
-        <div onclick="switchDashboardTab('spp')" class="cursor-pointer stat-card-amber text-white rounded-3xl p-5 shadow-lg shadow-amber-600/20 hover:-translate-y-1 transition">
+        <div class="stat-card-amber text-white rounded-3xl p-6 shadow-lg relative overflow-hidden cursor-pointer" onclick="switchDashboardTab('keuangan')">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-amber-100">Kas SPP Terverifikasi</span>
+            <span class="text-xs font-semibold text-amber-100">SPP Terverifikasi</span>
             <i data-lucide="wallet" class="w-5 h-5 text-amber-100"></i>
           </div>
           <p class="font-display font-extrabold text-2xl mt-2">Rp ${sppLunas.toLocaleString('id-ID')}</p>
-          <p class="text-[11px] text-amber-100 mt-2">Notifikasi WA Orang Tua Aktif</p>
+          <p class="text-[11px] text-amber-100 mt-2">${siswas.length} Peserta Didik Terdaftar</p>
         </div>
       </div>
 
-      ${(gurus.length === 0 && siswas.length === 0) ? `
-        <div class="glass-panel rounded-3xl p-7 border-l-4 border-l-teal-600 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-md">
-          <div>
-            <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Database Bersih & Siap Digunakan!</h3>
-            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">Data dummy siswa dan guru telah dibersihkan. Silakan tambahkan akun Guru, Peserta Didik, dan Orang Tua asli lembaga Anda melalui menu Manajemen User.</p>
-          </div>
-          <button onclick="switchDashboardTab('set_user')" class="px-5 py-2.5 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shrink-0 shadow-md">
-            + Tambah Akun Guru & Siswa
-          </button>
-        </div>
-      ` : ''}
-
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-7 glass-panel rounded-3xl p-6 shadow-md">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+        <div class="lg:col-span-8 glass-panel rounded-3xl p-6 shadow-md">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
             <div>
-              <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Statistik Surat & Pengajuan 2026</h3>
-              <div class="flex items-center gap-4 text-[11px] mt-1">
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Surat Masuk</span>
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Surat Keluar</span>
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Izin / Sakit / Cuti</span>
-              </div>
+              <h3 class="font-display font-bold text-base">Statistik Persuratan & Pengajuan 2026</h3>
+              <p class="text-xs text-slate-500">Perbandingan volume Surat Masuk, Surat Keluar & Pengajuan Izin/Cuti</p>
+            </div>
+            <div class="flex items-center gap-3 text-[11px] font-semibold">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Masuk</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>Keluar</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>Izin/Cuti</span>
             </div>
           </div>
-
-          <div class="h-44 flex items-end justify-between gap-2 pt-6 px-2 border-b border-slate-200 dark:border-slate-700">
-            ${['Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov'].map((bln, idx) => {
-              const hMasuk = idx === 5 ? Math.min(100, appState.data.persuratan.filter(s => s.jenis === 'Surat Masuk').length * 25 + 10) : 10;
-              const hKeluar = idx === 5 ? Math.min(100, appState.data.persuratan.filter(s => s.jenis === 'Surat Keluar').length * 25 + 10) : 10;
-              const hIzin = idx === 5 ? Math.min(100, appState.data.persuratan.filter(s => s.jenis === 'Surat Izin' || s.jenis === 'Surat Cuti').length * 25 + 10) : 10;
+          <div class="h-44 flex items-end justify-between gap-2 px-2 border-b border-slate-200 dark:border-slate-700 pb-2">
+            ${['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'].map((bln, i) => {
+              const h1 = [25, 18, 32, 22, 40, 28, 35, 30, 48, 38, 65, 20][i];
+              const h2 = [15, 24, 18, 30, 22, 34, 28, 42, 36, 44, 52, 18][i];
+              const h3 = [10, 14, 8, 16, 12, 20, 14, 18, 22, 15, 28, 10][i];
               return `
-                <div class="flex-1 flex flex-col items-center gap-2">
-                  <div class="w-full flex items-end justify-center gap-1.5 h-32">
-                    <div style="height:${hMasuk}%" class="w-2.5 sm:w-3 rounded-t-full bg-indigo-500 transition-all"></div>
-                    <div style="height:${hKeluar}%" class="w-2.5 sm:w-3 rounded-t-full bg-sky-500 transition-all"></div>
-                    <div style="height:${hIzin}%" class="w-2.5 sm:w-3 rounded-t-full bg-rose-500 transition-all"></div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                  <div class="w-full flex items-end justify-center gap-0.5 h-36">
+                    <div style="height:${h1}%" class="w-1.5 rounded-t bg-indigo-500"></div>
+                    <div style="height:${h2}%" class="w-1.5 rounded-t bg-sky-500"></div>
+                    <div style="height:${h3}%" class="w-1.5 rounded-t bg-rose-500"></div>
                   </div>
-                  <span class="text-[11px] font-semibold text-slate-500">${bln}</span>
+                  <span class="text-[10px] text-slate-400 font-semibold">${bln}</span>
                 </div>
               `;
             }).join('')}
           </div>
         </div>
 
-        <div class="lg:col-span-5 glass-panel rounded-3xl p-6 shadow-md flex flex-col justify-between">
-          <div class="flex items-center justify-between">
-            <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">Komposisi Kehadiran Tutor</h3>
-            <span class="text-xs font-semibold text-slate-400">${appState.data.pengaturan.periode_aktif}</span>
+        <div class="lg:col-span-4 glass-panel rounded-3xl p-6 shadow-md flex flex-col justify-between">
+          <div>
+            <h3 class="font-display font-bold text-base">Komposisi Kehadiran</h3>
+            <p class="text-xs text-slate-500">Rasio ketepatan waktu tutor & pegawai</p>
           </div>
-
-          <div class="my-4 flex items-center justify-center">
-            <div class="relative w-36 h-36 rounded-full flex items-center justify-center shadow-inner" style="background: conic-gradient(#10B981 0% ${persenTepat}%, #F59E0B ${persenTepat}% 100%);">
-              <div class="w-24 h-24 rounded-full bg-white dark:bg-slate-900 flex flex-col items-center justify-center shadow">
-                <span class="font-display font-extrabold text-xl text-slate-900 dark:text-white">${persenTepat}%</span>
-                <span class="text-[9px] font-semibold text-slate-400 uppercase">Tepat Waktu</span>
+          <div class="my-5 flex items-center justify-center">
+            <div class="w-36 h-36 rounded-full flex items-center justify-center relative" style="background: conic-gradient(#10B981 0% ${persenTepat}%, #F59E0B ${persenTepat}% 100%);">
+              <div class="w-24 h-24 rounded-full bg-white dark:bg-slate-900 flex flex-col items-center justify-center shadow-inner">
+                <span class="font-display font-extrabold text-2xl">${persenTepat}%</span>
+                <span class="text-[10px] text-slate-400">tepat waktu</span>
               </div>
             </div>
           </div>
-
-          <div class="grid grid-cols-3 gap-2 text-center text-[11px] pt-2 border-t border-slate-200/70 dark:border-slate-700">
-            <div><span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1"></span>Tepat (${tepatCount})</div>
-            <div><span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1"></span>Telat (${totalTelat})</div>
-            <div><span class="inline-block w-2 h-2 rounded-full bg-indigo-500 mr-1"></span>Izin (${pendingIzin})</div>
+          <div class="flex items-center justify-around text-xs pt-2 border-t border-slate-200/70 dark:border-slate-700">
+            <span class="flex items-center gap-1.5 font-semibold"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>Tepat: ${Math.max(0, hadirCount - telatCount)}</span>
+            <span class="flex items-center gap-1.5 font-semibold"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>Telat: ${telatCount}</span>
           </div>
         </div>
       </div>
+
+      ${(appState.currentUser.role === 'admin' && pendingSurat.length > 0) ? `
+        <div class="glass-panel rounded-3xl p-6 shadow-md border-l-4 border-l-blue-500">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-display font-bold text-sm">Persetujuan Cepat Kepsek (Otomatis TTD & Stempel)</h3>
+            <button onclick="switchDashboardTab('surat_agenda')" class="text-xs font-bold text-blue-600 hover:underline">Lihat Semua →</button>
+          </div>
+          <div class="space-y-2.5">
+            ${pendingSurat.map(s => `
+              <div class="p-3.5 rounded-2xl bg-white/70 dark:bg-slate-800/70 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div>
+                  <span class="px-2.5 py-0.5 rounded-full font-bold bg-blue-100 text-blue-700 mr-2">${s.jenis}</span>
+                  <strong>${s.tujuan_pengirim}</strong> — ${s.perihal} <span class="text-slate-400">(${s.tanggal_surat})</span>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="prosesPersetujuanSurat('${s.id}', 'Disetujui')" class="px-3.5 py-1.5 rounded-full bg-emerald-600 text-white font-bold">Setujui & Cap</button>
+                  <button onclick="prosesPersetujuanSurat('${s.id}', 'Ditolak')" class="px-3.5 py-1.5 rounded-full bg-rose-600 text-white font-bold">Tolak</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
     `;
   }
 
   // =========================================================================
-  // MODUL 2: PERSURATAN (BUAT SURAT, AGENDA IZIN/CUTI & GALERI SURAT)
+  // MODUL 2: GENERATOR SURAT AI GEMINI, KOP TEMPLATE, TTD & STEMPEL OTOMATIS
   // =========================================================================
+  function renderKopHeaderHtml() {
+    const cfg = appState.data.pengaturan;
+    if (cfg.kop_template_img && cfg.kop_template_img.trim() !== '') {
+      return `<div style="margin-bottom:18px; border-bottom:2px solid #000; padding-bottom:8px;"><img src="${cfg.kop_template_img}" alt="Kop Surat Resmi" style="width:100%; max-height:150px; object-fit:contain;" /></div>`;
+    }
+    return cfg.kop_surat_html;
+  }
+
+  function renderSignatureAndStampHtml(isApproved) {
+    const cfg = appState.data.pengaturan;
+    if (!isApproved) {
+      return `<div class="h-20 flex items-center justify-end text-[10px] text-amber-600 italic">[Menunggu Persetujuan Kepsek — TTD & Stempel Otomatis Muncul Setelah Disetujui]</div>`;
+    }
+    return `
+      <div class="relative inline-block h-24 w-52 my-1">
+        ${cfg.stempel_url ? `<img src="${cfg.stempel_url}" alt="Stempel Resmi PKBM" class="w-24 h-24 object-contain absolute left-1 -top-1 opacity-85 mix-blend-multiply pointer-events-none" />` : `<div class="w-20 h-20 rounded-full border-2 border-indigo-700/60 text-indigo-800/70 flex items-center justify-center text-[8px] font-extrabold text-center p-1 absolute left-2 top-1 rotate-[-12deg]">STEMPEL RESMI<br/>PKBM BINTANG</div>`}
+        ${cfg.ttd_kepsek_url ? `<img src="${cfg.ttd_kepsek_url}" alt="TTD Kepala Sekolah" class="h-20 object-contain ml-auto relative z-10" />` : `<div class="h-20 flex items-center justify-end text-[11px] font-bold text-emerald-700 relative z-10">✓ TTD DIGITAL KEPSEK SAH</div>`}
+      </div>
+    `;
+  }
+
   function renderSuratTransaksiTab(container) {
+    const isAdmin = appState.currentUser.role === 'admin';
     container.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-6 glass-panel rounded-3xl p-6 shadow-md">
-          <h3 class="font-display font-bold text-base mb-1">Buat Transaksi Surat & Pengajuan</h3>
-          <p class="text-xs text-slate-500 mb-4">Mendukung Surat Masuk, Surat Keluar, Surat Izin, dan Surat Cuti pegawai/tutor.</p>
+        <div class="lg:col-span-6 glass-panel rounded-3xl p-6 shadow-md space-y-4">
+          <div>
+            <h3 class="font-display font-bold text-base">Generator Surat AI (Gemini) & Transaksi</h3>
+            <p class="text-xs text-slate-500">Buat draf surat otomatis dengan AI atau ketik manual. TTD & Stempel muncul otomatis setelah disetujui Kepsek.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/25 space-y-2.5 text-xs">
+            <div class="flex items-center gap-2 font-bold text-indigo-700 dark:text-indigo-300">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>Asisten Pembuat Surat Otomatis (Gemini AI)</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <select id="ai-jenis-surat" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                <option value="Surat Keterangan Pindah Sekolah">Surat Pindah Sekolah</option>
+                <option value="Surat Tugas Mengajar / Dinas">Surat Tugas Tutor/Pegawai</option>
+                <option value="Surat Keterangan Penerimaan Peserta Didik">Surat Penerimaan Siswa</option>
+                <option value="Surat Keterangan Terdata Aktif di Dapodik">Surat Selesai Terdata Dapodik</option>
+                <option value="Surat Keterangan Lulus Kesetaraan">Surat Keterangan Lulus</option>
+              </select>
+              <input type="text" id="ai-detail-surat" placeholder="Nama Siswa/Guru, NISN, Paket, Tujuan..." class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <button type="button" id="btn-generate-ai-surat" onclick="generateSuratDenganGemini()" class="w-full py-2 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow flex items-center justify-center gap-2 transition">
+              <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+              <span>Buatkan Isi Surat Otomatis dengan Gemini AI</span>
+            </button>
+          </div>
+
           <form onsubmit="simpanSuratBaru(event)" class="space-y-3 text-xs">
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="font-semibold block mb-1">Kategori Surat</label>
+                <label class="font-semibold block mb-1">Kategori Arsip</label>
                 <select id="srt-jenis" onchange="updatePreviewSuratLive()" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
                   <option value="Surat Keluar">Surat Keluar Resmi</option>
                   <option value="Surat Masuk">Arsip Surat Masuk</option>
@@ -1450,42 +1582,48 @@
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="font-semibold block mb-1">Perihal</label>
-                <input type="text" id="srt-perihal" onkeyup="updatePreviewSuratLive()" required placeholder="Contoh: Permohonan Izin Sakit / Undangan" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+                <input type="text" id="srt-perihal" onkeyup="updatePreviewSuratLive()" required placeholder="Perihal surat..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
               </div>
               <div>
-                <label class="font-semibold block mb-1">Pemohon / Tujuan / Pengirim</label>
+                <label class="font-semibold block mb-1">Nama Pihak / Pemohon</label>
                 <input type="text" id="srt-tujuan" onkeyup="updatePreviewSuratLive()" required value="${appState.currentUser.nama_lengkap}" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
               </div>
             </div>
             <div>
-              <label class="font-semibold block mb-1">Isi / Keterangan Surat</label>
-              <textarea id="srt-isi" onkeyup="updatePreviewSuratLive()" rows="6" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">Dengan hormat,\n\nSehubungan dengan kegiatan operasional dan akademik di PKBM Bintang Inklusif, bersama ini kami sampaikan perihal tersebut di atas untuk dapat ditindaklanjuti.\n\nDemikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan terima kasih.</textarea>
+              <label class="font-semibold block mb-1">Isi Surat Resmi</label>
+              <textarea id="srt-isi" onkeyup="updatePreviewSuratLive()" rows="7" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 leading-relaxed">Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menerangkan bahwa:\n\nNama : ...\nNISN / NIP : ...\nProgram : Paket ...\n\nAdalah benar peserta didik/pendidik aktif yang telah terdata pada sistem Dapodik PKBM Bintang Inklusif.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.</textarea>
             </div>
             <div class="flex gap-2 pt-2">
-              <button type="submit" class="flex-1 py-3 rounded-full bg-teal-600 text-white font-bold shadow">Simpan ke Sistem Arsip</button>
+              <button type="submit" class="flex-1 py-3 rounded-full bg-teal-600 text-white font-bold shadow">
+                ${isAdmin ? 'Simpan & Sahkan (TTD + Stempel)' : 'Ajukan ke Kepsek / Super Admin'}
+              </button>
               <button type="button" onclick="window.print()" class="px-5 py-3 rounded-full bg-slate-900 dark:bg-blue-600 text-white font-bold">Cetak PDF</button>
             </div>
           </form>
         </div>
 
         <div class="lg:col-span-6">
-          <div id="printable-area" class="bg-white text-slate-900 rounded-3xl p-8 shadow-xl border border-slate-200 min-h-[450px]">
-            <div id="preview-kop-box">${appState.data.pengaturan.kop_surat_html}</div>
+          <div id="printable-area" class="bg-white text-slate-900 rounded-3xl p-8 shadow-xl border border-slate-200 min-h-[500px]">
+            <div id="preview-kop-box">${renderKopHeaderHtml()}</div>
             <div class="text-xs space-y-1 mb-5">
               <p><strong>Nomor:</strong> <span id="prev-nomor">421.9/0${appState.data.persuratan.length + 1}/PKBM-BI/XI/2026</span></p>
               <p><strong>Kategori:</strong> <span id="prev-jenis">Surat Keluar</span></p>
               <p><strong>Perihal:</strong> <span id="prev-perihal">-</span></p>
-              <p><strong>Kepada / Pemohon:</strong> <span id="prev-tujuan">${appState.currentUser.nama_lengkap}</span></p>
+              <p><strong>Kepada / Pihak:</strong> <span id="prev-tujuan">${appState.currentUser.nama_lengkap}</span></p>
             </div>
-            <div id="prev-isi" class="text-xs leading-relaxed whitespace-pre-line mb-10">Dengan hormat,
+            <div id="prev-isi" class="text-xs leading-relaxed whitespace-pre-line mb-8">Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menerangkan bahwa:
 
-Sehubungan dengan kegiatan operasional dan akademik di PKBM Bintang Inklusif, bersama ini kami sampaikan perihal tersebut di atas untuk dapat ditindaklanjuti.
+Nama : ...
+NISN / NIP : ...
+Program : Paket ...
 
-Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan terima kasih.</div>
-            <div class="text-right text-xs mt-8">
+Adalah benar peserta didik/pendidik aktif yang telah terdata pada sistem Dapodik PKBM Bintang Inklusif.
+
+Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.</div>
+            <div class="text-right text-xs mt-6">
               <p>Bukittinggi, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
               <p class="font-bold mt-1">Kepala / Penanggung Jawab PKBM,</p>
-              <div class="h-14"></div>
+              <div id="prev-ttd-stempel">${renderSignatureAndStampHtml(isAdmin)}</div>
               <p class="font-bold underline">${appState.data.pengaturan.penanggung_jawab}</p>
               <p class="text-[11px]">NIP/NIY. ${appState.data.pengaturan.nip_pj}</p>
             </div>
@@ -1495,6 +1633,56 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     `;
   }
 
+  window.generateSuratDenganGemini = async () => {
+    const jenisSurat = document.getElementById('ai-jenis-surat').value;
+    const detail = document.getElementById('ai-detail-surat').value.trim() || "Peserta didik/tutor PKBM Bintang Inklusif";
+    const apiKey = appState.data.pengaturan.gemini_api_key;
+    const btn = document.getElementById('btn-generate-ai-surat');
+
+    document.getElementById('srt-perihal').value = jenisSurat;
+    btn.disabled = true;
+    btn.innerHTML = `<span>Menyusun draf surat dengan Gemini AI...</span>`;
+
+    if (apiKey && apiKey.trim() !== '') {
+      try {
+        const prompt = `Buatkan isi badan surat resmi sekolah dalam Bahasa Indonesia yang formal, rapi, dan lengkap untuk "${jenisSurat}" dari lembaga "PKBM Bintang Inklusif" dengan detail pihak terkait: "${detail}". Langsung tuliskan bagian pembuka, data diri/isi pokok, dan penutup surat tanpa kop surat dan tanpa blok tanda tangan.`;
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
+        const json = await res.json();
+        const generatedText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (generatedText) {
+          document.getElementById('srt-isi').value = generatedText.trim();
+          updatePreviewSuratLive();
+          showToast("Isi surat berhasil dibuat oleh Gemini AI!", "success");
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="wand-2" class="w-3.5 h-3.5"></i><span>Buatkan Isi Surat Otomatis dengan Gemini AI</span>`;
+          lucide.createIcons();
+          return;
+        }
+      } catch (e) {
+        showToast("Gagal menghubungi API Gemini, menggunakan template pintar bawaan.", "warning");
+      }
+    }
+
+    const templatesAi = {
+      "Surat Keterangan Pindah Sekolah": `Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menerangkan bahwa:\n\nData Pihak Terkait : ${detail}\n\nBerdasarkan permohonan orang tua/wali, peserta didik tersebut di atas mengajukan pindah belajar dari PKBM Bintang Inklusif ke satuan pendidikan tujuan dengan alasan mengikuti domisili orang tua.\n\nDemikian surat keterangan pindah ini diberikan untuk dapat dipergunakan sebagaimana mestinya.`,
+      "Surat Tugas Mengajar / Dinas": `Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menugaskan kepada:\n\nNama / Jabatan : ${detail}\n\nUntuk melaksanakan tugas kedinasan / pendampingan pembelajaran kesetaraan pada PKBM Bintang Inklusif sesuai jadwal dan ketentuan yang berlaku.\n\nDemikian surat tugas ini diterbitkan untuk dilaksanakan dengan penuh tanggung jawab.`,
+      "Surat Keterangan Penerimaan Peserta Didik": `Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menerangkan bahwa:\n\nCalon Warga Belajar : ${detail}\n\nTelah dinyatakan DITERIMA sebagai peserta didik resmi pada PKBM Bintang Inklusif Tahun Ajaran 2026/2027.\n\nDemikian surat keterangan penerimaan ini diterbitkan untuk kelengkapan administrasi.`,
+      "Surat Keterangan Terdata Aktif di Dapodik": `Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menerangkan dengan sesungguhnya bahwa:\n\nIdentitas : ${detail}\n\nAdalah benar warga belajar aktif dan telah SELESAI TERDATA secara resmi dalam sistem Data Pokok Pendidikan (Dapodik) Kemendikbudristek pada PKBM Bintang Inklusif.\n\nDemikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.`,
+      "Surat Keterangan Lulus Kesetaraan": `Yang bertanda tangan di bawah ini Kepala PKBM Bintang Inklusif menerangkan bahwa:\n\nIdentitas : ${detail}\n\nTelah mengikuti seluruh rangkaian pembelajaran dan Asesmen Sumatif Akhir Jenjang serta dinyatakan LULUS program pendidikan kesetaraan.\n\nDemikian surat keterangan lulus sementara ini diterbitkan sambil menunggu penerbitan ijazah resmi.`
+    };
+
+    document.getElementById('srt-isi').value = templatesAi[jenisSurat] || templatesAi["Surat Keterangan Terdata Aktif di Dapodik"];
+    updatePreviewSuratLive();
+    showToast(apiKey ? "Draf surat siap!" : "Draf surat dibuat! Masukkan Gemini API Key di menu Integrasi untuk generasi AI kustom penuh.", "info");
+    btn.disabled = false;
+    btn.innerHTML = `<i data-lucide="wand-2" class="w-3.5 h-3.5"></i><span>Buatkan Isi Surat Otomatis dengan Gemini AI</span>`;
+    lucide.createIcons();
+  };
+
   function renderSuratAgendaTab(container) {
     const isAdmin = appState.currentUser.role === 'admin';
     const items = appState.data.persuratan;
@@ -1502,10 +1690,10 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       <div class="glass-panel rounded-3xl p-6 shadow-md">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
-            <h3 class="font-display font-bold text-base">Agenda Surat & Persetujuan Pengajuan Izin / Cuti</h3>
-            <p class="text-xs text-slate-500">Super Admin dapat menyetujui atau menolak pengajuan Surat Izin dan Surat Cuti secara langsung.</p>
+            <h3 class="font-display font-bold text-base">Agenda Surat & Persetujuan Kepala Sekolah (Otomatis TTD & Stempel)</h3>
+            <p class="text-xs text-slate-500">Setelah disetujui Super Admin / Kepsek, tanda tangan digital dan stempel resmi otomatis tersemat pada surat saat dicetak.</p>
           </div>
-          <button onclick="switchDashboardTab('surat_transaksi')" class="px-4 py-2 rounded-full bg-teal-600 text-white font-bold text-xs">+ Buat Surat / Izin Baru</button>
+          <button onclick="switchDashboardTab('surat_transaksi')" class="px-4 py-2 rounded-full bg-teal-600 text-white font-bold text-xs">+ Buat Surat AI / Izin Baru</button>
         </div>
 
         <div class="overflow-x-auto">
@@ -1517,8 +1705,8 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                 <th class="py-2.5">Nomor Surat</th>
                 <th class="py-2.5">Pemohon / Tujuan</th>
                 <th class="py-2.5">Perihal</th>
-                <th class="py-2.5">Status</th>
-                ${isAdmin ? '<th class="py-2.5 text-right">Aksi Persetujuan</th>' : ''}
+                <th class="py-2.5">Status & Pengesahan</th>
+                <th class="py-2.5 text-right">Aksi</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
@@ -1531,17 +1719,16 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                   <td class="py-3">${s.perihal}</td>
                   <td class="py-3">
                     <span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] ${s.status_persetujuan === 'Disetujui' ? 'bg-emerald-100 text-emerald-700' : s.status_persetujuan === 'Ditolak' ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-800'}">
-                      ${s.status_persetujuan || 'Disetujui'}
+                      ${s.status_persetujuan === 'Disetujui' ? '✓ Disetujui (TTD + Cap)' : s.status_persetujuan}
                     </span>
                   </td>
-                  ${isAdmin ? `
-                    <td class="py-3 text-right space-x-1">
-                      ${s.status_persetujuan === 'Menunggu' ? `
-                        <button onclick="prosesPersetujuanSurat('${s.id}', 'Disetujui')" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold text-[11px]">Setujui</button>
-                        <button onclick="prosesPersetujuanSurat('${s.id}', 'Ditolak')" class="px-3 py-1 rounded-full bg-rose-600 text-white font-bold text-[11px]">Tolak</button>
-                      ` : `<span class="text-slate-400 text-[11px]">Selesai</span>`}
-                    </td>
-                  ` : ''}
+                  <td class="py-3 text-right space-x-1">
+                    ${(isAdmin && s.status_persetujuan === 'Menunggu') ? `
+                      <button onclick="prosesPersetujuanSurat('${s.id}', 'Disetujui')" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold text-[11px]">Setujui & Cap</button>
+                      <button onclick="prosesPersetujuanSurat('${s.id}', 'Ditolak')" class="px-3 py-1 rounded-full bg-rose-600 text-white font-bold text-[11px]">Tolak</button>
+                    ` : ''}
+                    <button onclick="cetakSuratDariGaleri('${s.id}')" class="px-3 py-1 rounded-full bg-slate-800 text-white font-bold text-[11px]">Cetak</button>
+                  </td>
                 </tr>
               `).join('') || `<tr><td colspan="7" class="py-6 text-center text-slate-400">Belum ada agenda surat atau pengajuan izin/cuti.</td></tr>`}
             </tbody>
@@ -1578,7 +1765,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                 <p class="text-xs text-slate-500 mt-1">Pihak: ${s.tujuan_pengirim}</p>
               </div>
               <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-700 flex items-center justify-between text-[11px]">
-                <span class="font-bold text-emerald-600">${s.status_persetujuan || 'Tersimpan'}</span>
+                <span class="font-bold ${s.status_persetujuan === 'Disetujui' ? 'text-emerald-600' : 'text-amber-600'}">${s.status_persetujuan === 'Disetujui' ? '✓ TTD & Stempel Aktif' : s.status_persetujuan}</span>
                 <button onclick="cetakSuratDariGaleri('${s.id}')" class="font-bold text-blue-600 hover:underline">Lihat & Cetak</button>
               </div>
             </div>
@@ -1587,10 +1774,18 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       </div>
 
       ${appState.currentUser.role === 'admin' ? `
-        <div class="glass-panel rounded-3xl p-6 shadow-md">
-          <h3 class="font-display font-bold text-base mb-2">Sesuaikan Template Kop Surat Resmi (HTML)</h3>
-          <textarea id="editor-kop-html" rows="5" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs">${appState.data.pengaturan.kop_surat_html}</textarea>
-          <button onclick="simpanKopSurat()" class="mt-3 px-6 py-2.5 rounded-full bg-teal-600 text-white font-bold text-xs">Simpan Perubahan Kop Surat</button>
+        <div class="glass-panel rounded-3xl p-6 shadow-md space-y-4 text-xs">
+          <h3 class="font-display font-bold text-base">Upload Template Kop Surat Gambar / Sesuaikan HTML Kop</h3>
+          <div class="p-4 rounded-2xl bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2">
+            <label class="font-bold block">Upload File Gambar Template Kop Surat (PNG/JPG Lebar Penuh)</label>
+            <input type="file" accept="image/*" onchange="handleUploadAssetSurat(event, 'kop_template_img')" class="text-xs" />
+            ${appState.data.pengaturan.kop_template_img ? `<div class="flex items-center gap-3 pt-1"><span class="text-emerald-600 font-bold">✓ Template Gambar Kop Terpasang</span><button onclick="resetAssetSurat('kop_template_img')" class="text-rose-600 font-bold hover:underline">Hapus Gambar Kop</button></div>` : ''}
+          </div>
+          <div>
+            <label class="font-bold block mb-1">Atau Edit Kop Surat Versi Teks HTML:</label>
+            <textarea id="editor-kop-html" rows="4" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs">${appState.data.pengaturan.kop_surat_html}</textarea>
+          </div>
+          <button onclick="simpanKopSurat()" class="px-6 py-2.5 rounded-full bg-teal-600 text-white font-bold text-xs">Simpan Perubahan Kop Surat</button>
         </div>
       ` : ''}
     `;
@@ -1611,8 +1806,8 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
 
   window.simpanSuratBaru = (e) => {
     e.preventDefault();
+    const isAdmin = appState.currentUser.role === 'admin';
     const jenis = document.getElementById('srt-jenis').value;
-    const isPengajuan = jenis === 'Surat Izin' || jenis === 'Surat Cuti';
     const surat = {
       id: 's-' + Date.now(),
       jenis,
@@ -1620,12 +1815,12 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       perihal: document.getElementById('srt-perihal').value,
       tujuan_pengirim: document.getElementById('srt-tujuan').value,
       tanggal_surat: new Date().toISOString().split('T')[0],
-      status_persetujuan: isPengajuan ? 'Menunggu' : 'Disetujui',
+      status_persetujuan: isAdmin ? 'Disetujui' : 'Menunggu',
       isi_surat: document.getElementById('srt-isi').value
     };
     appState.data.persuratan.unshift(surat);
     saveLocalState(`Membuat ${jenis}: ${surat.perihal}`);
-    showToast(`${jenis} berhasil disimpan ke sistem arsip!`, "success");
+    showToast(isAdmin ? `${jenis} disahkan otomatis dengan TTD & Stempel!` : `${jenis} diajukan & menunggu persetujuan Kepsek!`, "success");
     renderDashboardTab('surat_agenda');
   };
 
@@ -1633,7 +1828,18 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     const srt = appState.data.persuratan.find(s => s.id === suratId);
     if (!srt) return;
     srt.status_persetujuan = statusBaru;
-    saveLocalState(`${statusBaru} pengajuan ${srt.jenis} (${srt.tujuan_pengirim})`);
+
+    if (statusBaru === 'Disetujui') {
+      if (!appState.data.notifikasi_internal) appState.data.notifikasi_internal = [];
+      appState.data.notifikasi_internal.unshift({
+        id: 'ntf-' + Date.now(),
+        target_nama: srt.tujuan_pengirim,
+        surat_id: srt.id,
+        pesan: `Surat "${srt.perihal}" (${srt.nomor_surat}) telah DISETUJUI Kepala Sekolah & dilengkapi TTD + Stempel resmi.`
+      });
+    }
+
+    saveLocalState(`${statusBaru} pengajuan ${srt.jenis} (${srt.tujuan_pengirim}) — TTD & Stempel otomatis disematkan`);
 
     const pemohon = appState.data.pengguna.find(u => u.nama_lengkap.toLowerCase().includes(srt.tujuan_pengirim.toLowerCase()));
     if (pemohon && pemohon.no_wa) {
@@ -1642,10 +1848,17 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
         jenis_surat: srt.jenis,
         tanggal: srt.tanggal_surat,
         status: statusBaru.toUpperCase()
-      });
+      }, pemohon.agama);
       kirimNotifikasiWhatsApp(pemohon.no_wa, pesan, "Persetujuan Surat");
     }
+    showToast(statusBaru === 'Disetujui' ? "Surat disetujui! TTD Kepsek & Stempel otomatis aktif dan notifikasi terkirim ke pemohon." : "Surat ditolak.", "success");
     renderDashboardTab('surat_agenda');
+  };
+
+  window.bersihkanNotifInternal = () => {
+    appState.data.notifikasi_internal = [];
+    saveLocalState();
+    renderDashboardTab('overview');
   };
 
   window.cetakSuratDariGaleri = (suratId) => {
@@ -1659,8 +1872,10 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       document.getElementById('srt-tujuan').value = srt.tujuan_pengirim;
       document.getElementById('srt-isi').value = srt.isi_surat;
       updatePreviewSuratLive();
+      const ttdBox = document.getElementById('prev-ttd-stempel');
+      if (ttdBox) ttdBox.innerHTML = renderSignatureAndStampHtml(srt.status_persetujuan === 'Disetujui');
       window.print();
-    }, 100);
+    }, 120);
   };
 
   window.simpanKopSurat = () => {
@@ -1670,28 +1885,54 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
   };
 
   // =========================================================================
-  // MODUL 3: ABSENSI GURU, JADWAL KERJA & PENILAIAN TELAT / HITUNG SP1
+  // MODUL 3: ABSENSI GPS GEOFENCING (MAKS 50 METER), JADWAL & PENILAIAN TELAT
   // =========================================================================
+  function hitungJarakMeter(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const p1 = lat1 * Math.PI / 180;
+    const p2 = lat2 * Math.PI / 180;
+    const dp = (lat2 - lat1) * Math.PI / 180;
+    const dl = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dp / 2) * Math.sin(dp / 2) + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) * Math.sin(dl / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return Math.round(R * c);
+  }
+
+  let currentGpsState = { lat: null, lng: null, jarak: null, valid: false };
+
   function renderAbsenTransaksiTab(container) {
     const cfg = appState.data.pengaturan;
-    const gurus = appState.data.pengguna.filter(u => u.role === 'guru');
-    const isGuru = appState.currentUser.role === 'guru';
+    const gurus = appState.data.pengguna.filter(u => u.role === 'guru' || u.role === 'bendahara');
+    const isAdmin = appState.currentUser.role === 'admin';
+    const radiusMaks = Number(cfg.radius_absen_meter || 50);
 
     container.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div class="lg:col-span-5 glass-panel rounded-3xl p-6 shadow-md space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="font-display font-bold text-base">Transaksi Presensi Harian</h3>
-            <span class="px-3 py-1 rounded-full bg-teal-500/15 text-teal-600 font-bold text-xs">Masuk: ${cfg.jam_masuk_guru} WIB</span>
+            <h3 class="font-display font-bold text-base">Presensi GPS Geofencing</h3>
+            <span class="px-3 py-1 rounded-full bg-teal-500/15 text-teal-600 font-bold text-xs">Maks ${radiusMaks}m • ${cfg.jam_masuk_guru} WIB</span>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold">Status Koordinat GPS Perangkat:</span>
+              <button type="button" onclick="cekLokasiGpsSekarang()" class="px-3 py-1 rounded-full bg-blue-600 text-white font-bold text-[11px] flex items-center gap-1">
+                <i data-lucide="locate-fixed" class="w-3 h-3"></i> Deteksi GPS
+              </button>
+            </div>
+            <p id="gps-status-text" class="text-[11px] text-slate-600 dark:text-slate-300">
+              Titik Pusat PKBM: <code>${cfg.lokasi_lat}, ${cfg.lokasi_lng}</code>. Klik "Deteksi GPS" untuk memverifikasi jarak Anda (maksimal ${radiusMaks} meter).
+            </p>
           </div>
 
           <form onsubmit="catatAbsensiGuru(event)" class="space-y-3 text-xs">
             <div>
-              <label class="font-semibold block mb-1">Pilih Nama Tutor / Pegawai</label>
+              <label class="font-semibold block mb-1">Nama Tutor / Pegawai</label>
               <select id="absen-guru-id" required class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
-                ${isGuru
+                ${!isAdmin
                   ? `<option value="${appState.currentUser.id}">${appState.currentUser.nama_lengkap}</option>`
-                  : `<option value="">-- Pilih Tutor --</option>` + gurus.map(g => `<option value="${g.id}">${g.nama_lengkap}</option>`).join('')
+                  : `<option value="">-- Pilih Tutor / Staf --</option>` + gurus.map(g => `<option value="${g.id}">${g.nama_lengkap}</option>`).join('')
                 }
               </select>
             </div>
@@ -1700,21 +1941,21 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
               <input type="time" id="absen-jam-input" value="${new Date().toTimeString().slice(0, 5)}" required class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
             </div>
             <button type="submit" class="w-full py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg transition">
-              Simpan Transaksi Absen
+              Simpan Presensi & Kirim ke Google Sheets
             </button>
           </form>
 
           <div class="pt-3 border-t border-slate-200/70 dark:border-slate-700 space-y-2">
-            <p class="text-[11px] font-bold text-slate-500">Sinkronisasi & Simulasi Kontrol Otomatis:</p>
+            <p class="text-[11px] font-bold text-slate-500">Sinkronisasi Spreadsheet & Kontrol WA:</p>
             <div class="grid grid-cols-2 gap-2">
-              <button onclick="sinkronAbsenOtomatis()" class="py-2 px-3 rounded-xl bg-indigo-600 text-white font-bold text-xs">Sinkron Absen Harian</button>
+              <button onclick="sinkronKeAppsScript('absensi')" class="py-2 px-3 rounded-xl bg-emerald-700 text-white font-bold text-xs">Sync Google Sheets</button>
               <button onclick="simulasiCekTelat30Menit()" class="py-2 px-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs">Cek Telat +30 Menit</button>
             </div>
           </div>
         </div>
 
         <div class="lg:col-span-7 glass-panel rounded-3xl p-6 shadow-md">
-          <h3 class="font-display font-bold text-base mb-4">Detail Log Presensi Hari Ini</h3>
+          <h3 class="font-display font-bold text-base mb-4">Detail Log Presensi GPS & Status Sinkronisasi</h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead>
@@ -1722,8 +1963,9 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                   <th class="py-2.5">Tanggal</th>
                   <th class="py-2.5">Nama Tutor</th>
                   <th class="py-2.5">Jam</th>
+                  <th class="py-2.5">Jarak GPS</th>
                   <th class="py-2.5">Status</th>
-                  <th class="py-2.5">Notif WA 30m</th>
+                  <th class="py-2.5">WA 30m</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
@@ -1732,6 +1974,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                     <td class="py-3 font-mono">${a.tanggal}</td>
                     <td class="py-3 font-bold">${a.guru_nama}</td>
                     <td class="py-3 font-mono">${a.jam_masuk} WIB</td>
+                    <td class="py-3 font-mono text-[11px]">${a.jarak_meter !== undefined ? a.jarak_meter + 'm' : 'Admin'}</td>
                     <td class="py-3">
                       <span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] ${a.status === 'Tepat Waktu' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
                         ${a.status} ${a.menit_telat > 0 ? `(+${a.menit_telat}m)` : ''}
@@ -1739,28 +1982,29 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                     </td>
                     <td class="py-3 text-[11px]">${a.notif_wa_30m_sent ? '<span class="text-emerald-600 font-bold">✓ Terkirim</span>' : '-'}</td>
                   </tr>
-                `).join('') || `<tr><td colspan="5" class="py-6 text-center text-slate-400">Belum ada transaksi absensi hari ini.</td></tr>`}
+                `).join('') || `<tr><td colspan="6" class="py-6 text-center text-slate-400">Belum ada transaksi absensi hari ini.</td></tr>`}
               </tbody>
             </table>
           </div>
         </div>
       </div>
     `;
+    if (!isAdmin) cekLokasiGpsSekarang();
   }
 
   function renderAbsenJadwalTab(container) {
     const isAdmin = appState.currentUser.role === 'admin';
     container.innerHTML = `
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 text-xs">
         ${isAdmin ? `
-          <div class="lg:col-span-4 glass-panel rounded-3xl p-6 shadow-md">
-            <h3 class="font-display font-bold text-base mb-3">Tambah Jadwal Kerja / Khusus / Libur</h3>
-            <form onsubmit="tambahJadwalKerja(event)" class="space-y-3 text-xs">
+          <div class="lg:col-span-4 glass-panel rounded-3xl p-6 shadow-md space-y-3">
+            <h3 class="font-display font-bold text-base">Atur Jadwal Kerja / Khusus / Libur</h3>
+            <form onsubmit="tambahJadwalKerja(event)" class="space-y-3">
               <div>
-                <label class="font-semibold block mb-1">Jenis Jadwal</label>
+                <label class="font-semibold block mb-1">Kategori Jadwal</label>
                 <select id="jdw-tipe" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
                   <option value="Jadwal Kerja Reguler">Jadwal Kerja Reguler</option>
-                  <option value="Jadwal Khusus">Jadwal Khusus (Ujian / Mukhayyam)</option>
+                  <option value="Jadwal Khusus">Jadwal Khusus (Ujian / Kegiatan)</option>
                   <option value="Jadwal Libur">Jadwal Libur Lembaga</option>
                 </select>
               </div>
@@ -1770,7 +2014,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
               </div>
               <div>
                 <label class="font-semibold block mb-1">Hari / Tanggal Berlaku</label>
-                <input type="text" id="jdw-hari" required placeholder="Contoh: Senin - Jumat / 25 Nov 2026" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+                <input type="text" id="jdw-hari" required placeholder="Contoh: Senin - Jumat atau 25 Nov 2026" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
               </div>
               <div class="grid grid-cols-2 gap-2">
                 <div>
@@ -1793,15 +2037,29 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
 
         <div class="${isAdmin ? 'lg:col-span-8' : 'lg:col-span-12'} glass-panel rounded-3xl p-6 shadow-md">
           <h3 class="font-display font-bold text-base mb-4">Daftar Jadwal Kerja, Jadwal Khusus & Jadwal Libur</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            ${appState.data.jadwal_kerja.map(j => `
-              <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${j.tipe === 'Jadwal Libur' ? 'bg-rose-100 text-rose-700' : j.tipe === 'Jadwal Khusus' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-700'}">${j.tipe}</span>
-                <h4 class="font-bold text-sm mt-2">${j.nama_jadwal}</h4>
-                <p class="text-xs text-slate-500 mt-1">Waktu: <strong>${j.hari}</strong> (${j.jam_masuk} - ${j.jam_pulang} WIB)</p>
-                <p class="text-[11px] text-slate-400 mt-1">${j.keterangan}</p>
-              </div>
-            `).join('')}
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">
+                  <th class="py-2.5">Kategori</th>
+                  <th class="py-2.5">Nama Jadwal</th>
+                  <th class="py-2.5">Hari / Tanggal</th>
+                  <th class="py-2.5">Jam Kerja</th>
+                  <th class="py-2.5">Keterangan</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
+                ${appState.data.jadwal_kerja.map(j => `
+                  <tr>
+                    <td class="py-3"><span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] ${j.tipe === 'Jadwal Libur' ? 'bg-rose-100 text-rose-700' : j.tipe === 'Jadwal Khusus' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-700'}">${j.tipe}</span></td>
+                    <td class="py-3 font-bold">${j.nama_jadwal}</td>
+                    <td class="py-3">${j.hari}</td>
+                    <td class="py-3 font-mono">${j.jam_masuk} - ${j.jam_pulang} WIB</td>
+                    <td class="py-3 text-slate-500">${j.keterangan}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1810,64 +2068,59 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
 
   function renderAbsenSpTab(container) {
     const cfg = appState.data.pengaturan;
-    const gurus = appState.data.pengguna.filter(u => u.role === 'guru');
+    const gurus = appState.data.pengguna.filter(u => u.role === 'guru' || u.role === 'bendahara');
     const batasTelat = Number(cfg.batas_telat_sp || 5);
     const batasIzin = Number(cfg.batas_izin_sp1 || 3);
 
     container.innerHTML = `
-      <div class="glass-panel rounded-3xl p-6 shadow-md">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <div class="glass-panel rounded-3xl p-6 shadow-md text-xs space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 class="font-display font-bold text-base">Penilaian Telat, Hitung SP1 Izin/Sakit & Riwayat Pelanggaran</h3>
-            <p class="text-xs text-slate-500">Ambang Telat SP: <strong>${batasTelat}x terlambat</strong> • Ambang Akumulasi Izin/Sakit SP1: <strong>${batasIzin}x izin/sakit</strong></p>
+            <h3 class="font-display font-bold text-base">Penilaian Keterlambatan, Hitung SP1 Izin/Sakit & Pelanggaran</h3>
+            <p class="text-slate-500 mt-0.5">Aturan Aktif: Batas Telat = <strong>${batasTelat}x</strong> untuk SP1 (kelipatan SP2/SP3) • Batas Izin/Sakit = <strong>${batasIzin}x</strong> untuk SP1.</p>
           </div>
+          <button onclick="switchDashboardTab('set_instansi')" class="px-4 py-2 rounded-full bg-slate-900 text-white font-bold">Ubah Batas SP</button>
         </div>
 
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+          <table class="w-full text-left">
             <thead>
               <tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">
                 <th class="py-2.5">Nama Tutor / Pegawai</th>
-                <th class="py-2.5 text-center">Jumlah Telat</th>
-                <th class="py-2.5 text-center">Total Menit Telat</th>
-                <th class="py-2.5 text-center">Jumlah Izin / Sakit</th>
-                <th class="py-2.5">Status SP & Pelanggaran</th>
+                <th class="py-2.5">Total Hadir</th>
+                <th class="py-2.5">Jumlah Telat</th>
+                <th class="py-2.5">Total Menit Telat</th>
+                <th class="py-2.5">Izin / Sakit</th>
+                <th class="py-2.5">Status SP Otomatis</th>
                 <th class="py-2.5 text-right">Tindakan</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
               ${gurus.map(g => {
-                const logsTelat = appState.data.absensi_guru.filter(a => a.guru_id === g.id && a.status === 'Terlambat');
-                const jmlTelat = logsTelat.length;
-                const totalMenit = logsTelat.reduce((sum, item) => sum + Number(item.menit_telat || 0), 0);
+                const absenG = appState.data.absensi_guru.filter(a => a.guru_id === g.id);
+                const jmlTelat = absenG.filter(a => a.status === 'Terlambat').length;
+                const totalMenit = absenG.reduce((s, a) => s + Number(a.menit_telat || 0), 0);
                 const jmlIzin = appState.data.persuratan.filter(s => (s.jenis === 'Surat Izin' || s.jenis === 'Surat Cuti') && s.tujuan_pengirim.toLowerCase().includes(g.nama_lengkap.toLowerCase())).length;
 
-                let statusSp = 'Disiplin Baik';
-                let badgeClass = 'bg-emerald-100 text-emerald-700';
-                if (jmlTelat >= batasTelat * 2) {
-                  statusSp = 'TERBIT SP 2 (Pelanggaran Berat)';
-                  badgeClass = 'bg-rose-600 text-white';
-                } else if (jmlTelat >= batasTelat) {
-                  statusSp = 'TERBIT SP 1 (Batas Telat Tercapai)';
-                  badgeClass = 'bg-rose-100 text-rose-700';
-                } else if (jmlIzin >= batasIzin) {
-                  statusSp = 'PERINGATAN SP 1 (Batas Izin/Sakit)';
-                  badgeClass = 'bg-amber-100 text-amber-800';
-                }
+                let statusSp = 'Aman / Disiplin';
+                let badgeCls = 'bg-emerald-100 text-emerald-700';
+                if (jmlTelat >= batasTelat * 2) { statusSp = 'SP 2 (Pelanggaran Berat)'; badgeCls = 'bg-rose-600 text-white'; }
+                else if (jmlTelat >= batasTelat || jmlIzin >= batasIzin) { statusSp = 'SP 1 (Peringatan Pertama)'; badgeCls = 'bg-rose-100 text-rose-700'; }
 
                 return `
                   <tr>
                     <td class="py-3 font-bold">${g.nama_lengkap}</td>
-                    <td class="py-3 text-center font-extrabold text-amber-600">${jmlTelat} / ${batasTelat}x</td>
-                    <td class="py-3 text-center font-mono">${totalMenit} menit</td>
-                    <td class="py-3 text-center font-bold">${jmlIzin} / ${batasIzin}x</td>
-                    <td class="py-3"><span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${badgeClass}">${statusSp}</span></td>
+                    <td class="py-3">${absenG.length} hari</td>
+                    <td class="py-3 font-bold ${jmlTelat > 0 ? 'text-rose-600' : ''}">${jmlTelat}x</td>
+                    <td class="py-3">${totalMenit} menit</td>
+                    <td class="py-3">${jmlIzin}x</td>
+                    <td class="py-3"><span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${badgeCls}">${statusSp}</span></td>
                     <td class="py-3 text-right">
-                      <button onclick="terbitkanSuratSP('${g.id}', '${statusSp}')" class="px-3 py-1 rounded-full bg-slate-900 dark:bg-rose-600 text-white font-bold text-[11px]">Cetak Surat SP</button>
+                      <button onclick="terbitkanSuratSP('${g.id}', '${statusSp}')" class="px-3 py-1 rounded-full bg-rose-600 text-white font-bold text-[11px]">Cetak Surat SP</button>
                     </td>
                   </tr>
                 `;
-              }).join('') || `<tr><td colspan="6" class="py-6 text-center text-slate-400">Belum ada data tutor/guru terdaftar.</td></tr>`}
+              }).join('') || `<tr><td colspan="7" class="py-6 text-center text-slate-400">Belum ada data tutor/staf untuk dihitung.</td></tr>`}
             </tbody>
           </table>
         </div>
@@ -1875,8 +2128,50 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     `;
   }
 
+  window.cekLokasiGpsSekarang = () => {
+    const cfg = appState.data.pengaturan;
+    const radiusMaks = Number(cfg.radius_absen_meter || 50);
+    const statusEl = document.getElementById('gps-status-text');
+    if (!navigator.geolocation) {
+      if (statusEl) statusEl.innerHTML = `<span class="text-rose-600 font-bold">Browser tidak mendukung GPS.</span>`;
+      return;
+    }
+    if (statusEl) statusEl.innerHTML = `Mengambil titik koordinat satelit GPS...`;
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const jarak = hitungJarakMeter(lat, lng, Number(cfg.lokasi_lat), Number(cfg.lokasi_lng));
+        const valid = jarak <= radiusMaks;
+        currentGpsState = { lat, lng, jarak, valid };
+        if (statusEl) {
+          statusEl.innerHTML = valid
+            ? `<span class="text-emerald-600 font-bold">✓ Dalam Radius (${jarak} meter dari titik PKBM — Maks ${radiusMaks}m). Siap Absen!</span>`
+            : `<span class="text-rose-600 font-bold">✕ Di Luar Radius (${jarak} meter dari titik PKBM — Maksimal ${radiusMaks} meter!). Mendekatlah ke lokasi sekolah.</span>`;
+        }
+      },
+      (err) => {
+        if (statusEl) statusEl.innerHTML = `<span class="text-rose-600 font-bold">Izin lokasi GPS ditolak (${err.message}). Aktifkan izin lokasi browser!</span>`;
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
   window.catatAbsensiGuru = (e) => {
     e.preventDefault();
+    const isAdmin = appState.currentUser.role === 'admin';
+    const radiusMaks = Number(appState.data.pengaturan.radius_absen_meter || 50);
+
+    if (!isAdmin) {
+      if (currentGpsState.jarak === null) {
+        cekLokasiGpsSekarang();
+        return showToast("Sedang memverifikasi koordinat GPS Anda, silakan klik sekali lagi setelah jarak muncul.", "warning");
+      }
+      if (!currentGpsState.valid) {
+        return showToast(`Absensi DITOLAK! Jarak Anda ${currentGpsState.jarak} meter dari titik pusat PKBM (Maksimal ${radiusMaks} meter).`, "error");
+      }
+    }
+
     const guruId = document.getElementById('absen-guru-id').value;
     const guru = appState.data.pengguna.find(u => u.id === guruId);
     if (!guru) return showToast("Pilih tutor terlebih dahulu!", "warning");
@@ -1891,38 +2186,59 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     const menit_telat = selisihMenit > 0 ? selisihMenit : 0;
     const notif30 = menit_telat >= 30;
 
-    appState.data.absensi_guru.unshift({
+    const record = {
       id: 'ab-' + Date.now(),
       guru_id: guru.id,
       guru_nama: guru.nama_lengkap,
       no_wa: guru.no_wa,
       tanggal: new Date().toISOString().split('T')[0],
       jam_masuk: jamInput,
+      jarak_meter: currentGpsState.jarak ?? 0,
       status,
       menit_telat,
       notif_wa_30m_sent: notif30
-    });
+    };
 
-    saveLocalState(`Mencatat absensi ${guru.nama_lengkap} (${status})`);
+    appState.data.absensi_guru.unshift(record);
+    saveLocalState(`Presensi GPS ${guru.nama_lengkap} (${status}, jarak ${record.jarak_meter}m)`);
+    sinkronKeAppsScript('absensi', record, true);
 
     if (notif30) {
       const pesan = formatWaTemplate('telat_30m', {
         nama: guru.nama_lengkap,
         menit_telat,
-        tanggal: new Date().toISOString().split('T')[0],
+        tanggal: record.tanggal,
         jam_masuk: jamBatas
-      });
+      }, guru.agama);
       kirimNotifikasiWhatsApp(guru.no_wa, pesan, "Alert Telat +30 Menit");
     } else {
-      showToast(`Presensi ${guru.nama_lengkap} (${status}) berhasil disimpan!`, "success");
+      showToast(`Presensi ${guru.nama_lengkap} (${status}) berhasil dicatat!`, "success");
     }
     renderDashboardTab('absen_transaksi');
   };
 
-  window.sinkronAbsenOtomatis = () => {
-    saveLocalState("Melakukan sinkronisasi data presensi & rekap SP");
-    showToast("Sinkronisasi presensi selesai! Data keterlambatan dan akumulasi SP telah diperbarui.", "success");
-    renderDashboardTab('absen_transaksi');
+  window.sinkronKeAppsScript = async (jenisData = 'absensi', singleRecord = null, silent = false) => {
+    const scriptUrl = appState.data.pengaturan.apps_script_url;
+    if (!scriptUrl || !scriptUrl.startsWith('http')) {
+      if (!silent) showToast("URL Google Apps Script belum diatur di menu Pengaturan & Integrasi.", "warning");
+      return;
+    }
+    try {
+      const payload = {
+        jenis: jenisData,
+        timestamp: new Date().toISOString(),
+        data: singleRecord || (jenisData === 'absensi' ? appState.data.absensi_guru : appState.data.keuangan)
+      };
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!silent) showToast(`Data ${jenisData} berhasil disinkronkan ke Google Spreadsheet via Apps Script!`, "success");
+    } catch (err) {
+      if (!silent) showToast("Gagal mengirim data ke Google Apps Script: " + err.message, "error");
+    }
   };
 
   window.simulasiCekTelat30Menit = () => {
@@ -1934,7 +2250,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       menit_telat: 35,
       tanggal: new Date().toISOString().split('T')[0],
       jam_masuk: appState.data.pengaturan.jam_masuk_guru
-    });
+    }, target.agama);
     kirimNotifikasiWhatsApp(target.no_wa, pesan, "Simulasi Alert 30 Menit");
   };
 
@@ -1969,11 +2285,395 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
   };
 
   // =========================================================================
-  // MODUL 4: PEMBAYARAN SPP & AUTO NOTIFIKASI WA ORANG TUA
+  // MODUL 3B: JURNAL MENGAJAR GURU & PUSAT PERANGKAT GOOGLE DRIVE PER GURU
+  // =========================================================================
+  function renderJurnalGuruTab(container) {
+    const cfg = appState.data.pengaturan;
+    const isAdmin = appState.currentUser.role === 'admin';
+    const currentUserObj = appState.data.pengguna.find(u => u.id === appState.currentUser.id) || appState.currentUser;
+    const drivePribadi = currentUserObj.link_drive_guru || '';
+    const gurus = appState.data.pengguna.filter(u => u.role === 'guru');
+    const listJurnal = isAdmin
+      ? (appState.data.jurnal_guru || [])
+      : (appState.data.jurnal_guru || []).filter(j => j.guru_id === appState.currentUser.id);
+
+    container.innerHTML = `
+      <div class="glass-panel rounded-3xl p-6 shadow-md space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 class="font-display font-bold text-base">Pusat Perangkat Mengajar, Media & Google Drive Tutor</h3>
+            <p class="text-xs text-slate-500">Klik tombol di bawah untuk membuka folder Google Drive perangkat ajar Anda atau membuat media & bahan ajar baru.</p>
+          </div>
+          ${drivePribadi
+            ? `<a href="${drivePribadi}" target="_blank" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-lg flex items-center gap-2 transition"><i data-lucide="folder-open" class="w-4 h-4"></i> Buka Folder Google Drive Saya</a>`
+            : `<span class="px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">Link Google Drive pribadi Anda dapat diisi pada form di bawah</span>`
+          }
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <a href="${drivePribadi || 'https://drive.google.com/'}" target="_blank" class="p-4 rounded-2xl bg-sky-500/10 border border-sky-500/25 hover:-translate-y-1 transition flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-sky-600 text-white flex items-center justify-center mb-2.5"><i data-lucide="hard-drive" class="w-4 h-4"></i></div>
+              <h4 class="font-bold text-sm">Drive Perangkat Guru</h4>
+              <p class="text-slate-500 mt-1">Arsip silabus, prota, promes, dan administrasi kelas di Google Drive masing-masing.</p>
+            </div>
+            <span class="mt-3 font-bold text-sky-600 flex items-center gap-1">Buka Drive →</span>
+          </a>
+
+          <a href="${cfg.link_template_media || 'https://www.canva.com/education/'}" target="_blank" class="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/25 hover:-translate-y-1 transition flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center mb-2.5"><i data-lucide="presentation" class="w-4 h-4"></i></div>
+              <h4 class="font-bold text-sm">Buat Media Pembelajaran</h4>
+              <p class="text-slate-500 mt-1">Desain slide presentasi interaktif, infografis, dan video pembelajaran inklusif.</p>
+            </div>
+            <span class="mt-3 font-bold text-purple-600 flex items-center gap-1">Mulai Buat Media →</span>
+          </a>
+
+          <a href="${cfg.link_template_bahan_ajar || 'https://docs.google.com/'}" target="_blank" class="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/25 hover:-translate-y-1 transition flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center mb-2.5"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+              <h4 class="font-bold text-sm">Susun Bahan Ajar & LKPD</h4>
+              <p class="text-slate-500 mt-1">Buat modul bacaan, lembar kerja peserta didik, dan bank soal Paket A, B, C.</p>
+            </div>
+            <span class="mt-3 font-bold text-teal-600 flex items-center gap-1">Buka Editor Bahan Ajar →</span>
+          </a>
+
+          <a href="${cfg.link_template_modul_rpp || 'https://drive.google.com/'}" target="_blank" class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 hover:-translate-y-1 transition flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center mb-2.5"><i data-lucide="layers" class="w-4 h-4"></i></div>
+              <h4 class="font-bold text-sm">Template Modul Ajar & IEP</h4>
+              <p class="text-slate-500 mt-1">Akses format RPP, Modul Ajar Kurikulum Merdeka & Program Pembelajaran Individual.</p>
+            </div>
+            <span class="mt-3 font-bold text-amber-600 flex items-center gap-1">Lihat Template →</span>
+          </a>
+        </div>
+
+        ${!isAdmin ? `
+          <form onsubmit="simpanLinkDrivePribadiGuru(event)" class="pt-3 border-t border-slate-200/70 dark:border-slate-700 flex flex-col sm:flex-row gap-2.5 text-xs">
+            <input type="url" id="guru-self-drive" value="${drivePribadi}" required placeholder="Tempel Link Folder Google Drive Pribadi Anda (https://drive.google.com/drive/folders/...)" class="flex-1 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            <button type="submit" class="px-5 py-2 rounded-full bg-slate-900 dark:bg-teal-600 text-white font-bold shrink-0">Simpan Link Drive Saya</button>
+          </form>
+        ` : `
+          <div class="pt-3 border-t border-slate-200/70 dark:border-slate-700 text-xs">
+            <p class="font-bold mb-2">Daftar Link Google Drive Masing-Masing Guru:</p>
+            <div class="flex flex-wrap gap-2">
+              ${gurus.map(g => g.link_drive_guru
+                ? `<a href="${g.link_drive_guru}" target="_blank" class="px-3 py-1.5 rounded-full bg-blue-600/15 text-blue-700 dark:text-blue-300 font-bold hover:bg-blue-600/25">📁 Drive ${g.nama_lengkap}</a>`
+                : `<span class="px-3 py-1.5 rounded-full bg-slate-200/70 dark:bg-slate-800 text-slate-500">${g.nama_lengkap} (Belum isi link)</span>`
+              ).join('') || `<span class="text-slate-400">Belum ada akun guru terdaftar.</span>`}
+            </div>
+          </div>
+        `}
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 text-xs">
+        <div class="lg:col-span-5 glass-panel rounded-3xl p-6 shadow-md space-y-3">
+          <h3 class="font-display font-bold text-base">Isi Jurnal Mengajar Harian Guru</h3>
+          <form onsubmit="simpanJurnalGuru(event)" class="space-y-3">
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="font-semibold block mb-1">Tanggal KBM</label>
+                <input type="date" id="jrn-tanggal" value="${new Date().toISOString().split('T')[0]}" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+              <div>
+                <label class="font-semibold block mb-1">Program Paket</label>
+                <select id="jrn-paket" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                  <option value="Paket A">Paket A (SD)</option>
+                  <option value="Paket B">Paket B (SMP)</option>
+                  <option value="Paket C">Paket C (SMA)</option>
+                  <option value="Inklusi / Homeschooling">Inklusi / Homeschooling</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="font-semibold block mb-1">Mata Pelajaran</label>
+                <input type="text" id="jrn-mapel" required placeholder="Contoh: Matematika / Bahasa Indonesia" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+              <div>
+                <label class="font-semibold block mb-1">Jml Siswa Hadir</label>
+                <input type="number" id="jrn-hadir" min="0" value="12" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Materi Pokok & Aktivitas Pembelajaran</label>
+              <textarea id="jrn-materi" rows="2" required placeholder="Ringkasan materi yang diajarkan..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700"></textarea>
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Catatan Perkembangan Inklusi / Kendala</label>
+              <input type="text" id="jrn-catatan" placeholder="Catatan pendampingan khusus warga belajar..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Link Bukti / Dokumentasi Drive (Opsional)</label>
+              <input type="url" id="jrn-link" placeholder="https://drive.google.com/..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <button type="submit" class="w-full py-3 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold shadow-md">
+              Simpan Jurnal Mengajar
+            </button>
+          </form>
+        </div>
+
+        <div class="lg:col-span-7 glass-panel rounded-3xl p-6 shadow-md">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <h3 class="font-display font-bold text-base">Rekap Jurnal Mengajar Guru</h3>
+            <div class="flex gap-2">
+              <button onclick="sinkronKeAppsScript('jurnal_guru')" class="px-3.5 py-1.5 rounded-full bg-emerald-700 text-white font-bold text-[11px]">Sync Google Sheets</button>
+              <button onclick="window.print()" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white font-bold text-[11px]">Cetak Jurnal</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">
+                  <th class="py-2.5">Tanggal</th>
+                  <th class="py-2.5">Tutor</th>
+                  <th class="py-2.5">Paket & Mapel</th>
+                  <th class="py-2.5">Materi & Catatan Inklusi</th>
+                  <th class="py-2.5 text-right">Hadir</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
+                ${listJurnal.map(j => `
+                  <tr>
+                    <td class="py-3 font-mono">${j.tanggal}</td>
+                    <td class="py-3 font-bold">${j.guru_nama}</td>
+                    <td class="py-3"><span class="px-2 py-0.5 rounded-full bg-teal-500/15 text-teal-600 font-bold text-[10px]">${j.paket}</span><br/><strong>${j.mapel}</strong></td>
+                    <td class="py-3">
+                      <p>${j.materi}</p>
+                      ${j.catatan ? `<p class="text-[11px] text-slate-500 mt-0.5">Catatan: ${j.catatan}</p>` : ''}
+                      ${j.link_bukti ? `<a href="${j.link_bukti}" target="_blank" class="text-[11px] text-blue-600 font-bold hover:underline">Lihat Bukti Drive</a>` : ''}
+                    </td>
+                    <td class="py-3 text-right font-bold">${j.jml_hadir} siswa</td>
+                  </tr>
+                `).join('') || `<tr><td colspan="5" class="py-6 text-center text-slate-400">Belum ada jurnal mengajar guru yang dicatat.</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  window.simpanLinkDrivePribadiGuru = (e) => {
+    e.preventDefault();
+    const url = document.getElementById('guru-self-drive').value.trim();
+    const idx = appState.data.pengguna.findIndex(u => u.id === appState.currentUser.id);
+    if (idx !== -1) {
+      appState.data.pengguna[idx].link_drive_guru = url;
+      appState.currentUser.link_drive_guru = url;
+      saveLocalState(`Memperbarui link Google Drive pribadi guru: ${appState.currentUser.nama_lengkap}`);
+      showToast("Link folder Google Drive pribadi Anda berhasil disimpan!", "success");
+      renderDashboardTab('jurnal_guru');
+    }
+  };
+
+  window.simpanJurnalGuru = (e) => {
+    e.preventDefault();
+    if (!appState.data.jurnal_guru) appState.data.jurnal_guru = [];
+    const record = {
+      id: 'jrn-' + Date.now(),
+      guru_id: appState.currentUser.id,
+      guru_nama: appState.currentUser.nama_lengkap,
+      tanggal: document.getElementById('jrn-tanggal').value,
+      paket: document.getElementById('jrn-paket').value,
+      mapel: document.getElementById('jrn-mapel').value,
+      jml_hadir: Number(document.getElementById('jrn-hadir').value),
+      materi: document.getElementById('jrn-materi').value,
+      catatan: document.getElementById('jrn-catatan').value,
+      link_bukti: document.getElementById('jrn-link').value.trim()
+    };
+    appState.data.jurnal_guru.unshift(record);
+    saveLocalState(`Mengisi jurnal mengajar ${record.mapel} (${record.paket})`);
+    sinkronKeAppsScript('jurnal_guru', record, true);
+    showToast("Jurnal mengajar guru berhasil disimpan!", "success");
+    renderDashboardTab('jurnal_guru');
+  };
+
+  // =========================================================================
+  // MODUL 4: E-LEARNING MATERI & TUGAS GOOGLE DRIVE
+  // =========================================================================
+  function renderElearningTab(container) {
+    const role = appState.currentUser.role;
+    const canEdit = role === 'admin' || role === 'guru';
+    const siswas = appState.data.pengguna.filter(u => u.role === 'siswa');
+    const editingItem = appState.editingMateriId ? appState.data.materi.find(m => m.id === appState.editingMateriId) : null;
+
+    let filteredNilai = appState.data.nilai;
+    if (role === 'siswa') filteredNilai = filteredNilai.filter(n => n.siswa_id === appState.currentUser.id);
+    else if (role === 'ortu') filteredNilai = filteredNilai.filter(n => n.siswa_id === appState.currentUser.relasi_siswa_id);
+
+    container.innerHTML = `
+      ${canEdit ? `
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+          <div class="glass-panel rounded-3xl p-6 shadow-md space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-bold text-base">${editingItem ? 'Edit Materi / Tugas Google Drive' : 'Upload Materi & Tugas (Google Drive)'}</h3>
+              ${editingItem ? `<button onclick="batalEditMateri()" class="text-rose-600 font-bold">Batal Edit</button>` : ''}
+            </div>
+            <form onsubmit="simpanAtauUpdateMateri(event)" class="space-y-3">
+              <div class="grid grid-cols-2 gap-2">
+                <select id="mat-paket" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                  <option value="Paket A" ${editingItem?.paket === 'Paket A' ? 'selected' : ''}>Paket A (SD)</option>
+                  <option value="Paket B" ${editingItem?.paket === 'Paket B' ? 'selected' : ''}>Paket B (SMP)</option>
+                  <option value="Paket C" ${editingItem?.paket === 'Paket C' ? 'selected' : ''}>Paket C (SMA)</option>
+                </select>
+                <input type="text" id="mat-mapel" required value="${editingItem?.mapel || ''}" placeholder="Mata Pelajaran" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+              <input type="text" id="mat-judul" required value="${editingItem?.judul_materi || ''}" placeholder="Judul Modul / Tugas" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              <input type="url" id="mat-gdrive" required value="${editingItem?.file_url || ''}" placeholder="Link Google Drive (https://drive.google.com/...)" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              <textarea id="mat-deskripsi" rows="2" placeholder="Instruksi pengerjaan tugas atau ringkasan materi..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">${editingItem?.deskripsi || ''}</textarea>
+              <button type="submit" class="w-full py-2.5 rounded-full bg-teal-600 text-white font-bold shadow">
+                ${editingItem ? 'Simpan Perubahan Materi' : 'Publikasikan Materi Google Drive'}
+              </button>
+            </form>
+          </div>
+
+          <div class="glass-panel rounded-3xl p-6 shadow-md space-y-3">
+            <h3 class="font-display font-bold text-base">Input Penilaian E-Rapor Peserta Didik</h3>
+            <form onsubmit="simpanNilaiSiswa(event)" class="space-y-3">
+              <select id="nil-siswa" required class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                <option value="">-- Pilih Peserta Didik --</option>
+                ${siswas.map(s => `<option value="${s.id}">${s.nama_lengkap} (${s.paket})</option>`).join('')}
+              </select>
+              <div class="grid grid-cols-3 gap-2">
+                <input type="text" id="nil-mapel" required placeholder="Mapel" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+                <select id="nil-jenis" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                  <option value="Tugas">Tugas</option>
+                  <option value="UTS">UTS</option>
+                  <option value="UAS">UAS</option>
+                </select>
+                <input type="number" id="nil-skor" min="0" max="100" required placeholder="Nilai" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-full bg-blue-600 text-white font-bold shadow">Simpan Nilai ke E-Rapor</button>
+            </form>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="glass-panel rounded-3xl p-6 shadow-md">
+        <h3 class="font-display font-bold text-base mb-4">Daftar Materi Pembelajaran & Tugas Google Drive</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          ${appState.data.materi.map(m => `
+            <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-500/15 text-teal-600">${m.paket} • ${m.mapel}</span>
+                  ${canEdit ? `
+                    <div class="flex gap-1.5 text-[11px]">
+                      <button onclick="mulaiEditMateri('${m.id}')" class="text-amber-600 font-bold hover:underline">Edit</button>
+                      <button onclick="hapusMateri('${m.id}')" class="text-rose-600 font-bold hover:underline">Hapus</button>
+                    </div>
+                  ` : ''}
+                </div>
+                <h4 class="font-bold text-sm mt-2">${m.judul_materi}</h4>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">${m.deskripsi}</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-700 flex items-center justify-between text-[11px]">
+                <span class="text-slate-400">Tutor: ${m.guru_nama}</span>
+                <a href="${m.file_url}" target="_blank" class="font-bold text-blue-600 hover:underline flex items-center gap-1">
+                  <span>Buka Google Drive</span>
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                </a>
+              </div>
+            </div>
+          `).join('') || `<p class="text-xs text-slate-400 col-span-3 text-center py-6">Belum ada materi pembelajaran atau tugas Google Drive yang diunggah.</p>`}
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-3xl p-6 shadow-md">
+        <h3 class="font-display font-bold text-base mb-4">Rekap Penilaian & E-Rapor Digital</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">
+                <th class="py-2.5">Peserta Didik</th>
+                <th class="py-2.5">Mata Pelajaran</th>
+                <th class="py-2.5">Kategori</th>
+                <th class="py-2.5">Nilai</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
+              ${filteredNilai.map(n => `
+                <tr>
+                  <td class="py-3 font-bold">${n.siswa_nama}</td>
+                  <td class="py-3">${n.mapel}</td>
+                  <td class="py-3">${n.jenis_nilai}</td>
+                  <td class="py-3 font-extrabold text-teal-600">${n.skor}</td>
+                </tr>
+              `).join('') || `<tr><td colspan="4" class="py-6 text-center text-slate-400">Belum ada data penilaian peserta didik.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  window.mulaiEditMateri = (id) => {
+    appState.editingMateriId = id;
+    renderDashboardTab('elearning');
+  };
+
+  window.batalEditMateri = () => {
+    appState.editingMateriId = null;
+    renderDashboardTab('elearning');
+  };
+
+  window.simpanAtauUpdateMateri = (e) => {
+    e.preventDefault();
+    const payload = {
+      paket: document.getElementById('mat-paket').value,
+      mapel: document.getElementById('mat-mapel').value,
+      judul_materi: document.getElementById('mat-judul').value,
+      file_url: document.getElementById('mat-gdrive').value.trim(),
+      deskripsi: document.getElementById('mat-deskripsi').value,
+      guru_nama: appState.currentUser.nama_lengkap
+    };
+
+    if (appState.editingMateriId) {
+      const idx = appState.data.materi.findIndex(m => m.id === appState.editingMateriId);
+      if (idx !== -1) appState.data.materi[idx] = { ...appState.data.materi[idx], ...payload };
+      saveLocalState(`Mengedit materi Google Drive: ${payload.judul_materi}`);
+      showToast("Materi Google Drive berhasil diperbarui!", "success");
+    } else {
+      appState.data.materi.unshift({ id: 'mat-' + Date.now(), ...payload });
+      saveLocalState(`Mengunggah materi Google Drive: ${payload.judul_materi}`);
+      showToast("Materi & Tugas Google Drive dipublikasikan!", "success");
+    }
+    appState.editingMateriId = null;
+    renderDashboardTab('elearning');
+  };
+
+  window.hapusMateri = (id) => {
+    appState.data.materi = appState.data.materi.filter(m => m.id !== id);
+    saveLocalState("Menghapus materi pembelajaran");
+    showToast("Materi telah dihapus.", "info");
+    renderDashboardTab('elearning');
+  };
+
+  window.simpanNilaiSiswa = (e) => {
+    e.preventDefault();
+    const siswaId = document.getElementById('nil-siswa').value;
+    const siswa = appState.data.pengguna.find(u => u.id === siswaId);
+    if (!siswa) return;
+    appState.data.nilai.unshift({
+      id: 'nil-' + Date.now(),
+      siswa_id: siswa.id,
+      siswa_nama: siswa.nama_lengkap,
+      mapel: document.getElementById('nil-mapel').value,
+      jenis_nilai: document.getElementById('nil-jenis').value,
+      skor: Number(document.getElementById('nil-skor').value)
+    });
+    saveLocalState(`Menginput nilai ${siswa.nama_lengkap}`);
+    showToast("Nilai berhasil disimpan ke E-Rapor!", "success");
+    renderDashboardTab('elearning');
+  };
+
+  // =========================================================================
+  // MODUL 5: PEMBAYARAN SPP & LAPORAN KEUANGAN BENDAHARA
   // =========================================================================
   function renderSppTab(container) {
     const role = appState.currentUser.role;
-    const isAdmin = role === 'admin';
+    const canVerify = role === 'admin' || role === 'bendahara';
     const siswas = appState.data.pengguna.filter(u => u.role === 'siswa');
     let listSpp = appState.data.spp;
     if (role === 'siswa') listSpp = listSpp.filter(s => s.siswa_id === appState.currentUser.id);
@@ -1983,13 +2683,13 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       <div class="glass-panel rounded-3xl p-6 shadow-md">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h3 class="font-display font-bold text-base">Manajemen Pembayaran SPP & Notifikasi WA Orang Tua</h3>
-            <p class="text-xs text-slate-500">Setelah status pembayaran disahkan LUNAS, notifikasi otomatis terkirim ke WhatsApp Orang Tua.</p>
+            <h3 class="font-display font-bold text-base">Manajemen Pembayaran SPP & Persetujuan Bendahara</h3>
+            <p class="text-xs text-slate-500">Bendahara / Super Admin dapat menyetujui pembayaran SPP yang otomatis masuk ke Laporan Keuangan & WhatsApp Orang Tua.</p>
           </div>
-          ${isAdmin ? `<button onclick="document.getElementById('form-tambah-spp').classList.toggle('hidden')" class="px-4 py-2 rounded-full bg-teal-600 text-white font-bold text-xs self-start">+ Buat Tagihan SPP</button>` : ''}
+          ${canVerify ? `<button onclick="document.getElementById('form-tambah-spp').classList.toggle('hidden')" class="px-4 py-2 rounded-full bg-teal-600 text-white font-bold text-xs self-start">+ Buat Tagihan SPP</button>` : ''}
         </div>
 
-        ${isAdmin ? `
+        ${canVerify ? `
           <form id="form-tambah-spp" onsubmit="buatTagihanSpp(event)" class="hidden mb-6 p-4 rounded-2xl bg-teal-500/10 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
             <select id="spp-siswa-id" required class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
               <option value="">-- Pilih Siswa --</option>
@@ -2011,7 +2711,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                 <th class="py-2.5">Nominal</th>
                 <th class="py-2.5">WA Orang Tua</th>
                 <th class="py-2.5">Status</th>
-                <th class="py-2.5 text-right">Aksi</th>
+                <th class="py-2.5 text-right">Aksi Bendahara</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
@@ -2025,8 +2725,8 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                   <td class="py-3"><span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] ${item.status === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'}">${item.status}</span></td>
                   <td class="py-3 text-right">
                     ${item.status !== 'Lunas'
-                      ? `<button onclick="verifikasiBayarSpp('${item.id}')" class="px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow">${isAdmin ? 'Verifikasi & Kirim WA' : 'Konfirmasi Bayar'}</button>`
-                      : `<span class="text-[11px] font-bold text-emerald-600">✓ WA Terkirim (${item.tgl_bayar})</span>`
+                      ? `<button onclick="verifikasiBayarSpp('${item.id}')" class="px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow">${canVerify ? 'Setujui Lunas & Kirim WA' : 'Konfirmasi Bayar'}</button>`
+                      : `<span class="text-[11px] font-bold text-emerald-600">✓ Disetujui (${item.tgl_bayar})</span>`
                     }
                   </td>
                 </tr>
@@ -2042,22 +2742,25 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     e.preventDefault();
     const siswaId = document.getElementById('spp-siswa-id').value;
     const siswa = appState.data.pengguna.find(u => u.id === siswaId);
-    if (!siswa) return showToast("Pilih peserta didik terlebih dahulu!", "warning");
+    if (!siswa) return;
+    const ortu = appState.data.pengguna.find(u => u.role === 'ortu' && u.relasi_siswa_id === siswa.id);
+
     appState.data.spp.unshift({
       id: 'spp-' + Date.now(),
       siswa_id: siswa.id,
       siswa_nama: siswa.nama_lengkap,
-      paket: siswa.paket,
-      no_wa_ortu: siswa.no_wa,
+      paket: siswa.paket || 'Paket C',
       bulan: document.getElementById('spp-bulan').value,
-      tahun: '2026',
+      tahun: new Date().getFullYear(),
       nominal: Number(document.getElementById('spp-nominal').value),
       status: 'Belum Bayar',
-      tgl_bayar: '',
+      no_wa_ortu: ortu?.no_wa || siswa.no_wa || '',
+      agama_ortu: ortu?.agama || siswa.agama || 'Islam',
+      tgl_bayar: null,
       wa_terkirim: false
     });
     saveLocalState(`Membuat tagihan SPP ${siswa.nama_lengkap}`);
-    showToast("Tagihan SPP baru ditambahkan!", "success");
+    showToast("Tagihan SPP berhasil dibuat!", "success");
     renderDashboardTab('spp');
   };
 
@@ -2067,251 +2770,145 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     item.status = 'Lunas';
     item.tgl_bayar = new Date().toISOString().split('T')[0];
     item.wa_terkirim = true;
-    saveLocalState(`Verifikasi lunas SPP ${item.siswa_nama} (${item.bulan})`);
+
+    appState.data.keuangan.unshift({
+      id: 'kas-' + Date.now(),
+      tanggal: item.tgl_bayar,
+      jenis: 'Pemasukan',
+      kategori: 'Pembayaran SPP',
+      keterangan: `SPP ${item.bulan} ${item.tahun} - ${item.siswa_nama} (${item.paket})`,
+      nominal: Number(item.nominal),
+      petugas: appState.currentUser.nama_lengkap
+    });
+
+    saveLocalState(`Bendahara menyetujui lunas SPP ${item.siswa_nama} (${item.bulan})`);
+    sinkronKeAppsScript('keuangan', appState.data.keuangan[0], true);
+
+    const ortu = appState.data.pengguna.find(u => u.role === 'ortu' && u.relasi_siswa_id === item.siswa_id);
+    const siswa = appState.data.pengguna.find(u => u.id === item.siswa_id);
+    const agamaTarget = ortu?.agama || item.agama_ortu || siswa?.agama || 'Islam';
 
     const pesan = formatWaTemplate('spp_lunas', {
       nama: item.siswa_nama,
       paket: item.paket,
       bulan: `${item.bulan} ${item.tahun}`,
       nominal: Number(item.nominal).toLocaleString('id-ID')
-    });
-    kirimNotifikasiWhatsApp(item.no_wa_ortu, pesan, "Bukti Lunas SPP");
+    }, agamaTarget);
+    kirimNotifikasiWhatsApp(item.no_wa_ortu, pesan, `Bukti Lunas SPP (${agamaTarget})`);
     renderDashboardTab('spp');
   };
 
-  // =========================================================================
-  // MODUL 5: E-LEARNING MATERI & TUGAS (GOOGLE DRIVE UPLOAD & EDITABLE)
-  // =========================================================================
-  function renderElearningTab(container) {
-    const role = appState.currentUser.role;
-    const canEdit = role === 'admin' || role === 'guru';
-    const siswas = appState.data.pengguna.filter(u => u.role === 'siswa');
-    const editingItem = appState.editingMateriId ? appState.data.materi.find(m => m.id === appState.editingMateriId) : null;
-
-    let listNilai = appState.data.nilai;
-    if (role === 'siswa') listNilai = listNilai.filter(n => n.siswa_id === appState.currentUser.id);
-    else if (role === 'ortu') listNilai = listNilai.filter(n => n.siswa_id === appState.currentUser.relasi_siswa_id);
+  function renderKeuanganTab(container) {
+    const listKas = appState.data.keuangan || [];
+    const totalMasuk = listKas.filter(k => k.jenis === 'Pemasukan').reduce((s, k) => s + Number(k.nominal), 0);
+    const totalKeluar = listKas.filter(k => k.jenis === 'Pengeluaran').reduce((s, k) => s + Number(k.nominal), 0);
+    const saldoAkhir = totalMasuk - totalKeluar;
 
     container.innerHTML = `
-      <div class="glass-panel rounded-3xl p-6 shadow-md">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-          <div>
-            <h3 class="font-display font-bold text-base">Materi Pembelajaran & Tugas (Google Drive / File)</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Unggah tautan Google Drive (PDF, Modul, Lembar Tugas, Video) dan edit kembali kapan saja jika ada pembaruan.</p>
-          </div>
-          ${canEdit ? `
-            <button onclick="bukaFormMateriBaru()" class="px-4 py-2 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs self-start shadow-sm">
-              + Upload Materi / Tugas G-Drive
-            </button>
-          ` : ''}
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="stat-card-teal text-white rounded-3xl p-5 shadow-md">
+          <span class="text-xs font-semibold text-teal-100">Total Pemasukan Kas</span>
+          <p class="font-display font-extrabold text-2xl mt-1">Rp ${totalMasuk.toLocaleString('id-ID')}</p>
         </div>
-
-        ${canEdit ? `
-          <form id="form-tambah-materi" onsubmit="simpanMateriAtauEdit(event)" class="${editingItem ? '' : 'hidden'} mb-6 p-5 rounded-2xl bg-teal-500/10 border border-teal-500/30 space-y-3 text-xs">
-            <div class="flex items-center justify-between">
-              <h4 class="font-bold text-sm text-teal-800 dark:text-teal-300">${editingItem ? 'Edit Materi / Tugas Terunggah' : 'Tambah Materi / Tugas Google Drive Baru'}</h4>
-              <button type="button" onclick="batalEditMateri()" class="text-slate-500 hover:text-rose-600 font-bold">✕ Tutup</button>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <label class="font-semibold block mb-1">Program Paket</label>
-                <select id="mat-paket" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
-                  <option value="Paket A" ${editingItem?.paket === 'Paket A' ? 'selected' : ''}>Paket A (SD)</option>
-                  <option value="Paket B" ${editingItem?.paket === 'Paket B' ? 'selected' : ''}>Paket B (SMP)</option>
-                  <option value="Paket C" ${editingItem?.paket === 'Paket C' ? 'selected' : ''}>Paket C (SMA)</option>
-                </select>
-              </div>
-              <div>
-                <label class="font-semibold block mb-1">Jenis Konten</label>
-                <select id="mat-jenis" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
-                  <option value="Materi Modul" ${editingItem?.jenis_konten === 'Materi Modul' ? 'selected' : ''}>Materi Modul</option>
-                  <option value="Tugas / LKPD" ${editingItem?.jenis_konten === 'Tugas / LKPD' ? 'selected' : ''}>Tugas / Lembar Kerja</option>
-                </select>
-              </div>
-              <div>
-                <label class="font-semibold block mb-1">Mata Pelajaran</label>
-                <input type="text" id="mat-mapel" required value="${editingItem?.mapel || ''}" placeholder="Contoh: Informatika / Matematika" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-              </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="font-semibold block mb-1">Judul Materi / Tugas</label>
-                <input type="text" id="mat-judul" required value="${editingItem?.judul_materi || ''}" placeholder="Judul lengkap materi atau tugas" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-              </div>
-              <div>
-                <label class="font-semibold block mb-1">Link Google Drive / File URL</label>
-                <input type="url" id="mat-url" required value="${editingItem?.file_url || ''}" placeholder="https://drive.google.com/file/d/..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-              </div>
-            </div>
-            <div>
-              <label class="font-semibold block mb-1">Instruksi / Deskripsi Singkat</label>
-              <input type="text" id="mat-deskripsi" value="${editingItem?.deskripsi || ''}" placeholder="Catatan pengerjaan untuk peserta didik..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-            </div>
-            <button type="submit" class="px-6 py-2.5 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold shadow-md">
-              ${editingItem ? 'Simpan Perubahan Materi' : 'Publikasikan ke Kelas'}
-            </button>
-          </form>
-        ` : ''}
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          ${appState.data.materi.map(m => `
-            <div class="p-5 rounded-2xl bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 flex flex-col justify-between shadow-sm">
-              <div>
-                <div class="flex items-center justify-between gap-2">
-                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 text-teal-700">${m.paket} • ${m.jenis_konten || 'Materi'}</span>
-                  ${canEdit ? `
-                    <div class="flex items-center gap-1.5">
-                      <button onclick="mulaiEditMateri('${m.id}')" class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px] hover:bg-amber-200">Edit</button>
-                      <button onclick="hapusMateri('${m.id}')" class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-bold text-[10px] hover:bg-rose-200">Hapus</button>
-                    </div>
-                  ` : ''}
-                </div>
-                <p class="text-[11px] font-semibold text-slate-400 mt-2">${m.mapel}</p>
-                <h4 class="font-bold text-sm mt-0.5 text-slate-900 dark:text-white">${m.judul_materi}</h4>
-                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">${m.deskripsi || 'Silakan buka tautan Google Drive di bawah ini.'}</p>
-              </div>
-              <div class="mt-4 pt-3 border-t border-slate-200/60 dark:border-slate-700 flex items-center justify-between text-[11px]">
-                <span class="text-slate-400 truncate max-w-[130px]">Tutor: ${m.guru_nama}</span>
-                <a href="${m.file_url}" target="_blank" class="inline-flex items-center gap-1 font-bold text-blue-600 dark:text-blue-400 hover:underline">
-                  <i data-lucide="hard-drive" class="w-3.5 h-3.5"></i>
-                  <span>Buka G-Drive</span>
-                </a>
-              </div>
-            </div>
-          `).join('') || `<p class="text-xs text-slate-400 col-span-3 text-center py-6">Belum ada materi atau tugas yang diunggah. Klik tombol "+ Upload Materi / Tugas G-Drive" untuk menambahkan.</p>`}
+        <div class="stat-card-rose text-white rounded-3xl p-5 shadow-md">
+          <span class="text-xs font-semibold text-rose-100">Total Pengeluaran Operasional</span>
+          <p class="font-display font-extrabold text-2xl mt-1">Rp ${totalKeluar.toLocaleString('id-ID')}</p>
+        </div>
+        <div class="stat-card-blue text-white rounded-3xl p-5 shadow-md">
+          <span class="text-xs font-semibold text-blue-100">Saldo Akhir Bendahara</span>
+          <p class="font-display font-extrabold text-2xl mt-1">Rp ${saldoAkhir.toLocaleString('id-ID')}</p>
         </div>
       </div>
 
-      <div class="glass-panel rounded-3xl p-6 shadow-md">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-          <div>
-            <h3 class="font-display font-bold text-base">Hasil Penilaian & E-Rapor Digital</h3>
-            <p class="text-xs text-slate-500">Transparansi nilai tugas, ujian, dan proyek portofolio untuk siswa & orang tua.</p>
-          </div>
-          ${canEdit ? `<button onclick="document.getElementById('form-input-nilai').classList.toggle('hidden')" class="px-4 py-2 rounded-full bg-blue-600 text-white font-bold text-xs self-start">+ Input Nilai Siswa</button>` : ''}
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-4 glass-panel rounded-3xl p-6 shadow-md text-xs">
+          <h3 class="font-display font-bold text-base mb-3">Catat Transaksi Keuangan</h3>
+          <form onsubmit="tambahTransaksiKeuangan(event)" class="space-y-3">
+            <div>
+              <label class="font-semibold block mb-1">Jenis Transaksi</label>
+              <select id="kas-jenis" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                <option value="Pemasukan">Pemasukan Kas</option>
+                <option value="Pengeluaran">Pengeluaran Operasional</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Kategori</label>
+              <input type="text" id="kas-kategori" required placeholder="Contoh: Honor Tutor / ATK / Bantuan BOP" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Keterangan</label>
+              <input type="text" id="kas-keterangan" required placeholder="Rincian transaksi..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Nominal (Rp)</label>
+              <input type="number" id="kas-nominal" required placeholder="500000" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <button type="submit" class="w-full py-2.5 rounded-full bg-teal-600 text-white font-bold shadow">Simpan ke Buku Kas</button>
+          </form>
         </div>
 
-        ${canEdit ? `
-          <form id="form-input-nilai" onsubmit="tambahNilaiSiswa(event)" class="hidden mb-6 p-4 rounded-2xl bg-blue-500/10 grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs">
-            <select id="nil-siswa" required class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
-              <option value="">-- Pilih Siswa --</option>
-              ${siswas.map(s => `<option value="${s.id}">${s.nama_lengkap} (${s.paket})</option>`).join('')}
-            </select>
-            <input type="text" id="nil-mapel" required placeholder="Mata Pelajaran" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-            <input type="text" id="nil-jenis" required placeholder="Jenis (Tugas/UTS/UAS)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-            <input type="number" id="nil-skor" min="0" max="100" required placeholder="Nilai (0-100)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
-            <button type="submit" class="py-2 px-4 rounded-full bg-blue-600 text-white font-bold">Simpan Nilai</button>
-          </form>
-        ` : ''}
-
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead>
-              <tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">
-                <th class="py-2.5">Nama Peserta Didik</th>
-                <th class="py-2.5">Paket</th>
-                <th class="py-2.5">Mata Pelajaran</th>
-                <th class="py-2.5">Kategori</th>
-                <th class="py-2.5 text-center">Skor</th>
-                <th class="py-2.5">Catatan Tutor</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
-              ${listNilai.map(n => `
-                <tr>
-                  <td class="py-3 font-bold">${n.siswa_nama}</td>
-                  <td class="py-3">${n.paket}</td>
-                  <td class="py-3">${n.mapel}</td>
-                  <td class="py-3">${n.jenis_nilai}</td>
-                  <td class="py-3 text-center"><span class="px-2.5 py-1 rounded-full font-extrabold bg-teal-100 text-teal-700">${n.skor}</span></td>
-                  <td class="py-3 text-slate-500">${n.catatan}</td>
+        <div class="lg:col-span-8 glass-panel rounded-3xl p-6 shadow-md text-xs">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <h3 class="font-display font-bold text-base">Buku Kas & Laporan Keuangan Bendahara</h3>
+            <div class="flex gap-2">
+              <button onclick="sinkronKeAppsScript('keuangan')" class="px-3.5 py-1.5 rounded-full bg-emerald-700 text-white font-bold text-[11px]">Sync Google Sheets</button>
+              <button onclick="window.print()" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white font-bold text-[11px]">Cetak Laporan</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500">
+                  <th class="py-2.5">Tanggal</th>
+                  <th class="py-2.5">Jenis</th>
+                  <th class="py-2.5">Kategori & Keterangan</th>
+                  <th class="py-2.5 text-right">Nominal</th>
                 </tr>
-              `).join('') || `<tr><td colspan="6" class="py-5 text-center text-slate-400">Belum ada data penilaian siswa.</td></tr>`}
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
+                ${listKas.map(k => `
+                  <tr>
+                    <td class="py-3 font-mono">${k.tanggal}</td>
+                    <td class="py-3"><span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] ${k.jenis === 'Pemasukan' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${k.jenis}</span></td>
+                    <td class="py-3"><strong>${k.kategori}</strong> — ${k.keterangan}</td>
+                    <td class="py-3 text-right font-bold ${k.jenis === 'Pemasukan' ? 'text-emerald-600' : 'text-rose-600'}">Rp ${Number(k.nominal).toLocaleString('id-ID')}</td>
+                  </tr>
+                `).join('') || `<tr><td colspan="4" class="py-6 text-center text-slate-400">Belum ada transaksi keuangan tercatat.</td></tr>`}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     `;
   }
 
-  window.bukaFormMateriBaru = () => {
-    appState.editingMateriId = null;
-    renderDashboardTab('elearning');
-    document.getElementById('form-tambah-materi').classList.remove('hidden');
-  };
-
-  window.mulaiEditMateri = (id) => {
-    appState.editingMateriId = id;
-    renderDashboardTab('elearning');
-  };
-
-  window.batalEditMateri = () => {
-    appState.editingMateriId = null;
-    renderDashboardTab('elearning');
-  };
-
-  window.simpanMateriAtauEdit = (e) => {
+  window.tambahTransaksiKeuangan = (e) => {
     e.preventDefault();
-    const payload = {
-      paket: document.getElementById('mat-paket').value,
-      jenis_konten: document.getElementById('mat-jenis').value,
-      mapel: document.getElementById('mat-mapel').value,
-      judul_materi: document.getElementById('mat-judul').value,
-      file_url: document.getElementById('mat-url').value,
-      deskripsi: document.getElementById('mat-deskripsi').value,
-      guru_nama: appState.currentUser.nama_lengkap
+    const record = {
+      id: 'kas-' + Date.now(),
+      tanggal: new Date().toISOString().split('T')[0],
+      jenis: document.getElementById('kas-jenis').value,
+      kategori: document.getElementById('kas-kategori').value,
+      keterangan: document.getElementById('kas-keterangan').value,
+      nominal: Number(document.getElementById('kas-nominal').value),
+      petugas: appState.currentUser.nama_lengkap
     };
-
-    if (appState.editingMateriId) {
-      const idx = appState.data.materi.findIndex(m => m.id === appState.editingMateriId);
-      if (idx !== -1) appState.data.materi[idx] = { ...appState.data.materi[idx], ...payload };
-      saveLocalState(`Mengedit materi/tugas: ${payload.judul_materi}`);
-      showToast("Perubahan materi/tugas berhasil disimpan!", "success");
-    } else {
-      appState.data.materi.unshift({ id: 'm-' + Date.now(), ...payload });
-      saveLocalState(`Mengunggah materi/tugas Google Drive: ${payload.judul_materi}`);
-      showToast("Materi/tugas Google Drive berhasil dipublikasikan!", "success");
-    }
-    appState.editingMateriId = null;
-    renderDashboardTab('elearning');
-  };
-
-  window.hapusMateri = (id) => {
-    appState.data.materi = appState.data.materi.filter(m => m.id !== id);
-    saveLocalState("Menghapus item materi/tugas E-Learning");
-    showToast("Materi/tugas berhasil dihapus.", "info");
-    renderDashboardTab('elearning');
-  };
-
-  window.tambahNilaiSiswa = (e) => {
-    e.preventDefault();
-    const siswaId = document.getElementById('nil-siswa').value;
-    const siswa = appState.data.pengguna.find(u => u.id === siswaId);
-    if (!siswa) return showToast("Pilih peserta didik terlebih dahulu!", "warning");
-    appState.data.nilai.unshift({
-      id: 'n-' + Date.now(),
-      siswa_id: siswa.id,
-      siswa_nama: siswa.nama_lengkap,
-      paket: siswa.paket,
-      mapel: document.getElementById('nil-mapel').value,
-      jenis_nilai: document.getElementById('nil-jenis').value,
-      skor: Number(document.getElementById('nil-skor').value),
-      catatan: "Evaluasi capaian pembelajaran semester berjalan."
-    });
-    saveLocalState(`Menginput nilai ${siswa.nama_lengkap}`);
-    showToast("Nilai berhasil disimpan!", "success");
-    renderDashboardTab('elearning');
+    appState.data.keuangan.unshift(record);
+    saveLocalState(`Mencatat ${record.jenis} keuangan: ${record.kategori}`);
+    sinkronKeAppsScript('keuangan', record, true);
+    showToast("Transaksi keuangan berhasil dicatat!", "success");
+    renderDashboardTab('keuangan');
   };
 
   // =========================================================================
-  // MODUL 6: PENGATURAN (LOGO SEKOLAH, INSTAGRAM FEED, EDIT AKUN PENGGUNA)
+  // MODUL 6: PENGATURAN INSTANSI (LOGO, GPS, TTD/STEMPEL, PENGUMUMAN GURU, IG)
   // =========================================================================
   function renderSetInstansiTab(container) {
     const cfg = appState.data.pengaturan;
     container.innerHTML = `
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
         <div class="glass-panel rounded-3xl p-6 shadow-md space-y-4">
-          <h3 class="font-display font-bold text-base">Profil Instansi, Ganti Logo Sekolah & Aturan SP</h3>
+          <h3 class="font-display font-bold text-base">Identitas Sekolah, Logo, Titik GPS & TTD Kepsek</h3>
           <form onsubmit="simpanPengaturanInstansi(event)" class="space-y-3">
             <div>
               <label class="font-semibold block mb-1">Nama Lembaga PKBM</label>
@@ -2319,11 +2916,48 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
             </div>
 
             <div class="p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2">
-              <label class="font-bold block text-teal-700 dark:text-teal-400">Logo Sekolah (URL Gambar atau Upload File)</label>
-              <input type="text" id="set-logo-url" value="${cfg.logo_url || ''}" placeholder="Tempel URL logo (https://...) atau pilih file di bawah" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700" />
-              <div class="flex items-center justify-between gap-2">
-                <input type="file" accept="image/*" onchange="handleUploadLogoFile(event)" class="text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-teal-600 file:text-white hover:file:bg-teal-700" />
+              <label class="font-bold block">Logo Resmi Sekolah (URL Gambar atau Upload File)</label>
+              <input type="text" id="set-logo-url" value="${cfg.logo_url || ''}" placeholder="https://... atau upload file di bawah" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700" />
+              <div class="flex items-center justify-between gap-2 pt-1">
+                <input type="file" accept="image/*" onchange="handleUploadLogoFile(event)" class="text-[11px]" />
                 ${cfg.logo_url ? `<button type="button" onclick="hapusLogoSekolah()" class="text-rose-600 font-bold hover:underline">Reset Logo</button>` : ''}
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="font-bold text-emerald-800 dark:text-emerald-300">Titik Koordinat GPS Sekolah & Radius Absen</label>
+                <button type="button" onclick="ambilKoordinatLokasiSekolah()" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold text-[10px]">Ambil Lokasi Saya</button>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <div>
+                  <label class="text-[10px] block">Latitude</label>
+                  <input type="text" id="set-lat" value="${cfg.lokasi_lat}" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono" />
+                </div>
+                <div>
+                  <label class="text-[10px] block">Longitude</label>
+                  <input type="text" id="set-lng" value="${cfg.lokasi_lng}" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono" />
+                </div>
+                <div>
+                  <label class="text-[10px] block">Radius (Meter)</label>
+                  <input type="number" id="set-radius" value="${cfg.radius_absen_meter || 50}" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono" />
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/25 space-y-2.5">
+              <label class="font-bold text-indigo-800 dark:text-indigo-300 block">Upload TTD Kepala Sekolah & Stempel Resmi (Otomatis Muncul Setelah Disetujui)</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <span class="text-[11px] font-semibold block mb-1">File TTD Kepsek (PNG Transparan)</span>
+                  <input type="file" accept="image/*" onchange="handleUploadAssetSurat(event, 'ttd_kepsek_url')" class="text-[11px]" />
+                  ${cfg.ttd_kepsek_url ? `<p class="text-emerald-600 font-bold mt-1">✓ TTD Terpasang <button type="button" onclick="resetAssetSurat('ttd_kepsek_url')" class="text-rose-600 underline ml-1">Hapus</button></p>` : ''}
+                </div>
+                <div>
+                  <span class="text-[11px] font-semibold block mb-1">File Stempel PKBM (PNG Transparan)</span>
+                  <input type="file" accept="image/*" onchange="handleUploadAssetSurat(event, 'stempel_url')" class="text-[11px]" />
+                  ${cfg.stempel_url ? `<p class="text-emerald-600 font-bold mt-1">✓ Stempel Terpasang <button type="button" onclick="resetAssetSurat('stempel_url')" class="text-rose-600 underline ml-1">Hapus</button></p>` : ''}
+                </div>
               </div>
             </div>
 
@@ -2332,12 +2966,30 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
               <input type="text" id="set-alamat" value="${cfg.alamat}" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
             </div>
             <div>
-              <label class="font-semibold block mb-1">Banner Pengumuman Publik</label>
+              <label class="font-semibold block mb-1">Banner Pengumuman Publik (Halaman Depan)</label>
               <textarea id="set-pengumuman" rows="2" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">${cfg.pengumuman_publik}</textarea>
+            </div>
+            <div>
+              <label class="font-semibold block mb-1 text-amber-700 dark:text-amber-300">Pengumuman Khusus Internal Guru & Tutor (Masuk ke Akun Guru)</label>
+              <textarea id="set-pengumuman-guru" rows="2" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">${cfg.pengumuman_guru || ''}</textarea>
             </div>
             <div>
               <label class="font-semibold block mb-1">Visi Lembaga</label>
               <textarea id="set-visi" rows="2" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">${cfg.visi}</textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div>
+                <label class="font-semibold block mb-1">Link Template Media Ajar</label>
+                <input type="url" id="set-link-media" value="${cfg.link_template_media || ''}" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+              <div>
+                <label class="font-semibold block mb-1">Link Template Bahan Ajar</label>
+                <input type="url" id="set-link-bahan" value="${cfg.link_template_bahan_ajar || ''}" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
+              <div>
+                <label class="font-semibold block mb-1">Link Template Modul/RPP</label>
+                <input type="url" id="set-link-modul" value="${cfg.link_template_modul_rpp || ''}" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
             </div>
             <div class="grid grid-cols-3 gap-2">
               <div>
@@ -2353,7 +3005,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                 <input type="number" id="set-batas-izin" min="1" max="20" value="${cfg.batas_izin_sp1 || 3}" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
               </div>
             </div>
-            <button type="submit" class="w-full py-3 rounded-full bg-teal-600 text-white font-bold shadow-md">Simpan Pengaturan Instansi & Logo</button>
+            <button type="submit" class="w-full py-3 rounded-full bg-teal-600 text-white font-bold shadow-md">Simpan Pengaturan Instansi, GPS & TTD</button>
           </form>
         </div>
 
@@ -2412,6 +3064,34 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     `;
   }
 
+  window.ambilKoordinatLokasiSekolah = () => {
+    if (!navigator.geolocation) return showToast("GPS tidak didukung browser ini.", "error");
+    navigator.geolocation.getCurrentPosition((pos) => {
+      document.getElementById('set-lat').value = pos.coords.latitude.toFixed(6);
+      document.getElementById('set-lng').value = pos.coords.longitude.toFixed(6);
+      showToast("Koordinat lokasi saat ini berhasil diambil! Klik Simpan Pengaturan.", "success");
+    }, (err) => showToast("Gagal mengambil GPS: " + err.message, "error"), { enableHighAccuracy: true });
+  };
+
+  window.handleUploadAssetSurat = (e, fieldKey) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      appState.data.pengaturan[fieldKey] = reader.result;
+      saveLocalState(`Mengunggah aset surat: ${fieldKey}`);
+      showToast("File berhasil diunggah dan disimpan!", "success");
+      renderDashboardTab(appState.activeTab);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.resetAssetSurat = (fieldKey) => {
+    appState.data.pengaturan[fieldKey] = "";
+    saveLocalState(`Menghapus aset surat: ${fieldKey}`);
+    renderDashboardTab(appState.activeTab);
+  };
+
   function renderSetUserTab(container) {
     const cfg = appState.data.pengaturan;
     const siswas = appState.data.pengguna.filter(u => u.role === 'siswa');
@@ -2431,6 +3111,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                 <label class="font-semibold block mb-1">Peran Pengguna</label>
                 <select id="usr-role" onchange="toggleRelasiSiswaField(this.value)" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
                   <option value="guru" ${editUser?.role === 'guru' ? 'selected' : ''}>Tutor / Guru</option>
+                  <option value="bendahara" ${editUser?.role === 'bendahara' ? 'selected' : ''}>Bendahara Keuangan & SPP</option>
                   <option value="siswa" ${editUser?.role === 'siswa' ? 'selected' : ''}>Peserta Didik (Siswa)</option>
                   <option value="ortu" ${editUser?.role === 'ortu' ? 'selected' : ''}>Orang Tua / Wali</option>
                 </select>
@@ -2472,6 +3153,21 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
                 <label class="font-semibold block mb-1">Nomor WhatsApp (Format 628xxx)</label>
                 <input type="tel" id="usr-wa" required value="${editUser?.no_wa || ''}" placeholder="6281234567890" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
               </div>
+              <div>
+                <label class="font-semibold block mb-1">Agama (Penentu Salam Otomatis WhatsApp)</label>
+                <select id="usr-agama" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                  <option value="Islam" ${(!editUser?.agama || editUser?.agama === 'Islam') ? 'selected' : ''}>Islam (Salam: Assalamu'alaikum)</option>
+                  <option value="Kristen Protestan" ${editUser?.agama === 'Kristen Protestan' ? 'selected' : ''}>Kristen Protestan (Salam Sejahtera)</option>
+                  <option value="Katolik" ${editUser?.agama === 'Katolik' ? 'selected' : ''}>Katolik (Salam Sejahtera)</option>
+                  <option value="Hindu" ${editUser?.agama === 'Hindu' ? 'selected' : ''}>Hindu (Salam Sejahtera)</option>
+                  <option value="Buddha" ${editUser?.agama === 'Buddha' ? 'selected' : ''}>Buddha (Salam Sejahtera)</option>
+                  <option value="Khonghucu" ${editUser?.agama === 'Khonghucu' ? 'selected' : ''}>Khonghucu (Salam Sejahtera)</option>
+                </select>
+              </div>
+              <div id="drive-guru-wrapper" class="${(!editUser || editUser?.role === 'guru') ? '' : 'hidden'}">
+                <label class="font-semibold block mb-1 text-blue-700 dark:text-blue-300">Link Folder Google Drive Perangkat Guru</label>
+                <input type="url" id="usr-drive-guru" value="${editUser?.link_drive_guru || ''}" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+              </div>
               <div id="relasi-siswa-wrapper" class="${editUser?.role === 'ortu' ? '' : 'hidden'}">
                 <label class="font-semibold block mb-1">Hubungkan ke Akun Anak (Siswa)</label>
                 <select id="usr-relasi-siswa" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
@@ -2508,8 +3204,8 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
         <div class="lg:col-span-8 glass-panel rounded-3xl p-6 shadow-md space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h3 class="font-display font-bold text-base">Daftar Akun Guru, Peserta Didik & Orang Tua</h3>
-              <p class="text-slate-500">Super Admin dapat mengubah username, password, paket, maupun nomor WhatsApp pengguna kapan saja.</p>
+              <h3 class="font-display font-bold text-base">Daftar Akun Guru, Bendahara, Peserta Didik & Orang Tua</h3>
+              <p class="text-slate-500">Super Admin dapat mengubah peran, username, password, paket, maupun nomor WhatsApp pengguna kapan saja.</p>
             </div>
             <button onclick="bersihkanSemuaDataPengguna()" class="px-3.5 py-1.5 rounded-full bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold text-[11px]">
               Bersihkan Semua Data
@@ -2531,19 +3227,22 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
               <tbody class="divide-y divide-slate-200/60 dark:divide-slate-800">
                 ${appState.data.pengguna.map(u => `
                   <tr>
-                    <td class="py-3 font-bold">${u.nama_lengkap}</td>
+                    <td class="py-3 font-bold">${u.nama_lengkap}<br/><span class="text-[10px] font-normal text-slate-500">Agama: ${u.agama || 'Islam'}</span></td>
                     <td class="py-3 font-mono text-[11px]">${u.username} / <span class="text-teal-600 font-bold">${u.password}</span></td>
                     <td class="py-3 uppercase font-bold text-[10px]">
-                      <span class="px-2 py-0.5 rounded-full ${u.role === 'guru' ? 'bg-indigo-100 text-indigo-700' : u.role === 'siswa' ? 'bg-teal-100 text-teal-700' : 'bg-amber-100 text-amber-800'}">${u.role}</span>
+                      <span class="px-2 py-0.5 rounded-full ${u.role === 'guru' ? 'bg-indigo-100 text-indigo-700' : u.role === 'bendahara' ? 'bg-purple-100 text-purple-700' : u.role === 'siswa' ? 'bg-teal-100 text-teal-700' : 'bg-amber-100 text-amber-800'}">${u.role}</span>
                     </td>
-                    <td class="py-3">${u.paket || '-'} (${u.jalur_belajar || 'Reguler'})</td>
+                    <td class="py-3">
+                      ${u.paket || '-'} (${u.jalur_belajar || 'Reguler'})
+                      ${u.link_drive_guru ? `<br/><a href="${u.link_drive_guru}" target="_blank" class="text-[10px] text-blue-600 font-bold hover:underline">📁 Folder Drive</a>` : ''}
+                    </td>
                     <td class="py-3 font-mono text-[11px]">${u.no_wa}</td>
                     <td class="py-3 text-right space-x-1">
                       <button onclick="mulaiEditUser('${u.id}')" class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 hover:bg-amber-200 font-bold text-[10px]">Edit</button>
                       <button onclick="hapusAkunUser('${u.id}')" class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold text-[10px]">Hapus</button>
                     </td>
                   </tr>
-                `).join('') || `<tr><td colspan="6" class="py-8 text-center text-slate-400">Belum ada akun pengguna terdaftar. Silakan buat akun Guru, Siswa, atau Orang Tua di formulir samping.</td></tr>`}
+                `).join('') || `<tr><td colspan="6" class="py-8 text-center text-slate-400">Belum ada akun pengguna terdaftar. Silakan buat akun Guru, Bendahara, Siswa, atau Orang Tua di formulir samping.</td></tr>`}
               </tbody>
             </table>
           </div>
@@ -2558,13 +3257,23 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     container.innerHTML = `
       <div class="glass-panel rounded-3xl p-6 shadow-md max-w-3xl text-xs space-y-4">
         <div>
-          <h3 class="font-display font-bold text-base">Konfigurasi Gateway & Template Pesan WhatsApp</h3>
-          <p class="text-slate-500 mt-1">Gunakan variabel otomatis: <code>{nama}</code>, <code>{tanggal}</code>, <code>{menit_telat}</code>, <code>{jam_masuk}</code>, <code>{paket}</code>, <code>{bulan}</code>, <code>{nominal}</code>, <code>{jenis_surat}</code>, <code>{status}</code>.</p>
+          <h3 class="font-display font-bold text-base">Integrasi API Gemini AI, WhatsApp Fonnte & Google Apps Script</h3>
+          <p class="text-slate-500 mt-1">Hubungkan layanan AI pembuat surat otomatis, notifikasi WhatsApp otomatis, serta sinkronisasi rekap absensi & keuangan ke Google Sheets.</p>
         </div>
         <form onsubmit="simpanTemplateWa(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="font-semibold block mb-1 text-indigo-700 dark:text-indigo-300">API Key Google Gemini (Untuk Generator Surat AI)</label>
+              <input type="password" id="gemini-key" value="${cfg.gemini_api_key || ''}" placeholder="AIzaSy..." class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+            <div>
+              <label class="font-semibold block mb-1 text-emerald-700 dark:text-emerald-300">API Token WhatsApp Gateway (Fonnte)</label>
+              <input type="text" id="wa-token" value="${cfg.wa_api_token || ''}" placeholder="Token Device Fonnte..." class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            </div>
+          </div>
           <div>
-            <label class="font-semibold block mb-1">API Token WhatsApp Gateway (Fonnte / Wablas — Kosongkan untuk Direct Link)</label>
-            <input type="text" id="wa-token" value="${cfg.wa_api_token || ''}" placeholder="Masukkan Token API Gateway..." class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
+            <label class="font-semibold block mb-1 text-teal-700 dark:text-teal-300">Web App URL Google Apps Script (Sinkron Rekap Absen & Keuangan ke Spreadsheet)</label>
+            <input type="url" id="apps-script-url" value="${cfg.apps_script_url || ''}" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700" />
           </div>
           <div>
             <label class="font-semibold block mb-1">1. Template Alert Keterlambatan Guru (+30 Menit)</label>
@@ -2578,7 +3287,7 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
             <label class="font-semibold block mb-1">3. Template Persetujuan Surat Izin / Cuti</label>
             <textarea id="tpl-izin" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700">${tpls.izin_cuti || ''}</textarea>
           </div>
-          <button type="submit" class="px-6 py-3 rounded-full bg-emerald-600 text-white font-bold shadow">Simpan Template WhatsApp</button>
+          <button type="submit" class="px-6 py-3 rounded-full bg-emerald-600 text-white font-bold shadow">Simpan Semua Integrasi & Template</button>
         </form>
       </div>
     `;
@@ -2630,15 +3339,22 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
     const cfg = appState.data.pengaturan;
     cfg.nama_pkbm = document.getElementById('set-nama').value;
     cfg.logo_url = document.getElementById('set-logo-url').value.trim();
+    cfg.lokasi_lat = parseFloat(document.getElementById('set-lat').value);
+    cfg.lokasi_lng = parseFloat(document.getElementById('set-lng').value);
+    cfg.radius_absen_meter = Number(document.getElementById('set-radius').value || 50);
     cfg.alamat = document.getElementById('set-alamat').value;
     cfg.pengumuman_publik = document.getElementById('set-pengumuman').value;
+    cfg.pengumuman_guru = document.getElementById('set-pengumuman-guru').value;
     cfg.visi = document.getElementById('set-visi').value;
+    cfg.link_template_media = document.getElementById('set-link-media').value.trim();
+    cfg.link_template_bahan_ajar = document.getElementById('set-link-bahan').value.trim();
+    cfg.link_template_modul_rpp = document.getElementById('set-link-modul').value.trim();
     cfg.jam_masuk_guru = document.getElementById('set-jam-guru').value;
     cfg.batas_telat_sp = Number(document.getElementById('set-batas-sp').value);
     cfg.batas_izin_sp1 = Number(document.getElementById('set-batas-izin').value);
-    saveLocalState("Memperbarui profil instansi, logo & aturan disiplin");
+    saveLocalState("Memperbarui profil instansi, koordinat GPS & aturan disiplin");
     renderLogoElements();
-    showToast("Pengaturan instansi & logo berhasil disimpan!", "success");
+    showToast("Pengaturan instansi, titik GPS & TTD berhasil disimpan!", "success");
   };
 
   window.tambahPostinganIG = (e) => {
@@ -2665,6 +3381,8 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
   window.toggleRelasiSiswaField = (roleVal) => {
     const wrap = document.getElementById('relasi-siswa-wrapper');
     if (wrap) wrap.classList.toggle('hidden', roleVal !== 'ortu');
+    const driveWrap = document.getElementById('drive-guru-wrapper');
+    if (driveWrap) driveWrap.classList.toggle('hidden', roleVal !== 'guru');
   };
 
   window.mulaiEditUser = (id) => {
@@ -2688,6 +3406,8 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
       paket: document.getElementById('usr-paket').value,
       jalur_belajar: document.getElementById('usr-jalur').value,
       no_wa: document.getElementById('usr-wa').value.trim(),
+      agama: document.getElementById('usr-agama').value,
+      link_drive_guru: role === 'guru' ? (document.getElementById('usr-drive-guru').value.trim() || '') : '',
       relasi_siswa_id: role === 'ortu' ? (document.getElementById('usr-relasi-siswa').value || null) : null
     };
 
@@ -2748,14 +3468,16 @@ Demikian surat ini disampaikan, atas perhatian dan kerja samanya kami ucapkan te
 
   window.simpanTemplateWa = (e) => {
     e.preventDefault();
+    appState.data.pengaturan.gemini_api_key = document.getElementById('gemini-key').value.trim();
     appState.data.pengaturan.wa_api_token = document.getElementById('wa-token').value.trim();
+    appState.data.pengaturan.apps_script_url = document.getElementById('apps-script-url').value.trim();
     appState.data.pengaturan.wa_templates = {
       telat_30m: document.getElementById('tpl-telat').value,
       spp_lunas: document.getElementById('tpl-spp').value,
       izin_cuti: document.getElementById('tpl-izin').value
     };
-    saveLocalState("Memperbarui template notifikasi WhatsApp");
-    showToast("Konfigurasi & template WhatsApp berhasil disimpan!", "success");
+    saveLocalState("Memperbarui API Key Gemini, Fonnte WA & Apps Script");
+    showToast("Konfigurasi API Gemini, WhatsApp & Apps Script berhasil disimpan!", "success");
   };
 
   // =========================================================================
