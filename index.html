@@ -628,7 +628,7 @@
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800 text-xs">
         <div class="space-y-3">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+            <div id="footer-logo-box" class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center overflow-hidden border border-white/20"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
             <span id="footer-school-name" class="font-display font-extrabold text-white text-sm">PKBM BINTANG INKLUSIF</span>
           </div>
           <p class="text-slate-400 leading-relaxed">Pusat Kegiatan Belajar Masyarakat yang inklusif, adaptif, dan berorientasi pada masa depan setiap warga belajar.</p>
@@ -701,7 +701,7 @@
     <aside class="hidden lg:flex lg:flex-col lg:w-64 lg:sticky lg:top-0 lg:h-screen shrink-0 bg-[#0B2447] text-slate-200 p-4 justify-between overflow-y-auto border-r border-slate-800">
       <div class="space-y-4">
         <div class="flex items-center gap-3 px-2 py-2 border-b border-slate-800">
-          <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+          <div id="dash-sidebar-logo-box" class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 overflow-hidden border border-white/20"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
           <div class="min-w-0">
             <p id="dash-sidebar-school" class="font-display font-extrabold text-xs text-white truncate">PKBM BINTANG INKLUSIF</p>
             <p id="dash-sidebar-role" class="text-[10px] text-sky-300 truncate">PORTAL AKADEMIK</p>
@@ -958,9 +958,9 @@
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
   // KONFIGURASI DEPLOYMENT SUPABASE
-  const IS_PREVIEW = true; // Ubah ke false jika sudah terhubung ke Supabase Anda
-  const SUPABASE_URL = "URL_SUPABASE_ANDA";
-  const SUPABASE_ANON_KEY = "ANON_KEY_ANDA";
+  const IS_PREVIEW = false; // Ubah ke false jika sudah terhubung ke Supabase Anda
+  const SUPABASE_URL = "https://xsbvzpkyiqllthqjedwa.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_oBIuhApfvOtanMKS8Y-0RQ_maDZb7wV";
 
   const supabase = (!IS_PREVIEW && SUPABASE_URL.startsWith('http'))
     ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -1020,7 +1020,9 @@
       bank_atas_nama: 'PKBM Bintang Inklusif',
       wa_api_token: '',
       wa_templates: {
-        spp_lunas: '{salam}, terima kasih. Pembayaran SPP ananda {nama} untuk periode {periode} sebesar Rp {nominal} telah LUNAS.'
+        spp_lunas: '{salam}, terima kasih. Pembayaran SPP ananda {nama} untuk periode {periode} sebesar Rp {nominal} telah LUNAS.',
+        tabungan_mutasi: '{salam}, informasi Buku Tabungan PKBM: Ananda {nama} melakukan {jenis} sebesar Rp {nominal} pada {tanggal}. Saldo aktif saat ini: Rp {saldo}.',
+        absensi_telat: '{salam}, laporan presensi PKBM: Tutor/Staf {nama} tercatat TERLAMBAT pada {tanggal} pukul {jam} WIB (Batas masuk {batas} WIB).'
       },
       sosmed: {
         instagram: 'https://instagram.com',
@@ -1240,7 +1242,12 @@
           prev.src = compressedDataUrl;
           prev.classList.remove('hidden');
         }
-        showToast('Gambar berhasil dimuat & dikompresi!', 'success');
+        if (inputId === 'set-logo') {
+          appState.data.pengaturan.logo_url = compressedDataUrl;
+          saveLocalState('Memperbarui logo sekolah');
+          applySchoolLogos(compressedDataUrl);
+        }
+        showToast('Gambar berhasil dimuat & diterapkan!', 'success');
 
         const scriptUrl = appState.data.pengaturan.apps_script_url;
         if (scriptUrl) {
@@ -1265,18 +1272,73 @@
     reader.readAsDataURL(file);
   };
 
-  function kirimNotifikasiWhatsApp(noWa, pesan) {
+  function getSalamInklusif(agama = 'Islam') {
+    const ag = String(agama || 'Islam').toLowerCase();
+    if (ag.includes('islam')) return "Assalamu'alaikum Warahmatullahi Wabarakatuh";
+    if (ag.includes('kristen') || ag.includes('katolik')) return 'Salam Sejahtera dalam Kasih Tuhan';
+    if (ag.includes('hindu')) return 'Om Swastiastu';
+    if (ag.includes('buddha')) return 'Namo Buddhaya';
+    if (ag.includes('khonghucu')) return 'Wei De Dong Tian';
+    return 'Salam Sejahtera';
+  }
+
+  function formatWaTemplate(rawTpl, vars = {}) {
+    let text = String(rawTpl || '');
+    const salam = getSalamInklusif(vars.agama);
+    const merged = { salam, sekolah: appState.data.pengaturan.nama_pkbm, ...vars };
+    Object.keys(merged).forEach((k) => {
+      text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), String(merged[k] ?? ''));
+    });
+    return text;
+  }
+
+  function cariNomorWaSiswaAtauOrtu(siswaId) {
+    const siswa = (appState.data.pengguna || []).find(u => u.id === siswaId);
+    const ortu = (appState.data.pengguna || []).find(u => u.role === 'ortu' && u.relasi_siswa_id === siswaId);
+    const bi = (appState.data.buku_induk || []).find(b => b.siswa_id === siswaId);
+    const rawWa = ortu?.no_wa || siswa?.no_wa || bi?.no_wa || appState.data.pengaturan.kontak?.wa || '';
+    const agama = siswa?.agama || ortu?.agama || bi?.agama || 'Islam';
+    return { noWa: rawWa, agama };
+  }
+
+  function kirimNotifikasiWhatsApp(noWa, pesan, autoOpenFallback = false) {
     if (!noWa) return;
     const cleanPhone = String(noWa).replace(/\D/g, '');
     if (!cleanPhone) return;
+    const formattedPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
     const token = appState.data.pengaturan.wa_api_token;
     if (token) {
       fetch('https://api.fonnte.com/send', {
         method: 'POST',
         headers: { Authorization: token, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target: cleanPhone, message: pesan })
+        body: JSON.stringify({ target: formattedPhone, message: pesan })
+      }).then(() => {
+        showToast(`Notifikasi WhatsApp terkirim otomatis ke ${formattedPhone}!`, 'success');
       }).catch(() => {});
+    } else if (autoOpenFallback) {
+      window.open(`https://wa.me/${formattedPhone}?text=${encodeURIComponent(pesan)}`, '_blank', 'noopener,noreferrer');
     }
+  }
+
+  window.bukaWhatsappLangsung = (noWa, pesan) => {
+    const cleanPhone = String(noWa || appState.data.pengaturan.kontak?.wa || '').replace(/\D/g, '');
+    const formattedPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
+    if (!formattedPhone) return showToast('Nomor WhatsApp belum diisi.', 'warning');
+    window.open(`https://wa.me/${formattedPhone}?text=${encodeURIComponent(pesan)}`, '_blank', 'noopener,noreferrer');
+  };
+
+  function applySchoolLogos(logoUrl) {
+    const boxes = ['nav-logo-box', 'dash-sidebar-logo-box', 'footer-logo-box'];
+    boxes.forEach((boxId) => {
+      const el = document.getElementById(boxId);
+      if (!el) return;
+      if (logoUrl) {
+        el.innerHTML = `<img src="${logoUrl}" alt="Logo Sekolah" class="w-full h-full object-cover" />`;
+      } else {
+        el.innerHTML = `<i data-lucide="graduation-cap" class="w-5 h-5"></i>`;
+      }
+    });
+    if (window.lucide) lucide.createIcons();
   }
 
   // =========================================================================
@@ -1384,10 +1446,7 @@
     setText('public-kontak-email', cfg.kontak?.email || 'admin@pkbmbintang.sch.id');
     setText('public-kontak-jam', cfg.kontak?.jam || 'Senin - Sabtu, 08.00 - 16.00 WIB');
 
-    if (cfg.logo_url) {
-      const logoBox = document.getElementById('nav-logo-box');
-      if (logoBox) logoBox.innerHTML = `<img src="${cfg.logo_url}" alt="Logo" class="w-full h-full object-cover" />`;
-    }
+    applySchoolLogos(cfg.logo_url);
     const tentangFoto = document.getElementById('public-tentang-foto');
     if (tentangFoto && cfg.tentang_foto) tentangFoto.src = cfg.tentang_foto;
 
@@ -1831,6 +1890,7 @@
     };
     const sbSchool = document.getElementById('dash-sidebar-school');
     if (sbSchool) sbSchool.textContent = appState.data.pengaturan.nama_pkbm;
+    applySchoolLogos(appState.data.pengaturan.logo_url);
     const sbRole = document.getElementById('dash-sidebar-role');
     if (sbRole) sbRole.textContent = roleNames[user.role] || user.role.toUpperCase();
 
@@ -3074,17 +3134,29 @@
         <div class="glass-panel rounded-3xl p-5 overflow-x-auto">
           <h3 class="font-display font-bold text-sm mb-3">Riwayat Mutasi Buku Tabungan</h3>
           <table class="w-full text-left border-collapse">
-            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Tanggal</th><th class="py-2 px-3">Peserta Didik</th><th class="py-2 px-3">Jenis</th><th class="py-2 px-3">Nominal</th><th class="py-2 px-3">Keterangan</th></tr></thead>
+            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Tanggal</th><th class="py-2 px-3">Peserta Didik</th><th class="py-2 px-3">Jenis</th><th class="py-2 px-3">Nominal</th><th class="py-2 px-3">Keterangan</th><th class="py-2 px-3">Notif WA</th></tr></thead>
             <tbody>
-              ${filtered.length === 0 ? `<tr><td colspan="5" class="py-5 text-center text-slate-400">Belum ada riwayat mutasi tabungan.</td></tr>` : filtered.map(t => `
+              ${filtered.length === 0 ? `<tr><td colspan="6" class="py-5 text-center text-slate-400">Belum ada riwayat mutasi tabungan.</td></tr>` : filtered.map(t => {
+                const { noWa, agama } = cariNomorWaSiswaAtauOrtu(t.siswa_id);
+                const msgWa = formatWaTemplate(appState.data.pengaturan.wa_templates?.tabungan_mutasi || '{salam}, info tabungan {nama}: {jenis} Rp {nominal}.', {
+                  agama,
+                  nama: t.siswa_nama,
+                  jenis: t.jenis,
+                  nominal: Number(t.nominal).toLocaleString('id-ID'),
+                  tanggal: t.tanggal,
+                  saldo: Number(t.saldo_setelah || saldoAktif).toLocaleString('id-ID')
+                });
+                return `
                 <tr class="border-b border-slate-100 dark:border-slate-800">
                   <td class="py-2 px-3 font-mono">${t.tanggal}</td>
                   <td class="py-2 px-3 font-bold">${t.siswa_nama}</td>
                   <td class="py-2 px-3 font-bold ${t.jenis === 'Setoran' ? 'text-emerald-600' : 'text-rose-600'}">${t.jenis}</td>
                   <td class="py-2 px-3 font-mono font-bold">Rp ${Number(t.nominal).toLocaleString('id-ID')}</td>
                   <td class="py-2 px-3">${t.keterangan || '-'}</td>
+                  <td class="py-2 px-3"><button onclick="bukaWhatsappLangsung('${noWa}', ${JSON.stringify(msgWa)})" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold hover:bg-emerald-200">📲 Kirim WA</button></td>
                 </tr>
-              `).join('')}
+              `;
+              }).join('')}
             </tbody>
           </table>
         </div>
@@ -3098,22 +3170,41 @@
     const siswaId = document.getElementById('tab-siswa').value;
     const siswa = appState.data.pengguna.find(u => u.id === siswaId);
     if (!siswa) return showToast('Pilih peserta didik terlebih dahulu.', 'warning');
+    const jenis = document.getElementById('tab-jenis').value;
+    const nominal = Number(document.getElementById('tab-nominal').value);
+    const riwayatSiswa = (appState.data.tabungan_siswa || []).filter(t => t.siswa_id === siswa.id);
+    const saldoSebelumnya = riwayatSiswa.reduce((acc, cur) => acc + (cur.jenis === 'Setoran' ? Number(cur.nominal) : -Number(cur.nominal)), 0);
+    const saldoSetelah = jenis === 'Setoran' ? saldoSebelumnya + nominal : Math.max(0, saldoSebelumnya - nominal);
+
     const item = {
       id: 'tab-' + Date.now(),
       siswa_id: siswa.id,
       siswa_nama: siswa.nama_lengkap,
       paket: siswa.paket,
       tanggal: new Date().toISOString().split('T')[0],
-      jenis: document.getElementById('tab-jenis').value,
-      nominal: Number(document.getElementById('tab-nominal').value),
+      jenis,
+      nominal,
+      saldo_setelah: saldoSetelah,
       keterangan: document.getElementById('tab-ket').value.trim(),
       petugas: appState.currentUser.nama_lengkap
     };
     appState.data.tabungan_siswa.unshift(item);
     saveLocalState(`Mutasi tabungan ${item.jenis} ${siswa.nama_lengkap}: Rp ${item.nominal}`);
     syncRecordToCloud('tabungan_siswa', item);
+
+    const { noWa, agama } = cariNomorWaSiswaAtauOrtu(siswa.id);
+    const pesanWa = formatWaTemplate(appState.data.pengaturan.wa_templates?.tabungan_mutasi, {
+      agama,
+      nama: siswa.nama_lengkap,
+      jenis,
+      nominal: nominal.toLocaleString('id-ID'),
+      tanggal: item.tanggal,
+      saldo: saldoSetelah.toLocaleString('id-ID')
+    });
+    kirimNotifikasiWhatsApp(noWa, pesanWa, !appState.data.pengaturan.wa_api_token);
+
     renderDashboardTab('tabungan_siswa');
-    showToast('Transaksi buku tabungan berhasil dicatat!', 'success');
+    showToast('Transaksi buku tabungan dicatat & laporan WA dikirim!', 'success');
   };
 
   // =========================================================================
@@ -3176,8 +3267,11 @@
                   <td class="py-2 px-3 font-mono font-bold">Rp ${Number(item.nominal).toLocaleString('id-ID')}</td>
                   <td class="py-2 px-3"><span class="px-2.5 py-0.5 rounded-full font-bold ${item.status === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${item.status}</span></td>
                   <td class="py-2 px-3">
-                    ${isStaff && item.status !== 'Lunas' ? `<button onclick="verifikasiLunasSpp('${item.id}')" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold">✓ Sahkan Lunas</button>` : ''}
-                    ${!isStaff && item.status === 'Belum Lunas' ? `<button onclick="konfirmasiBayarSppOrtu('${item.id}')" class="px-3 py-1 rounded-full bg-blue-600 text-white font-bold">Konfirmasi Transfer/QRIS</button>` : ''}
+                    <div class="flex flex-wrap gap-1.5">
+                      ${isStaff && item.status !== 'Lunas' ? `<button onclick="verifikasiLunasSpp('${item.id}')" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-bold">✓ Sahkan Lunas</button>` : ''}
+                      ${!isStaff && item.status === 'Belum Lunas' ? `<button onclick="konfirmasiBayarSppOrtu('${item.id}')" class="px-3 py-1 rounded-full bg-blue-600 text-white font-bold">Konfirmasi Transfer/QRIS</button>` : ''}
+                      <button onclick="kirimNotifSppManual('${item.id}')" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold">📲 WA</button>
+                    </div>
                   </td>
                 </tr>
               `).join('')}
@@ -3189,15 +3283,14 @@
     renderChartSafe('chart-spp-3d', ['Lunas', 'Menunggu Verifikasi', 'Belum Lunas'], [lunasCount, verifCount, belumCount], ['#10B981', '#3B82F6', '#F59E0B'], 'Tagihan');
   }
 
-  window.salinNomorRekening = () => {
-    const rek = appState.data.pengaturan.bank_no_rek || '7123456789';
-    const tmp = document.createElement('input');
-    tmp.value = rek;
-    document.body.appendChild(tmp);
-    tmp.select();
-    document.execCommand('copy');
-    document.body.removeChild(tmp);
-    showToast(`Nomor rekening ${rek} berhasil disalin!`, 'success');
+  window.kirimNotifSppManual = (id) => {
+    const item = appState.data.spp.find(s => s.id === id);
+    if (!item) return;
+    const { noWa, agama } = cariNomorWaSiswaAtauOrtu(item.siswa_id);
+    const pesan = item.status === 'Lunas'
+      ? formatWaTemplate(appState.data.pengaturan.wa_templates?.spp_lunas, { agama, nama: item.siswa_nama, periode: item.periode, nominal: Number(item.nominal).toLocaleString('id-ID') })
+      : `${getSalamInklusif(agama)}, pengingat tagihan SPP ananda ${item.siswa_nama} periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')} (${item.status}). Pembayaran dapat melalui QRIS atau Transfer ${appState.data.pengaturan.bank_nama} No. Rek ${appState.data.pengaturan.bank_no_rek}.`;
+    window.bukaWhatsappLangsung(noWa, pesan);
   };
 
   window.buatTagihanSpp = (e) => {
@@ -3217,8 +3310,11 @@
     appState.data.spp.unshift(item);
     saveLocalState(`Menerbitkan tagihan SPP ${siswa.nama_lengkap}`);
     syncRecordToCloud('pembayaran_spp', item);
+    const { noWa, agama } = cariNomorWaSiswaAtauOrtu(siswa.id);
+    const pesanTagihan = `${getSalamInklusif(agama)}, informasi tagihan SPP ananda ${siswa.nama_lengkap} periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')}. Silakan melakukan pembayaran via QRIS atau Transfer ${appState.data.pengaturan.bank_nama} (${appState.data.pengaturan.bank_no_rek}).`;
+    kirimNotifikasiWhatsApp(noWa, pesanTagihan, false);
     renderDashboardTab('spp');
-    showToast(`Tagihan SPP ${siswa.nama_lengkap} berhasil diterbitkan!`, 'success');
+    showToast(`Tagihan SPP ${siswa.nama_lengkap} diterbitkan & info WA dikirim!`, 'success');
   };
 
   window.konfirmasiBayarSppOrtu = (id) => {
@@ -3228,8 +3324,10 @@
     item.metode_bayar = 'QRIS / Transfer Bank';
     saveLocalState(`Konfirmasi bayar SPP oleh orang tua: ${item.siswa_nama}`);
     syncRecordToCloud('pembayaran_spp', item);
+    const pesanAdmin = `[KONFIRMASI SPP] Orang tua ananda ${item.siswa_nama} (${item.paket}) telah melakukan konfirmasi pembayaran SPP periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')}. Mohon verifikasi di portal Bendahara.`;
+    kirimNotifikasiWhatsApp(appState.data.pengaturan.kontak?.wa, pesanAdmin, !appState.data.pengaturan.wa_api_token);
     renderDashboardTab('spp');
-    showToast('Konfirmasi pembayaran terkirim ke Bendahara!', 'success');
+    showToast('Konfirmasi pembayaran terkirim ke Bendahara & WA Admin!', 'success');
   };
 
   window.verifikasiLunasSpp = (id) => {
@@ -3239,8 +3337,16 @@
     item.tanggal_bayar = new Date().toISOString().split('T')[0];
     saveLocalState(`Verifikasi lunas SPP: ${item.siswa_nama}`);
     syncRecordToCloud('pembayaran_spp', item);
+    const { noWa, agama } = cariNomorWaSiswaAtauOrtu(item.siswa_id);
+    const pesanLunas = formatWaTemplate(appState.data.pengaturan.wa_templates?.spp_lunas, {
+      agama,
+      nama: item.siswa_nama,
+      periode: item.periode,
+      nominal: Number(item.nominal).toLocaleString('id-ID')
+    });
+    kirimNotifikasiWhatsApp(noWa, pesanLunas, !appState.data.pengaturan.wa_api_token);
     renderDashboardTab('spp');
-    showToast(`SPP ${item.siswa_nama} disahkan LUNAS!`, 'success');
+    showToast(`SPP ${item.siswa_nama} disahkan LUNAS & bukti WA dikirim!`, 'success');
   };
 
   // =========================================================================
@@ -3449,7 +3555,14 @@
     syncRecordToCloud('absensi_guru', item);
 
     if (isTelat) {
-      kirimNotifikasiWhatsApp(appState.data.pengaturan.kontak?.wa, `[INFO ABSENSI PKBM] Tutor ${item.guru_nama} tercatat TERLAMBAT pada ${item.tanggal} pukul ${jamStr} WIB.`);
+      const pesanTelat = formatWaTemplate(appState.data.pengaturan.wa_templates?.absensi_telat || '{salam}, Tutor {nama} tercatat TERLAMBAT pada {tanggal} pukul {jam} WIB.', {
+        agama: appState.currentUser.agama || 'Islam',
+        nama: item.guru_nama,
+        tanggal: item.tanggal,
+        jam: jamStr,
+        batas
+      });
+      kirimNotifikasiWhatsApp(appState.data.pengaturan.kontak?.wa, pesanTelat, !appState.data.pengaturan.wa_api_token);
     }
     renderDashboardTab('absen_transaksi');
     showToast(`Presensi GPS berhasil dicatat (${jamStr} — ${item.status})!`, isTelat ? 'warning' : 'success');
@@ -3463,7 +3576,7 @@
     const teks = belum.length
       ? `[REKAP ABSENSI ${today}] Guru/Tutor yang belum mengisi absen hari ini: ${belum.join(', ')}.`
       : `[REKAP ABSENSI ${today}] Seluruh guru/tutor sudah mengisi presensi hari ini.`;
-    kirimNotifikasiWhatsApp(appState.data.pengaturan.kontak?.wa, teks);
+    kirimNotifikasiWhatsApp(appState.data.pengaturan.kontak?.wa, teks, !appState.data.pengaturan.wa_api_token);
     showToast(teks, 'info');
   };
 
@@ -3660,7 +3773,7 @@
         <div class="glass-panel rounded-3xl p-5 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 class="font-display font-bold text-base">Manajemen Akun Portal (Guru, Operator, Bendahara, Siswa & Ortu)</h3>
-            <p class="text-slate-500">Mendukung pembuatan akun satuan maupun unggah template Excel massal.</p>
+            <p class="text-slate-500">Mendukung pembuatan akun satuan, edit akun lengkap, maupun unggah template Excel massal.</p>
           </div>
           <div class="flex gap-2">
             <button onclick="downloadTemplateExcelAkun()" class="px-4 py-2 rounded-full bg-emerald-600 text-white font-bold">⬇ Template Excel Akun</button>
@@ -3668,33 +3781,56 @@
           </div>
         </div>
 
-        <form onsubmit="tambahAkunPortal(event)" class="glass-panel rounded-3xl p-5 grid grid-cols-1 sm:grid-cols-6 gap-2.5">
-          <select id="usr-role" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-            <option value="guru">Tutor / Guru</option>
-            <option value="operator">Operator Dapodik / TU</option>
-            <option value="bendahara">Bendahara</option>
-            <option value="siswa">Peserta Didik (Siswa)</option>
-            <option value="ortu">Orang Tua / Wali</option>
-          </select>
-          <input type="text" id="usr-nama" required placeholder="Nama Lengkap & Gelar" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
-          <input type="text" id="usr-user" required placeholder="Username / NUPTK / NISN" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
-          <input type="text" id="usr-pass" required value="123456" placeholder="Password" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
-          <select id="usr-paket" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"><option value="Paket A">Paket A</option><option value="Paket B">Paket B</option><option value="Paket C" selected>Paket C</option></select>
-          <button type="submit" class="py-2 rounded-xl bg-blue-600 text-white font-bold">+ Tambah Akun</button>
+        <form onsubmit="simpanAkunPortalForm(event)" class="glass-panel rounded-3xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 id="usr-form-title" class="font-display font-bold text-sm">Tambah Akun Portal Baru</h4>
+            <button type="button" id="usr-cancel-edit-btn" onclick="batalEditAkunPortal()" class="hidden px-3 py-1 rounded-full bg-slate-200 text-slate-700 font-bold">Batal Edit</button>
+          </div>
+          <input type="hidden" id="usr-edit-id" value="" />
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+            <select id="usr-role" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <option value="guru">Tutor / Guru</option>
+              <option value="operator">Operator Dapodik / TU</option>
+              <option value="bendahara">Bendahara</option>
+              <option value="siswa">Peserta Didik (Siswa)</option>
+              <option value="ortu">Orang Tua / Wali</option>
+            </select>
+            <input type="text" id="usr-nama" required placeholder="Nama Lengkap & Gelar" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+            <input type="text" id="usr-user" required placeholder="Username / NUPTK / NISN" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
+            <input type="text" id="usr-pass" required value="123456" placeholder="Password" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-2.5">
+            <select id="usr-paket" onchange="updatePilihanKelas('usr-paket', 'usr-kelas')" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"><option value="Paket A">Paket A</option><option value="Paket B">Paket B</option><option value="Paket C" selected>Paket C</option></select>
+            <select id="usr-kelas" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"><option value="Kelas 10">Kelas 10</option><option value="Kelas 11">Kelas 11</option><option value="Kelas 12">Kelas 12</option></select>
+            <select id="usr-agama" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <option value="Islam">Islam</option>
+              <option value="Kristen Protestan">Kristen Protestan</option>
+              <option value="Katolik">Katolik</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Buddha">Buddha</option>
+              <option value="Khonghucu">Khonghucu</option>
+            </select>
+            <input type="tel" id="usr-wa" placeholder="No. WhatsApp (628xxx)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
+            <button type="submit" id="usr-submit-btn" class="py-2 rounded-xl bg-blue-600 text-white font-bold">+ Tambah Akun</button>
+          </div>
         </form>
 
         <div class="glass-panel rounded-3xl p-5 overflow-x-auto">
           <table class="w-full text-left border-collapse">
-            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Peran</th><th class="py-2 px-3">Nama Lengkap</th><th class="py-2 px-3">Username / Login</th><th class="py-2 px-3">Password</th><th class="py-2 px-3">Paket</th><th class="py-2 px-3">Aksi</th></tr></thead>
+            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Peran</th><th class="py-2 px-3">Nama Lengkap</th><th class="py-2 px-3">Username / Login</th><th class="py-2 px-3">Password</th><th class="py-2 px-3">Paket & Kelas</th><th class="py-2 px-3">No. WA</th><th class="py-2 px-3">Aksi</th></tr></thead>
             <tbody>
-              ${users.length === 0 ? `<tr><td colspan="6" class="py-5 text-center text-slate-400">Belum ada akun pengguna portal.</td></tr>` : users.map(u => `
+              ${users.length === 0 ? `<tr><td colspan="7" class="py-5 text-center text-slate-400">Belum ada akun pengguna portal.</td></tr>` : users.map(u => `
                 <tr class="border-b border-slate-100 dark:border-slate-800">
                   <td class="py-2 px-3 uppercase font-bold text-blue-600">${u.role}</td>
                   <td class="py-2 px-3 font-bold">${u.nama_lengkap}</td>
                   <td class="py-2 px-3 font-mono">${u.username}</td>
                   <td class="py-2 px-3 font-mono">${u.password}</td>
-                  <td class="py-2 px-3">${u.paket || '-'}</td>
-                  <td class="py-2 px-3"><button onclick="hapusAkunPortal('${u.id}')" class="text-rose-600 font-bold">Hapus</button></td>
+                  <td class="py-2 px-3">${u.paket || '-'} ${u.kelas ? '(' + u.kelas + ')' : ''}</td>
+                  <td class="py-2 px-3 font-mono">${u.no_wa || '-'}</td>
+                  <td class="py-2 px-3 flex gap-2.5">
+                    <button onclick="mulaiEditAkunPortal('${u.id}')" class="text-blue-600 font-bold hover:underline">Edit</button>
+                    <button onclick="hapusAkunPortal('${u.id}')" class="text-rose-600 font-bold hover:underline">Hapus</button>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -3704,24 +3840,77 @@
     `;
   }
 
-  window.tambahAkunPortal = (e) => {
+  window.mulaiEditAkunPortal = (id) => {
+    const u = appState.data.pengguna.find(x => x.id === id);
+    if (!u) return;
+    document.getElementById('usr-edit-id').value = u.id;
+    document.getElementById('usr-role').value = u.role;
+    document.getElementById('usr-nama').value = u.nama_lengkap;
+    document.getElementById('usr-user').value = u.username;
+    document.getElementById('usr-pass').value = u.password;
+    document.getElementById('usr-paket').value = u.paket || 'Paket C';
+    updatePilihanKelas('usr-paket', 'usr-kelas');
+    if (u.kelas) document.getElementById('usr-kelas').value = u.kelas;
+    document.getElementById('usr-agama').value = u.agama || 'Islam';
+    document.getElementById('usr-wa').value = u.no_wa || '';
+
+    document.getElementById('usr-form-title').textContent = `Edit Akun: ${u.nama_lengkap}`;
+    document.getElementById('usr-submit-btn').textContent = 'Simpan Perubahan Akun';
+    document.getElementById('usr-cancel-edit-btn')?.classList.remove('hidden');
+    document.getElementById('usr-nama')?.focus();
+  };
+
+  window.batalEditAkunPortal = () => {
+    renderDashboardTab('users');
+  };
+
+  window.simpanAkunPortalForm = (e) => {
     e.preventDefault();
+    const editId = document.getElementById('usr-edit-id')?.value.trim();
     const role = document.getElementById('usr-role').value;
     const nama = document.getElementById('usr-nama').value.trim();
     const username = document.getElementById('usr-user').value.trim();
     const password = document.getElementById('usr-pass').value.trim();
     const paket = document.getElementById('usr-paket').value;
-    const kelas = getDefaultKelasByPaket(paket);
+    const kelas = document.getElementById('usr-kelas')?.value || getDefaultKelasByPaket(paket);
+    const agama = document.getElementById('usr-agama')?.value || 'Islam';
+    const no_wa = document.getElementById('usr-wa')?.value.trim() || '';
 
-    const newU = { id: 'usr-' + Date.now(), role, nama_lengkap: nama, username, password, paket, kelas, jalur_belajar: 'Online' };
+    if (editId) {
+      const idx = appState.data.pengguna.findIndex(u => u.id === editId);
+      if (idx !== -1) {
+        const updated = { ...appState.data.pengguna[idx], role, nama_lengkap: nama, username, password, paket, kelas, agama, no_wa };
+        appState.data.pengguna[idx] = updated;
+        if (role === 'siswa') {
+          const bi = appState.data.buku_induk.find(b => b.siswa_id === editId);
+          if (bi) {
+            bi.nama_lengkap = nama;
+            bi.nisn = username;
+            bi.paket = paket;
+            bi.kelas = kelas;
+            bi.agama = agama;
+            bi.no_wa = no_wa;
+            syncRecordToCloud('buku_induk', bi);
+          }
+        }
+        saveLocalState(`Memperbarui akun ${role}: ${nama}`);
+        syncRecordToCloud('pengguna_portal', updated);
+        renderPublicContent();
+        renderDashboardTab('users');
+        return showToast(`Perubahan akun ${nama} berhasil disimpan!`, 'success');
+      }
+    }
+
+    const newU = { id: 'usr-' + Date.now(), role, nama_lengkap: nama, username, password, paket, kelas, agama, no_wa, jalur_belajar: 'Online' };
     appState.data.pengguna.push(newU);
     if (role === 'siswa') {
-      const bi = { id: 'bi-' + Date.now(), siswa_id: newU.id, no_induk: '2026' + String(appState.data.buku_induk.length + 1).padStart(4, '0'), nisn: username, nama_lengkap: nama, paket, kelas };
+      const bi = { id: 'bi-' + Date.now(), siswa_id: newU.id, no_induk: '2026' + String(appState.data.buku_induk.length + 1).padStart(4, '0'), nisn: username, nama_lengkap: nama, paket, kelas, agama, no_wa };
       appState.data.buku_induk.push(bi);
       syncRecordToCloud('buku_induk', bi);
     }
     saveLocalState(`Menambah akun ${role}: ${nama}`);
     syncRecordToCloud('pengguna_portal', newU);
+    renderPublicContent();
     renderDashboardTab('users');
     showToast(`Akun ${nama} (${role.toUpperCase()}) berhasil dibuat!`, 'success');
   };
