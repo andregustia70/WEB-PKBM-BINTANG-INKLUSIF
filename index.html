@@ -959,8 +959,8 @@
 
   // KONFIGURASI DEPLOYMENT SUPABASE
   const IS_PREVIEW = false; // Ubah ke false jika sudah terhubung ke Supabase Anda
-  const SUPABASE_URL = "https://xsbvzpkyiqllthqjedwa.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_oBIuhApfvOtanMKS8Y-0RQ_maDZb7wV";
+  const SUPABASE_URL = "https://vzaatdzmlrnlnfnpyrlz.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_LNolwZhamaLRs2XT0siUcw_Oz5Pe5Id";
 
   const supabase = (!IS_PREVIEW && SUPABASE_URL.startsWith('http'))
     ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -1019,8 +1019,11 @@
       bank_no_rek: '7123456789',
       bank_atas_nama: 'PKBM Bintang Inklusif',
       wa_api_token: '',
+      spp_reminder_days: 2,
+      spp_default_due_date: '2026-11-25',
       wa_templates: {
         spp_lunas: '{salam}, terima kasih. Pembayaran SPP ananda {nama} untuk periode {periode} sebesar Rp {nominal} telah LUNAS.',
+        spp_reminder: '{salam}, pengingat pembayaran SPP ananda {nama} ({paket}) periode {periode} sebesar Rp {nominal} akan jatuh tempo pada {jatuh_tempo} (H-{sisa_hari}). Pembayaran dapat melalui QRIS atau Transfer {bank} No. Rek {rek}.',
         tabungan_mutasi: '{salam}, informasi Buku Tabungan PKBM: Ananda {nama} melakukan {jenis} sebesar Rp {nominal} pada {tanggal}. Saldo aktif saat ini: Rp {saldo}.',
         absensi_telat: '{salam}, laporan presensi PKBM: Tutor/Staf {nama} tercatat TERLAMBAT pada {tanggal} pukul {jam} WIB (Batas masuk {batas} WIB).'
       },
@@ -1112,20 +1115,66 @@
   }
 
   async function autoSetupDatabase() {
-    if (IS_PREVIEW || !supabase) return;
-    try {
-      const { data: users } = await supabase.from('pengguna_portal').select('*');
-      if (Array.isArray(users)) appState.data.pengguna = users;
-      const { data: bi } = await supabase.from('buku_induk').select('*');
-      if (Array.isArray(bi)) appState.data.buku_induk = bi;
-      const { data: spp } = await supabase.from('pembayaran_spp').select('*');
-      if (Array.isArray(spp)) appState.data.spp = spp;
-      const { data: abs } = await supabase.from('absensi_guru').select('*');
-      if (Array.isArray(abs)) appState.data.absensi_guru = abs;
-      saveLocalState();
-    } catch (e) {
-      console.warn('Sinkronisasi awal Supabase:', e);
+    // 1. Jika terhubung ke Supabase, tarik seluruh data publik & akademik lintas perangkat
+    if (!IS_PREVIEW && supabase) {
+      try {
+        const { data: cfgRows } = await supabase.from('pengaturan_sekolah').select('*').limit(1);
+        if (Array.isArray(cfgRows) && cfgRows[0]) {
+          appState.data.pengaturan = { ...appState.data.pengaturan, ...cfgRows[0] };
+        }
+        const { data: beritaRows } = await supabase.from('berita_sekolah').select('*').order('created_at', { ascending: false });
+        if (Array.isArray(beritaRows) && beritaRows.length) appState.data.berita = beritaRows;
+        const { data: galeriRows } = await supabase.from('galeri_konten').select('*').order('created_at', { ascending: false });
+        if (Array.isArray(galeriRows) && galeriRows.length) appState.data.galeri = galeriRows;
+        const { data: strRows } = await supabase.from('struktur_sekolah').select('*');
+        if (Array.isArray(strRows) && strRows.length) appState.data.struktur_sekolah = strRows;
+        const { data: kalRows } = await supabase.from('kalender_akademik').select('*');
+        if (Array.isArray(kalRows) && kalRows.length) appState.data.kalender_akademik = kalRows;
+
+        const { data: users } = await supabase.from('pengguna_portal').select('*');
+        if (Array.isArray(users)) appState.data.pengguna = users;
+        const { data: bi } = await supabase.from('buku_induk').select('*');
+        if (Array.isArray(bi)) appState.data.buku_induk = bi;
+        const { data: spp } = await supabase.from('pembayaran_spp').select('*');
+        if (Array.isArray(spp)) appState.data.spp = spp;
+        const { data: abs } = await supabase.from('absensi_guru').select('*');
+        if (Array.isArray(abs)) appState.data.absensi_guru = abs;
+        const { data: nil } = await supabase.from('nilai_siswa').select('*');
+        if (Array.isArray(nil)) appState.data.nilai_siswa = nil;
+        saveLocalState();
+        return;
+      } catch (e) {
+        console.warn('Sinkronisasi awal Supabase:', e);
+      }
     }
+
+    // 2. Fallback Lintas Perangkat melalui Google Apps Script (jika URL Apps Script sudah diisi)
+    const scriptUrl = appState.data.pengaturan.apps_script_url;
+    if (scriptUrl) {
+      try {
+        const res = await fetch(`${scriptUrl}?action=pull_public`);
+        const cloud = await res.json();
+        if (cloud && cloud.status === 'ok' && cloud.data) {
+          if (cloud.data.pengaturan_sekolah?.[0]) {
+            appState.data.pengaturan = { ...appState.data.pengaturan, ...cloud.data.pengaturan_sekolah[0] };
+          }
+          if (Array.isArray(cloud.data.berita_sekolah) && cloud.data.berita_sekolah.length) appState.data.berita = cloud.data.berita_sekolah;
+          if (Array.isArray(cloud.data.galeri_konten) && cloud.data.galeri_konten.length) appState.data.galeri = cloud.data.galeri_konten;
+          if (Array.isArray(cloud.data.struktur_sekolah) && cloud.data.struktur_sekolah.length) appState.data.struktur_sekolah = cloud.data.struktur_sekolah;
+          if (Array.isArray(cloud.data.pengguna_portal) && cloud.data.pengguna_portal.length) appState.data.pengguna = cloud.data.pengguna_portal;
+          if (Array.isArray(cloud.data.buku_induk) && cloud.data.buku_induk.length) appState.data.buku_induk = cloud.data.buku_induk;
+          if (Array.isArray(cloud.data.pembayaran_spp) && cloud.data.pembayaran_spp.length) appState.data.spp = cloud.data.pembayaran_spp;
+          saveLocalState();
+        }
+      } catch (e) {
+        console.warn('Sinkronisasi Apps Script:', e);
+      }
+    }
+  }
+
+  function syncPengaturanKeCloud() {
+    const payloadCfg = { id: '00000000-0000-0000-0000-000000000001', ...appState.data.pengaturan };
+    syncRecordToCloud('pengaturan_sekolah', payloadCfg, 'upsert');
   }
 
   function saveLocalState(logMsg) {
@@ -1560,33 +1609,45 @@
     setHref('sosmed-fb', cfg.sosmed?.facebook);
 
     renderHeroSlide();
+    if (window.lucide) lucide.createIcons();
   }
 
   // =========================================================================
-  // MODAL CONTROLS, LOGIN HYBRID & PPDB SUBMIT
+  // MODAL LOGIN, PPDB, TEMA & DRAWER
   // =========================================================================
-  window.toggleMobilePublicDrawer = () => document.getElementById('mobile-public-drawer')?.classList.toggle('hidden');
-  window.toggleMobileDashDrawer = () => document.getElementById('mobile-dash-drawer')?.classList.toggle('hidden');
+  window.toggleMobilePublicDrawer = () => {
+    document.getElementById('mobile-public-drawer')?.classList.toggle('hidden');
+  };
+
+  window.toggleMobileDashDrawer = () => {
+    document.getElementById('mobile-dash-drawer')?.classList.toggle('hidden');
+  };
+
+  window.toggleDarkMode = () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('pkbm_dark_mode', isDark ? '1' : '0');
+  };
+
   window.toggleThemePanel = () => {
     const m = document.getElementById('theme-modal');
     if (!m) return;
     m.classList.toggle('hidden');
     m.classList.toggle('flex');
   };
-  window.toggleDarkMode = () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('pkbm_dark_mode', isDark ? '1' : '0');
-  };
+
   window.applyAccentColor = (hex) => {
     document.documentElement.style.setProperty('--accent-primary', hex);
-    showToast('Warna tema berhasil diperbarui!', 'success');
+    appState.data.pengaturan.tema_warna = hex;
+    saveLocalState();
   };
+
   window.applyPresetBackground = (url) => {
     document.documentElement.style.setProperty('--bg-image-overlay', url === 'none' ? 'none' : `url('${url}')`);
   };
+
   window.applyCustomBgUrl = () => {
-    const url = document.getElementById('custom-bg-input')?.value.trim();
-    if (url) applyPresetBackground(url);
+    const val = document.getElementById('custom-bg-input')?.value.trim();
+    if (val) window.applyPresetBackground(val);
   };
 
   window.openLoginModal = (mode = 'portal') => {
@@ -1594,15 +1655,17 @@
     if (!m) return;
     m.classList.remove('hidden');
     m.classList.add('flex');
-    switchLoginMode(mode);
-    muatKredensialTersimpan();
+    window.switchLoginMode(mode);
+    if (window.lucide) lucide.createIcons();
   };
+
   window.closeLoginModal = () => {
     const m = document.getElementById('login-modal');
     if (!m) return;
     m.classList.add('hidden');
     m.classList.remove('flex');
   };
+
   window.switchLoginMode = (mode) => {
     const isAdmin = mode === 'admin';
     document.getElementById('form-login-portal')?.classList.toggle('hidden', isAdmin);
@@ -1610,8 +1673,8 @@
     const tPortal = document.getElementById('tab-login-portal');
     const tAdmin = document.getElementById('tab-login-admin');
     if (tPortal && tAdmin) {
-      tPortal.className = isAdmin ? 'py-2 rounded-full text-slate-600 dark:text-slate-300 transition' : 'py-2 rounded-full bg-blue-600 text-white transition';
-      tAdmin.className = isAdmin ? 'py-2 rounded-full bg-slate-900 text-white transition' : 'py-2 rounded-full text-slate-600 dark:text-slate-300 transition';
+      tPortal.className = `py-2 rounded-full transition ${!isAdmin ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-300'}`;
+      tAdmin.className = `py-2 rounded-full transition ${isAdmin ? 'bg-slate-900 text-white' : 'text-slate-600 dark:text-slate-300'}`;
     }
   };
 
@@ -2462,20 +2525,52 @@
     const siswaId = document.getElementById('nil-siswa').value;
     const siswa = appState.data.pengguna.find(u => u.id === siswaId);
     if (!siswa) return showToast('Pilih peserta didik terlebih dahulu.', 'warning');
+    const jenisSelect = document.getElementById('nil-jenis')?.value || 'Penilaian Akhir';
+    const jenisPenilaian = jenisSelect === 'CUSTOM'
+      ? (document.getElementById('nil-jenis-custom')?.value.trim() || 'Penilaian Kustom')
+      : jenisSelect;
+    const bobot = Number(document.getElementById('nil-bobot')?.value) || 100;
     const angka = Number(document.getElementById('nil-angka').value);
     const predikat = angka >= 90 ? 'A (Sangat Baik)' : angka >= 80 ? 'B (Baik)' : angka >= 70 ? 'C (Cukup)' : 'D (Perlu Bimbingan)';
-    const item = { id: 'nil-' + Date.now(), siswa_id: siswa.id, siswa_nama: siswa.nama_lengkap, paket: siswa.paket, kelas: siswa.kelas, mapel: document.getElementById('nil-mapel').value.trim(), nilai_akhir: angka, predikat };
+    const item = {
+      id: 'nil-' + Date.now(),
+      siswa_id: siswa.id,
+      siswa_nama: siswa.nama_lengkap,
+      paket: siswa.paket,
+      kelas: siswa.kelas,
+      mapel: document.getElementById('nil-mapel').value.trim(),
+      jenis_penilaian: jenisPenilaian,
+      bobot,
+      nilai_akhir: angka,
+      predikat
+    };
     appState.data.nilai_siswa.unshift(item);
-    saveLocalState(`Input nilai ${siswa.nama_lengkap}: ${item.mapel} (${angka})`);
+    saveLocalState(`Input ${jenisPenilaian} ${siswa.nama_lengkap}: ${item.mapel} (${angka})`);
     syncRecordToCloud('nilai_siswa', item);
     renderDashboardTab('elearning');
-    showToast('Nilai akhir berhasil disimpan ke E-Rapor!', 'success');
+    showToast(`${jenisPenilaian} (${item.mapel}) berhasil disimpan ke E-Rapor!`, 'success');
   };
 
   window.cetakERaporOtomatis = (siswaId) => {
     const siswa = appState.data.pengguna.find(u => u.id === siswaId) || { nama_lengkap: 'Peserta Didik', username: '-', paket: 'Paket C', kelas: 'Kelas 10' };
     const daftarNilai = (appState.data.nilai_siswa || []).filter(n => n.siswa_id === siswaId);
-    const rata = daftarNilai.length ? (daftarNilai.reduce((a, b) => a + Number(b.nilai_akhir), 0) / daftarNilai.length).toFixed(1) : '0';
+
+    // Rekap nilai tertimbang per Mata Pelajaran (menggabungkan PH, Tugas, PTS, PAS, dll.)
+    const mapelMap = {};
+    daftarNilai.forEach(n => {
+      if (!mapelMap[n.mapel]) mapelMap[n.mapel] = { mapel: n.mapel, rincian: [], totalSkorBobot: 0, totalBobot: 0 };
+      const b = Number(n.bobot) || 100;
+      mapelMap[n.mapel].rincian.push(`${n.jenis_penilaian || 'Nilai'}: ${n.nilai_akhir}`);
+      mapelMap[n.mapel].totalSkorBobot += Number(n.nilai_akhir) * b;
+      mapelMap[n.mapel].totalBobot += b;
+    });
+    const rekapMapel = Object.values(mapelMap).map(m => {
+      const akhir = m.totalBobot > 0 ? Math.round((m.totalSkorBobot / m.totalBobot) * 10) / 10 : 0;
+      const predikat = akhir >= 90 ? 'A (Sangat Baik)' : akhir >= 80 ? 'B (Baik)' : akhir >= 70 ? 'C (Cukup)' : 'D (Perlu Bimbingan)';
+      return { mapel: m.mapel, rincian: m.rincian.join(' • '), nilai_akhir: akhir, predikat };
+    });
+
+    const rata = rekapMapel.length ? (rekapMapel.reduce((a, b) => a + Number(b.nilai_akhir), 0) / rekapMapel.length).toFixed(1) : '0';
     const cfg = appState.data.pengaturan;
     const area = document.getElementById('print-surat-area');
     if (!area) return;
@@ -2494,9 +2589,9 @@
           <div><strong>Rata-Rata Akhir:</strong> ${rata}</div>
         </div>
         <table class="w-full border-collapse border border-slate-400">
-          <thead><tr class="bg-slate-100"><th class="border border-slate-400 p-2">No</th><th class="border border-slate-400 p-2">Mata Pelajaran</th><th class="border border-slate-400 p-2">Nilai Akhir</th><th class="border border-slate-400 p-2">Predikat & Capaian</th></tr></thead>
+          <thead><tr class="bg-slate-100"><th class="border border-slate-400 p-2">No</th><th class="border border-slate-400 p-2">Mata Pelajaran & Rincian Penilaian</th><th class="border border-slate-400 p-2">Nilai Akhir</th><th class="border border-slate-400 p-2">Predikat & Capaian</th></tr></thead>
           <tbody>
-            ${daftarNilai.map((n, i) => `<tr><td class="border border-slate-400 p-2 text-center">${i + 1}</td><td class="border border-slate-400 p-2">${n.mapel}</td><td class="border border-slate-400 p-2 text-center font-bold">${n.nilai_akhir}</td><td class="border border-slate-400 p-2">${n.predikat}</td></tr>`).join('')}
+            ${rekapMapel.map((n, i) => `<tr><td class="border border-slate-400 p-2 text-center">${i + 1}</td><td class="border border-slate-400 p-2"><strong>${n.mapel}</strong><div class="text-[10px] text-slate-600">${n.rincian}</div></td><td class="border border-slate-400 p-2 text-center font-bold">${n.nilai_akhir}</td><td class="border border-slate-400 p-2">${n.predikat}</td></tr>`).join('')}
           </tbody>
         </table>
         <div class="flex justify-between items-end pt-6">
@@ -2880,14 +2975,16 @@
       url: document.getElementById('hs-url').value.trim()
     });
     saveLocalState('Menambah foto slide beranda');
+    syncPengaturanKeCloud();
     renderPublicContent();
     renderDashboardTab('cms_konten');
-    showToast('Foto slide beranda berhasil ditambahkan!', 'success');
+    showToast('Foto slide beranda berhasil ditambahkan & disinkronkan ke cloud!', 'success');
   };
 
   window.hapusHeroSlide = (idx) => {
     appState.data.pengaturan.hero_slides.splice(idx, 1);
     saveLocalState('Menghapus foto slide beranda');
+    syncPengaturanKeCloud();
     renderPublicContent();
     renderDashboardTab('cms_konten');
   };
@@ -2904,8 +3001,9 @@
       p.foto = document.getElementById(`prog-foto-${i}`)?.value.trim() || p.foto;
     });
     saveLocalState('Memperbarui profil sekolah & foto kartu program');
+    syncPengaturanKeCloud();
     renderPublicContent();
-    showToast('Profil sekolah dan kartu program berhasil diperbarui!', 'success');
+    showToast('Profil sekolah dan kartu program berhasil diperbarui & tersinkron!', 'success');
   };
 
   window.tambahStrukturSekolah = (e) => {
@@ -2919,13 +3017,16 @@
     };
     appState.data.struktur_sekolah.push(item);
     saveLocalState(`Menambah struktur organisasi: ${item.nama}`);
+    syncRecordToCloud('struktur_sekolah', item, 'upsert');
     renderPublicContent();
     renderDashboardTab('cms_konten');
     showToast('Pengurus struktur organisasi berhasil ditambahkan!', 'success');
   };
 
   window.hapusStrukturSekolah = (id) => {
+    const target = appState.data.struktur_sekolah.find(s => s.id === id);
     appState.data.struktur_sekolah = appState.data.struktur_sekolah.filter(s => s.id !== id);
+    if (target) syncRecordToCloud('struktur_sekolah', target, 'delete');
     saveLocalState('Menghapus anggota struktur organisasi');
     renderPublicContent();
     renderDashboardTab('cms_konten');
@@ -2942,22 +3043,26 @@
 
   window.tambahBeritaSekolah = (e) => {
     e.preventDefault();
-    appState.data.berita.unshift({
+    const newBerita = {
       id: 'brt-' + Date.now(),
       judul: document.getElementById('brt-judul').value.trim(),
       foto_url: document.getElementById('brt-foto').value.trim() || 'https://placehold.co/600x340/2563eb/ffffff?text=Berita+PKBM',
       ringkasan: document.getElementById('brt-isi').value.trim(),
       tanggal: new Date().toISOString().split('T')[0],
       kategori: 'Berita Sekolah'
-    });
+    };
+    appState.data.berita.unshift(newBerita);
     saveLocalState('Menerbitkan berita sekolah baru');
+    syncRecordToCloud('berita_sekolah', newBerita, 'upsert');
     renderPublicContent();
     renderDashboardTab('cms_konten');
-    showToast('Berita sekolah berhasil diterbitkan!', 'success');
+    showToast('Berita sekolah berhasil diterbitkan & disinkronkan ke cloud!', 'success');
   };
 
   window.hapusBeritaSekolah = (id) => {
+    const target = appState.data.berita.find(b => b.id === id);
     appState.data.berita = appState.data.berita.filter(b => b.id !== id);
+    if (target) syncRecordToCloud('berita_sekolah', target, 'delete');
     saveLocalState('Menghapus berita sekolah');
     renderPublicContent();
     renderDashboardTab('cms_konten');
@@ -2965,21 +3070,25 @@
 
   window.tambahGaleriKonten = (e) => {
     e.preventDefault();
-    appState.data.galeri.unshift({
+    const newGal = {
       id: 'gal-' + Date.now(),
       judul: document.getElementById('gal-judul').value.trim(),
       tipe: document.getElementById('gal-tipe').value,
       kategori: document.getElementById('gal-kategori').value.trim(),
       url_media: document.getElementById('gal-url').value.trim()
-    });
+    };
+    appState.data.galeri.unshift(newGal);
     saveLocalState('Menambah galeri foto/video');
+    syncRecordToCloud('galeri_konten', newGal, 'upsert');
     renderPublicContent();
     renderDashboardTab('cms_konten');
-    showToast('Item galeri berhasil ditambahkan!', 'success');
+    showToast('Item galeri berhasil ditambahkan & disinkronkan!', 'success');
   };
 
   window.hapusGaleriKonten = (id) => {
+    const target = appState.data.galeri.find(g => g.id === id);
     appState.data.galeri = appState.data.galeri.filter(g => g.id !== id);
+    if (target) syncRecordToCloud('galeri_konten', target, 'delete');
     saveLocalState('Menghapus item galeri');
     renderPublicContent();
     renderDashboardTab('cms_konten');
@@ -3087,7 +3196,6 @@
     container.innerHTML = `
       <div class="space-y-6 text-xs">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          <!-- Kartu Buku Tabungan 3D -->
           <div class="lg:col-span-5 passbook-3d-wrapper">
             <div class="passbook-3d-card rounded-3xl p-6 text-white space-y-5 relative overflow-hidden">
               <div class="flex items-center justify-between">
@@ -3109,7 +3217,6 @@
             </div>
           </div>
 
-          <!-- Grafik Batang 3D Tabungan -->
           <div class="lg:col-span-7 glass-panel rounded-3xl p-5 space-y-3">
             <h3 class="font-display font-bold text-sm">Grafik 3D Setoran vs Penarikan Tabungan</h3>
             <div class="h-44"><canvas id="chart-tabungan-3d"></canvas></div>
@@ -3126,37 +3233,24 @@
               <option value="Penarikan">Penarikan Tabungan (-)</option>
             </select>
             <input type="number" id="tab-nominal" required placeholder="Nominal (Rp)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
-            <input type="text" id="tab-ket" placeholder="Keterangan" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
-            <button type="submit" class="py-2 rounded-xl bg-blue-600 text-white font-bold">+ Catat Mutasi</button>
+            <input type="text" id="tab-ket" placeholder="Keterangan (Tabungan Harian/Mingguan)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+            <button type="submit" class="py-2 rounded-xl bg-blue-600 text-white font-bold">+ Simpan Mutasi</button>
           </form>
         ` : ''}
 
         <div class="glass-panel rounded-3xl p-5 overflow-x-auto">
-          <h3 class="font-display font-bold text-sm mb-3">Riwayat Mutasi Buku Tabungan</h3>
           <table class="w-full text-left border-collapse">
-            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Tanggal</th><th class="py-2 px-3">Peserta Didik</th><th class="py-2 px-3">Jenis</th><th class="py-2 px-3">Nominal</th><th class="py-2 px-3">Keterangan</th><th class="py-2 px-3">Notif WA</th></tr></thead>
+            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Tanggal</th><th class="py-2 px-3">Peserta Didik</th><th class="py-2 px-3">Jenis</th><th class="py-2 px-3">Nominal</th><th class="py-2 px-3">Keterangan</th></tr></thead>
             <tbody>
-              ${filtered.length === 0 ? `<tr><td colspan="6" class="py-5 text-center text-slate-400">Belum ada riwayat mutasi tabungan.</td></tr>` : filtered.map(t => {
-                const { noWa, agama } = cariNomorWaSiswaAtauOrtu(t.siswa_id);
-                const msgWa = formatWaTemplate(appState.data.pengaturan.wa_templates?.tabungan_mutasi || '{salam}, info tabungan {nama}: {jenis} Rp {nominal}.', {
-                  agama,
-                  nama: t.siswa_nama,
-                  jenis: t.jenis,
-                  nominal: Number(t.nominal).toLocaleString('id-ID'),
-                  tanggal: t.tanggal,
-                  saldo: Number(t.saldo_setelah || saldoAktif).toLocaleString('id-ID')
-                });
-                return `
+              ${filtered.length === 0 ? `<tr><td colspan="5" class="py-5 text-center text-slate-400">Belum ada mutasi buku tabungan.</td></tr>` : filtered.map(t => `
                 <tr class="border-b border-slate-100 dark:border-slate-800">
                   <td class="py-2 px-3 font-mono">${t.tanggal}</td>
                   <td class="py-2 px-3 font-bold">${t.siswa_nama}</td>
-                  <td class="py-2 px-3 font-bold ${t.jenis === 'Setoran' ? 'text-emerald-600' : 'text-rose-600'}">${t.jenis}</td>
+                  <td class="py-2 px-3"><span class="px-2.5 py-0.5 rounded-full font-bold ${t.jenis === 'Setoran' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${t.jenis}</span></td>
                   <td class="py-2 px-3 font-mono font-bold">Rp ${Number(t.nominal).toLocaleString('id-ID')}</td>
                   <td class="py-2 px-3">${t.keterangan || '-'}</td>
-                  <td class="py-2 px-3"><button onclick="bukaWhatsappLangsung('${noWa}', ${JSON.stringify(msgWa)})" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold hover:bg-emerald-200">📲 Kirim WA</button></td>
                 </tr>
-              `;
-              }).join('')}
+              `).join('')}
             </tbody>
           </table>
         </div>
@@ -3172,9 +3266,12 @@
     if (!siswa) return showToast('Pilih peserta didik terlebih dahulu.', 'warning');
     const jenis = document.getElementById('tab-jenis').value;
     const nominal = Number(document.getElementById('tab-nominal').value);
-    const riwayatSiswa = (appState.data.tabungan_siswa || []).filter(t => t.siswa_id === siswa.id);
-    const saldoSebelumnya = riwayatSiswa.reduce((acc, cur) => acc + (cur.jenis === 'Setoran' ? Number(cur.nominal) : -Number(cur.nominal)), 0);
-    const saldoSetelah = jenis === 'Setoran' ? saldoSebelumnya + nominal : Math.max(0, saldoSebelumnya - nominal);
+    const ket = document.getElementById('tab-ket').value.trim();
+
+    const prevTrans = (appState.data.tabungan_siswa || []).filter(t => t.siswa_id === siswaId);
+    const prevSetor = prevTrans.filter(t => t.jenis === 'Setoran').reduce((a, b) => a + Number(b.nominal), 0);
+    const prevTarik = prevTrans.filter(t => t.jenis === 'Penarikan').reduce((a, b) => a + Number(b.nominal), 0);
+    const saldoSetelah = (prevSetor - prevTarik) + (jenis === 'Setoran' ? nominal : -nominal);
 
     const item = {
       id: 'tab-' + Date.now(),
@@ -3184,10 +3281,10 @@
       tanggal: new Date().toISOString().split('T')[0],
       jenis,
       nominal,
-      saldo_setelah: saldoSetelah,
-      keterangan: document.getElementById('tab-ket').value.trim(),
+      keterangan: ket,
       petugas: appState.currentUser.nama_lengkap
     };
+
     appState.data.tabungan_siswa.unshift(item);
     saveLocalState(`Mutasi tabungan ${item.jenis} ${siswa.nama_lengkap}: Rp ${item.nominal}`);
     syncRecordToCloud('tabungan_siswa', item);
@@ -3208,7 +3305,7 @@
   };
 
   // =========================================================================
-  // MODUL PEMBAYARAN SPP (QRIS, TRANSFER BANK & KONFIRMASI)
+  // MODUL PEMBAYARAN SPP (QRIS, TRANSFER BANK & OTOMASI PENGINGAT JATUH TEMPO)
   // =========================================================================
   function renderSppTab(container) {
     const user = appState.currentUser;
@@ -3223,7 +3320,6 @@
 
     container.innerHTML = `
       <div class="space-y-6 text-xs">
-        <!-- Kartu Informasi QRIS & Rekening Bank -->
         <div class="glass-panel rounded-3xl p-5 grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
           <div class="md:col-span-4 text-center">
             <img src="${cfg.qris_url}" alt="QRIS PKBM" class="w-40 h-40 object-contain mx-auto rounded-2xl border border-slate-200 bg-white p-2 shadow" />
@@ -3241,14 +3337,31 @@
         </div>
 
         ${isStaff ? `
-          <form onsubmit="buatTagihanSpp(event)" class="glass-panel rounded-3xl p-5 grid grid-cols-1 sm:grid-cols-4 gap-2.5">
-            <select id="spp-siswa" required class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              ${siswaList.map(s => `<option value="${s.id}">${s.nama_lengkap} (${s.paket})</option>`).join('')}
-            </select>
-            <input type="text" id="spp-periode" required value="November 2026" placeholder="Bulan / Periode" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
-            <input type="number" id="spp-nominal" required value="150000" placeholder="Nominal (Rp)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
-            <button type="submit" class="py-2 rounded-xl bg-blue-600 text-white font-bold">+ Terbitkan Tagihan SPP</button>
-          </form>
+          <div class="glass-panel rounded-3xl p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="font-display font-bold text-sm">Pengaturan Batas Jatuh Tempo & Otomasi Pengingat WhatsApp H-${cfg.spp_reminder_days ?? 2} Hari</h3>
+                <p class="text-[11px] text-slate-500">Sistem otomatis mengirim pengingat ke WhatsApp Orang Tua/Siswa H-${cfg.spp_reminder_days ?? 2} sebelum tanggal jatuh tempo.</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <label class="font-semibold">Kirim Otomatis H-</label>
+                <input type="number" id="spp-set-hmin" min="0" max="30" value="${cfg.spp_reminder_days ?? 2}" class="w-16 px-2.5 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-center" />
+                <span>Hari</span>
+                <button type="button" onclick="simpanAturanJatuhTempoSpp()" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white font-bold">Simpan Aturan</button>
+                <button type="button" onclick="cekDanKirimPengingatJatuhTempoSpp(true)" class="px-3.5 py-1.5 rounded-full bg-emerald-600 text-white font-bold">📲 Cek & Kirim Pengingat Sekarang</button>
+              </div>
+            </div>
+
+            <form onsubmit="buatTagihanSpp(event)" class="grid grid-cols-1 sm:grid-cols-5 gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <select id="spp-siswa" required class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                ${siswaList.map(s => `<option value="${s.id}">${s.nama_lengkap} (${s.paket})</option>`).join('')}
+              </select>
+              <input type="text" id="spp-periode" required value="November 2026" placeholder="Bulan / Periode" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+              <input type="number" id="spp-nominal" required value="150000" placeholder="Nominal (Rp)" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
+              <input type="date" id="spp-jatuh-tempo" required value="${cfg.spp_default_due_date || new Date(Date.now() + 2 * 86400000).toISOString().split('T')[0]}" title="Tanggal Batas Jatuh Tempo" class="px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono" />
+              <button type="submit" class="py-2 rounded-xl bg-blue-600 text-white font-bold">+ Terbitkan Tagihan SPP</button>
+            </form>
+          </div>
         ` : ''}
 
         <div class="glass-panel rounded-3xl p-5">
@@ -3258,12 +3371,13 @@
 
         <div class="glass-panel rounded-3xl p-5 overflow-x-auto">
           <table class="w-full text-left border-collapse">
-            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Peserta Didik</th><th class="py-2 px-3">Periode</th><th class="py-2 px-3">Nominal</th><th class="py-2 px-3">Status</th><th class="py-2 px-3">Aksi</th></tr></thead>
+            <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-slate-500"><th class="py-2 px-3">Peserta Didik</th><th class="py-2 px-3">Periode</th><th class="py-2 px-3">Jatuh Tempo</th><th class="py-2 px-3">Nominal</th><th class="py-2 px-3">Status</th><th class="py-2 px-3">Aksi</th></tr></thead>
             <tbody>
-              ${list.length === 0 ? `<tr><td colspan="5" class="py-5 text-center text-slate-400">Belum ada data tagihan SPP.</td></tr>` : list.map(item => `
+              ${list.length === 0 ? `<tr><td colspan="6" class="py-5 text-center text-slate-400">Belum ada data tagihan SPP.</td></tr>` : list.map(item => `
                 <tr class="border-b border-slate-100 dark:border-slate-800">
                   <td class="py-2 px-3 font-bold">${item.siswa_nama} (${item.paket})</td>
                   <td class="py-2 px-3">${item.periode}</td>
+                  <td class="py-2 px-3 font-mono">${item.jatuh_tempo || '-'}</td>
                   <td class="py-2 px-3 font-mono font-bold">Rp ${Number(item.nominal).toLocaleString('id-ID')}</td>
                   <td class="py-2 px-3"><span class="px-2.5 py-0.5 rounded-full font-bold ${item.status === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${item.status}</span></td>
                   <td class="py-2 px-3">
@@ -3283,13 +3397,74 @@
     renderChartSafe('chart-spp-3d', ['Lunas', 'Menunggu Verifikasi', 'Belum Lunas'], [lunasCount, verifCount, belumCount], ['#10B981', '#3B82F6', '#F59E0B'], 'Tagihan');
   }
 
+  window.salinNomorRekening = () => {
+    const rek = appState.data.pengaturan.bank_no_rek || '';
+    const temp = document.createElement('input');
+    temp.value = rek;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    temp.remove();
+    showToast(`Nomor rekening ${rek} berhasil disalin!`, 'success');
+  };
+
+  window.simpanAturanJatuhTempoSpp = () => {
+    const hMin = parseInt(document.getElementById('spp-set-hmin')?.value, 10);
+    appState.data.pengaturan.spp_reminder_days = isNaN(hMin) ? 2 : Math.max(0, hMin);
+    saveLocalState(`Mengatur pengingat otomatis SPP H-${appState.data.pengaturan.spp_reminder_days} sebelum jatuh tempo`);
+    syncPengaturanKeCloud();
+    renderDashboardTab('spp');
+    showToast(`Otomasi pengingat WA disetel ke H-${appState.data.pengaturan.spp_reminder_days} sebelum jatuh tempo!`, 'success');
+  };
+
+  window.cekDanKirimPengingatJatuhTempoSpp = (manualTrigger = false) => {
+    const cfg = appState.data.pengaturan;
+    const hMin = Number(cfg.spp_reminder_days ?? 2);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+
+    let terkirim = 0;
+    (appState.data.spp || []).forEach(item => {
+      if (item.status === 'Lunas' || !item.jatuh_tempo) return;
+      const due = new Date(item.jatuh_tempo + 'T00:00:00');
+      const diffDays = Math.ceil((due.getTime() - today.getTime()) / 86400000);
+      if (diffDays <= hMin && (manualTrigger || item.last_reminder_date !== todayStr)) {
+        const { noWa, agama } = cariNomorWaSiswaAtauOrtu(item.siswa_id);
+        const sisaHari = Math.max(0, diffDays);
+        const pesan = formatWaTemplate(cfg.wa_templates?.spp_reminder || '{salam}, pengingat SPP ananda {nama} periode {periode} Rp {nominal} jatuh tempo {jatuh_tempo}.', {
+          agama,
+          nama: item.siswa_nama,
+          paket: item.paket,
+          periode: item.periode,
+          nominal: Number(item.nominal).toLocaleString('id-ID'),
+          jatuh_tempo: item.jatuh_tempo,
+          sisa_hari: sisaHari,
+          bank: cfg.bank_nama || 'Bank',
+          rek: cfg.bank_no_rek || '-'
+        });
+        kirimNotifikasiWhatsApp(noWa, pesan, manualTrigger && !cfg.wa_api_token && terkirim === 0);
+        item.last_reminder_date = todayStr;
+        syncRecordToCloud('pembayaran_spp', item);
+        terkirim++;
+      }
+    });
+
+    if (terkirim > 0) {
+      saveLocalState(`Mengirim ${terkirim} pengingat jatuh tempo SPP ke WhatsApp`);
+      if (manualTrigger) showToast(`${terkirim} pengingat jatuh tempo SPP diproses ke WhatsApp!`, 'success');
+    } else if (manualTrigger) {
+      showToast(`Tidak ada tagihan belum lunas yang memasuki batas H-${hMin} hari jatuh tempo.`, 'info');
+    }
+  };
+
   window.kirimNotifSppManual = (id) => {
     const item = appState.data.spp.find(s => s.id === id);
     if (!item) return;
     const { noWa, agama } = cariNomorWaSiswaAtauOrtu(item.siswa_id);
     const pesan = item.status === 'Lunas'
       ? formatWaTemplate(appState.data.pengaturan.wa_templates?.spp_lunas, { agama, nama: item.siswa_nama, periode: item.periode, nominal: Number(item.nominal).toLocaleString('id-ID') })
-      : `${getSalamInklusif(agama)}, pengingat tagihan SPP ananda ${item.siswa_nama} periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')} (${item.status}). Pembayaran dapat melalui QRIS atau Transfer ${appState.data.pengaturan.bank_nama} No. Rek ${appState.data.pengaturan.bank_no_rek}.`;
+      : `${getSalamInklusif(agama)}, pengingat tagihan SPP ananda ${item.siswa_nama} periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')} (Jatuh tempo: ${item.jatuh_tempo || '-'}). Pembayaran dapat melalui QRIS atau Transfer ${appState.data.pengaturan.bank_nama} No. Rek ${appState.data.pengaturan.bank_no_rek}.`;
     window.bukaWhatsappLangsung(noWa, pesan);
   };
 
@@ -3298,6 +3473,8 @@
     const siswaId = document.getElementById('spp-siswa').value;
     const siswa = appState.data.pengguna.find(u => u.id === siswaId);
     if (!siswa) return showToast('Pilih peserta didik terlebih dahulu.', 'warning');
+    const jatuhTempo = document.getElementById('spp-jatuh-tempo')?.value || '';
+    appState.data.pengaturan.spp_default_due_date = jatuhTempo;
     const item = {
       id: 'spp-' + Date.now(),
       siswa_id: siswa.id,
@@ -3305,16 +3482,17 @@
       paket: siswa.paket,
       periode: document.getElementById('spp-periode').value.trim(),
       nominal: Number(document.getElementById('spp-nominal').value),
+      jatuh_tempo: jatuhTempo,
       status: 'Belum Lunas'
     };
     appState.data.spp.unshift(item);
-    saveLocalState(`Menerbitkan tagihan SPP ${siswa.nama_lengkap}`);
+    saveLocalState(`Menerbitkan tagihan SPP ${siswa.nama_lengkap} (Jatuh tempo: ${jatuhTempo})`);
     syncRecordToCloud('pembayaran_spp', item);
     const { noWa, agama } = cariNomorWaSiswaAtauOrtu(siswa.id);
-    const pesanTagihan = `${getSalamInklusif(agama)}, informasi tagihan SPP ananda ${siswa.nama_lengkap} periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')}. Silakan melakukan pembayaran via QRIS atau Transfer ${appState.data.pengaturan.bank_nama} (${appState.data.pengaturan.bank_no_rek}).`;
+    const pesanTagihan = `${getSalamInklusif(agama)}, informasi tagihan SPP ananda ${siswa.nama_lengkap} periode ${item.periode} sebesar Rp ${Number(item.nominal).toLocaleString('id-ID')} dengan batas jatuh tempo ${jatuhTempo}. Silakan melakukan pembayaran via QRIS atau Transfer ${appState.data.pengaturan.bank_nama} (${appState.data.pengaturan.bank_no_rek}).`;
     kirimNotifikasiWhatsApp(noWa, pesanTagihan, false);
     renderDashboardTab('spp');
-    showToast(`Tagihan SPP ${siswa.nama_lengkap} diterbitkan & info WA dikirim!`, 'success');
+    showToast(`Tagihan SPP ${siswa.nama_lengkap} diterbitkan (Jatuh tempo: ${jatuhTempo})!`, 'success');
   };
 
   window.konfirmasiBayarSppOrtu = (id) => {
@@ -3984,8 +4162,9 @@
     cfg.sosmed.whatsapp = `https://wa.me/${String(cfg.kontak.wa).replace(/\D/g, '')}`;
 
     saveLocalState('Memperbarui pengaturan lembaga, GPS, QRIS, Bank & Media Sosial');
+    syncPengaturanKeCloud();
     renderPublicContent();
-    showToast('Pengaturan sekolah berhasil disimpan!', 'success');
+    showToast('Pengaturan sekolah berhasil disimpan & disinkronkan ke cloud!', 'success');
   };
 
   function renderSetApiTab(container) {
@@ -4092,6 +4271,9 @@
 
     if (appState.currentUser) {
       enterDashboard();
+      if (['admin', 'bendahara'].includes(appState.currentUser.role)) {
+        cekDanKirimPengingatJatuhTempoSpp(false);
+      }
     } else {
       const initialHash = window.location.hash.replace('#page/', '') || 'beranda';
       navigatePublicPage(initialHash);
