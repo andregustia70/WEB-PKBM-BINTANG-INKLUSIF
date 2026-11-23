@@ -744,6 +744,20 @@
         jam_masuk_guru: '08:00',
         jam_pulang_guru: '15:00',
         batas_telat_sp: 3,
+        absen_wajib_user_ids: [],
+        hari_sekolah: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+        absen_belum_notif_enabled: true,
+        absen_grace_menit: 30,
+        wa_admin_notif: '',
+        spp_reminder_days: 2,
+        spp_auto_reminder_enabled: true,
+        wa_templates: {
+          absen_telat: 'Pemberitahuan Presensi: Anda tercatat *TERLAMBAT {menit} menit* pada {tanggal} pukul {jam} WIB.',
+          absen_belum: 'Pengingat Presensi: Anda tercatat belum mengisi absensi kehadiran hari ini ({tanggal}). Harap segera melakukan presensi atau mengajukan izin/dinas luar.',
+          absen_sp: 'Pemberitahuan Resmi: Diterbitkan *{jenis_sp}* atas nama {nama} pada {tanggal} karena akumulasi keterlambatan ({alasan}).',
+          spp_reminder: 'Pengingat Pembayaran SPP: Tagihan SPP periode *{periode}* atas nama *{nama}* sebesar *Rp {nominal}* akan jatuh tempo pada *{jatuh_tempo}*.',
+          spp_lunas: 'Konfirmasi Pembayaran SPP: Terima kasih, pembayaran SPP periode *{periode}* atas nama *{nama}* sebesar *Rp {nominal}* telah kami terima (*LUNAS*).'
+        },
         gemini_api_key: '',
         google_drive_folder_url: 'https://drive.google.com',
         ttd_kepsek_url: '',
@@ -1301,7 +1315,7 @@
       if (!supabase) return;
       try {
         const [{ data: settingsData }, { data: jadwals }, { data: kaldik }, { data: struktur }, { data: berita }, { data: galeri }] = await Promise.all([
-          supabase.from('pengaturan_sekolah').select('id,nama_pkbm,kop_yayasan,kop_subjudul,logo_yayasan_url,logo_url,kop_logo_size,kop_text_color,ttd_size,stempel_size,kaldik_dokumen_url,kaldik_dokumen_nama,kaldik_roles,wali_kelas_assignments,buku_induk_guru_ids,guru_visible_menus,operator_visible_menus,ppdb_visible_roles,ppdb_form_config,tabungan_input_roles,sosmed_feed_visible,sosmed_posts,video_profil_judul,video_profil_desk,video_profil_url,tentang_judul,tentang_desk,tentang_foto,program_cards,hero_slides,alamat,penanggung_jawab,nuptk_pj,periode_aktif,pengumuman_publik,visi,misi,jam_masuk_guru,jam_pulang_guru,batas_telat_sp,google_drive_folder_url,ttd_kepsek_url,stempel_url,qris_url,bank_nama,bank_no_rek,bank_atas_nama,sosmed,lokasi_lat,lokasi_lng,radius_absen_meter').limit(1),
+          supabase.from('pengaturan_sekolah').select('id,nama_pkbm,kop_yayasan,kop_subjudul,logo_yayasan_url,logo_url,kop_logo_size,kop_text_color,ttd_size,stempel_size,kaldik_dokumen_url,kaldik_dokumen_nama,kaldik_roles,wali_kelas_assignments,buku_induk_guru_ids,guru_visible_menus,operator_visible_menus,ppdb_visible_roles,ppdb_form_config,tabungan_input_roles,sosmed_feed_visible,sosmed_posts,video_profil_judul,video_profil_desk,video_profil_url,tentang_judul,tentang_desk,tentang_foto,program_cards,hero_slides,alamat,penanggung_jawab,nuptk_pj,periode_aktif,pengumuman_publik,visi,misi,jam_masuk_guru,jam_pulang_guru,batas_telat_sp,absen_wajib_user_ids,hari_sekolah,absen_belum_notif_enabled,absen_grace_menit,wa_admin_notif,spp_reminder_days,spp_auto_reminder_enabled,wa_templates,google_drive_folder_url,ttd_kepsek_url,stempel_url,qris_url,bank_nama,bank_no_rek,bank_atas_nama,sosmed,lokasi_lat,lokasi_lng,radius_absen_meter').limit(1),
           supabase.from('jadwal_mapel').select(TABLE_SELECT_COLUMNS.jadwal_mapel).is('deleted_at', null).limit(100),
           supabase.from('kalender_akademik').select(TABLE_SELECT_COLUMNS.kalender_akademik).is('deleted_at', null).limit(100),
           supabase.from('struktur_sekolah').select('id,jabatan,nama,nuptk,foto_url').is('deleted_at', null).limit(50),
@@ -3770,80 +3784,100 @@
                       <span class="font-bold">${escapeHtml(c.pengirim_nama)} (${escapeHtml(c.pengirim_role.replace('_', ' '))})</span>
                       <span>${escapeHtml((c.created_at || '').slice(0, 16).replace('T', ' '))}</span>
                     </div>
-                    <p class="leading-relaxed">${escapeHtml(c.pesan)}</p>
+                    <p class="mt-1 leading-relaxed">${escapeHtml(c.pesan)}</p>
                   </div>`;
-                }).join('') || '<p class="text-slate-400 text-center py-8">Belum ada pesan kolaborasi. Mulai diskusi perkembangan peserta didik di bawah ini.</p>'}
+                }).join('') || '<p class="text-slate-400 text-center py-8">Belum ada pesan komunikasi pada ILP ini.</p>'}
               </div>
             </div>
-
-            ${['super_admin', 'operator', 'guru', 'orang_tua'].includes(u.role) ? `
-            <form onsubmit="kirimPesanKomunikasiIlp(event, '${escapeHtml(activeIlp.id)}', '${escapeHtml(activeIlp.siswa_id)}')" class="flex gap-2 pt-2 border-t">
-              <input type="text" id="ilp-chat-input" required placeholder="Tulis pesan perkembangan untuk tutor / orang tua..." class="flex-1 px-3.5 py-2.5 rounded-full border bg-slate-50 dark:bg-slate-800" />
-              <button type="submit" class="px-4 py-2.5 rounded-full bg-[#0F9D8A] hover:bg-teal-700 text-white font-bold shrink-0">Kirim</button>
-            </form>` : ''}
+            <form onsubmit="kirimPesanKomunikasiIlp(event, '${escapeHtml(activeIlp.id)}', '${escapeHtml(activeStudent.id)}')" class="flex gap-2 pt-2 border-t">
+              <input type="text" id="ilp-chat-input" required placeholder="Tulis pesan untuk tutor / orang tua..." class="flex-1 px-3.5 py-2 rounded-xl border bg-slate-50 dark:bg-slate-800" />
+              <button type="submit" class="px-4 py-2 rounded-xl bg-[#0F9D8A] hover:bg-teal-700 text-white font-bold shrink-0">Kirim</button>
+            </form>
           </div>
-        </div>` : (!canManage ? renderEmptyState('Dokumen ILP Belum Tersedia', 'Tutor pendamping belum menerbitkan dokumen Individual Learning Plan (ILP) untuk peserta didik ini.') : '')}`;
+        </div>` : ''}
+      `;
 
-      const historyPoints = activeIlp?.riwayat_pendampingan || [];
-      const labels = historyPoints.length ? historyPoints.map((h) => h.tanggal) : ['Asesmen Awal'];
-      const litSeries = historyPoints.length ? historyPoints.map((h) => Number(h.skor_literasi || 0)) : [0];
-      const numSeries = historyPoints.length ? historyPoints.map((h) => Number(h.skor_numerasi || 0)) : [0];
+      const hLabels = (activeIlp?.riwayat_pendampingan || []).map((r, i) => r.tanggal || `Sesi ${i + 1}`);
+      const litSeries = (activeIlp?.riwayat_pendampingan || []).map((r) => Number(r.skor_literasi ?? activeIlp?.skor_literasi ?? 0));
+      const numSeries = (activeIlp?.riwayat_pendampingan || []).map((r) => Number(r.skor_numerasi ?? activeIlp?.skor_numerasi ?? 0));
 
       renderChartSafe('chart-ilp-progress', {
         type: 'line',
         data: {
-          labels,
+          labels: hLabels.length ? hLabels : ['Awal'],
           datasets: [
-            { label: 'Capaian Literasi (%)', data: litSeries, borderColor: '#0F9D8A', backgroundColor: 'rgba(15, 157, 138, 0.14)', tension: 0.35, fill: true },
-            { label: 'Capaian Numerasi (%)', data: numSeries, borderColor: '#2563EB', backgroundColor: 'rgba(37, 99, 235, 0.12)', tension: 0.35, fill: true }
+            { label: 'Literasi (%)', data: litSeries.length ? litSeries : [Number(activeIlp?.skor_literasi || 0)], borderColor: '#0F9D8A', backgroundColor: 'rgba(15, 157, 138, 0.12)', tension: 0.35, fill: true },
+            { label: 'Numerasi (%)', data: numSeries.length ? numSeries : [Number(activeIlp?.skor_numerasi || 0)], borderColor: '#1D63DC', backgroundColor: 'rgba(29, 99, 220, 0.12)', tension: 0.35, fill: true }
           ]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: { y: { min: 0, max: 100 } },
-          plugins: { legend: { position: 'bottom' } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } }, plugins: { legend: { position: 'bottom' } } }
       });
     }
 
-    // =========================================================================
-    // 6. ABSENSI GURU LENGKAP (GPS 50M, CHECK-IN/OUT, FOTO, DINAS/IZIN, SP)
-    // =========================================================================
-    function hitungJarakMeter(lat1, lon1, lat2, lon2) {
-      const R = 6371000;
-      const toRad = (d) => (d * Math.PI) / 180;
-      const dLat = toRad(lat2 - lat1);
-      const dLon = toRad(lon2 - lon1);
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-      return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    function renderWaTemplateText(key, vars = {}) {
+      const p = appState.data.pengaturan;
+      const tpl = (p.wa_templates && p.wa_templates[key]) || defaultData.pengaturan.wa_templates[key] || '';
+      return tpl.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined && vars[k] !== null ? String(vars[k]) : ''));
     }
 
-    function dapatkanKoordinatPerangkat() {
-      return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) {
-          reject(new Error('Browser tidak mendukung GPS Geolocation.'));
-          return;
+    function getParentAndStudentPhones(siswaId) {
+      const list = [];
+      const sObj = getUnifiedSiswaList().find((x) => x.id === siswaId);
+      if (sObj?.no_wa) list.push({ wa: sObj.no_wa, agama: sObj.agama || 'Islam' });
+      const ortus = (appState.data.pengguna || []).filter((x) => x.role === 'orang_tua' && x.relasi_siswa_id === siswaId && x.no_wa);
+      ortus.forEach((o) => list.push({ wa: o.no_wa, agama: o.agama || 'Islam' }));
+      return list;
+    }
+
+    function getAdminNotifPhone() {
+      const p = appState.data.pengaturan;
+      const direct = String(p.wa_admin_notif || '').trim();
+      if (direct) return direct;
+      const adminUser = (appState.data.pengguna || []).find((x) => x.role === 'super_admin' && x.no_wa);
+      if (adminUser?.no_wa) return adminUser.no_wa;
+      return String(p.sosmed?.wa || '').replace(/^https?:\/\/wa\.me\//i, '');
+    }
+
+    function getWajibAbsenPersonnelList() {
+      const p = appState.data.pengaturan;
+      const allStaff = (appState.data.pengguna || []).filter((x) => ['guru', 'operator', 'bendahara', 'tim_media'].includes(x.role) && x.is_active !== false);
+      const selectedIds = Array.isArray(p.absen_wajib_user_ids) ? p.absen_wajib_user_ids : [];
+      if (!selectedIds.length) return allStaff.filter((x) => x.role === 'guru');
+      return allStaff.filter((x) => selectedIds.includes(x.id));
+    }
+
+    window.jalankanCekPengingatSppOtomatis = async (manualTrigger = false) => {
+      const p = appState.data.pengaturan;
+      if (!manualTrigger && p.spp_auto_reminder_enabled === false) return;
+      const daysBefore = Number(p.spp_reminder_days ?? 2);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const todayStr = today.toISOString().split('T')[0];
+
+      let sentCount = 0;
+      for (const inv of (appState.data.pembayaran_spp || [])) {
+        if (inv.status === 'Lunas' || !inv.jatuh_tempo) continue;
+        if (!manualTrigger && inv.last_reminder_date === todayStr) continue;
+        const due = new Date(inv.jatuh_tempo + 'T00:00:00');
+        const diffDays = Math.round((due - today) / 86400000);
+        if (diffDays === daysBefore || (manualTrigger && diffDays <= daysBefore)) {
+          const msg = renderWaTemplateText('spp_reminder', {
+            nama: inv.siswa_nama,
+            periode: inv.periode,
+            nominal: Number(inv.nominal || 0).toLocaleString('id-ID'),
+            jatuh_tempo: inv.jatuh_tempo
+          });
+          const phones = getParentAndStudentPhones(inv.siswa_id);
+          for (const ph of phones) {
+            await kirimNotifWhatsAppOtomatis(ph.wa, msg, ph.agama);
+            sentCount++;
+          }
+          inv.last_reminder_date = todayStr;
+          await syncRecordToCloud('pembayaran_spp', inv, 'upsert');
         }
-        navigator.geolocation.getCurrentPosition(
-          (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: Math.round(pos.coords.accuracy || 0) }),
-          (err) => reject(err),
-          { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
-        );
-      });
-    }
-
-    window.ambilLokasiKampusSekarang = async () => {
-      try {
-        showToast('Mendeteksi titik koordinat GPS kampus...', 'info');
-        const pos = await dapatkanKoordinatPerangkat();
-        appState.data.pengaturan.lokasi_lat = Number(pos.lat.toFixed(6));
-        appState.data.pengaturan.lokasi_lng = Number(pos.lng.toFixed(6));
-        await syncPengaturanKeCloud();
-        showToast(`Koordinat kampus dikunci: ${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}`, 'success');
-        if (appState.activeTab === 'absensi') switchDashboardTab('absensi');
-      } catch (e) {
-        showToast('Gagal mengakses GPS. Pastikan izin lokasi diaktifkan di browser.', 'error');
+      }
+      if (manualTrigger) {
+        showToast(sentCount > 0 ? `Pengingat SPP otomatis terkirim (${sentCount} pesan WA).` : 'Tidak ada tagihan SPP yang memasuki jadwal pengingat hari ini.', sentCount > 0 ? 'success' : 'info');
       }
     };
 
@@ -3856,8 +3890,18 @@
       p.jam_masuk_guru = document.getElementById('abs-cfg-masuk').value || '08:00';
       p.jam_pulang_guru = document.getElementById('abs-cfg-pulang').value || '15:00';
       p.batas_telat_sp = parseInt(document.getElementById('abs-cfg-sp').value, 10) || 3;
+      p.absen_grace_menit = Math.max(0, parseInt(document.getElementById('abs-cfg-grace')?.value, 10) || 0);
+      p.wa_admin_notif = document.getElementById('abs-cfg-wa-admin')?.value?.trim() || '';
+      p.absen_belum_notif_enabled = Boolean(document.getElementById('abs-cfg-belum-aktif')?.checked);
+      p.hari_sekolah = Array.from(document.querySelectorAll('.chk-hari-sekolah:checked')).map((c) => c.value);
+      p.absen_wajib_user_ids = Array.from(document.querySelectorAll('.chk-wajib-absen-user:checked')).map((c) => c.value);
+      p.wa_templates = Object.assign({}, defaultData.pengaturan.wa_templates, p.wa_templates || {}, {
+        absen_telat: document.getElementById('tpl-wa-telat')?.value?.trim() || defaultData.pengaturan.wa_templates.absen_telat,
+        absen_belum: document.getElementById('tpl-wa-belum')?.value?.trim() || defaultData.pengaturan.wa_templates.absen_belum,
+        absen_sp: document.getElementById('tpl-wa-sp')?.value?.trim() || defaultData.pengaturan.wa_templates.absen_sp
+      });
       await syncPengaturanKeCloud();
-      showToast('Pengaturan titik koordinat & jam presensi disimpan!', 'success');
+      showToast('Pengaturan GPS, personel wajib absen, jadwal & pesan WA disimpan!', 'success');
       switchDashboardTab('absensi');
     };
 
@@ -3927,7 +3971,9 @@
 
       const [jM, mM] = (p.jam_masuk_guru || '08:00').split(':').map(Number);
       const [jN, mN] = nowTime.split(':').map(Number);
-      const menitTelat = Math.max(0, (jN * 60 + mN) - (jM * 60 + mM));
+      const graceMin = Math.max(0, Number(p.absen_grace_menit ?? 30));
+      const batasMasukMenit = (jM * 60 + mM) + graceMin;
+      const menitTelat = Math.max(0, (jN * 60 + mN) - batasMasukMenit);
       const status = menitTelat > 0 ? 'Terlambat' : 'Tepat Waktu';
 
       const rec = {
@@ -3950,19 +3996,50 @@
       logAktivitas(`Absen masuk (${status}) pukul ${nowTime} WIB, jarak ${jarak}m`);
 
       if (menitTelat > 0) {
-        kirimNotifWhatsAppOtomatis(u.no_wa, `Pemberitahuan Presensi: Anda tercatat *TERLAMBAT ${menitTelat} menit* pada ${today} pukul ${nowTime} WIB.`, u.agama);
+        const msgTelat = renderWaTemplateText('absen_telat', {
+          nama: u.nama_lengkap,
+          tanggal: today,
+          jam: nowTime,
+          menit: menitTelat
+        });
+        await kirimNotifWhatsAppOtomatis(u.no_wa, msgTelat, u.agama);
+
+        const adminWa = getAdminNotifPhone();
+        if (adminWa) {
+          await kirimNotifWhatsAppOtomatis(
+            adminWa,
+            `Laporan Presensi Terlambat (Admin): *${u.nama_lengkap}* tercatat terlambat *${menitTelat} menit* pada ${today} pukul ${nowTime} WIB (Jadwal masuk ${p.jam_masuk_guru || '08:00'} + toleransi ${graceMin} menit).`,
+            'Islam'
+          );
+        }
+
         const totalTelat = (appState.data.absensi_guru || []).filter((a) => a.guru_id === u.id && a.status === 'Terlambat').length;
-        if (totalTelat >= Number(p.batas_telat_sp || 3)) {
+        const batasSp = Math.max(1, Number(p.batas_telat_sp || 3));
+        if (totalTelat > 0 && totalTelat % batasSp === 0) {
+          const tingkatSp = Math.min(3, Math.floor(totalTelat / batasSp));
+          const jenisSp = `SP ${tingkatSp} (Otomatis)`;
+          const alasanSp = `Akumulasi keterlambatan mencapai ${totalTelat} kali.`;
           const sp = {
             id: 'sp-' + Date.now(),
             guru_id: u.id,
             guru_nama: u.nama_lengkap,
-            jenis_sp: 'SP 1 (Otomatis)',
-            alasan: `Akumulasi keterlambatan mencapai ${totalTelat} kali.`,
+            jenis_sp: jenisSp,
+            alasan: alasanSp,
             tanggal: today
           };
           appState.data.riwayat_sp_guru = [sp, ...(appState.data.riwayat_sp_guru || [])];
           syncRecordToCloud('riwayat_sp_guru', sp, 'upsert');
+
+          const msgSp = renderWaTemplateText('absen_sp', {
+            nama: u.nama_lengkap,
+            tanggal: today,
+            jenis_sp: jenisSp,
+            alasan: alasanSp
+          });
+          await kirimNotifWhatsAppOtomatis(u.no_wa, msgSp, u.agama);
+          if (adminWa) {
+            await kirimNotifWhatsAppOtomatis(adminWa, `Notifikasi SP Otomatis (Admin): *${jenisSp}* diterbitkan untuk *${u.nama_lengkap}* (${alasanSp}).`, 'Islam');
+          }
         }
       }
 
@@ -3970,19 +4047,59 @@
       switchDashboardTab('absensi');
     };
 
-    window.cekDanKirimWaGuruBelumAbsen = () => {
-      const today = new Date().toISOString().split('T')[0];
-      const guruList = (appState.data.pengguna || []).filter((x) => x.role === 'guru');
-      const sudahIds = new Set((appState.data.absensi_guru || []).filter((a) => a.tanggal === today).map((a) => a.guru_id));
-      const belum = guruList.filter((g) => !sudahIds.has(g.id));
-      if (!belum.length) {
-        showToast('Seluruh tutor sudah mengisi presensi hari ini!', 'success');
+    window.cekDanKirimWaGuruBelumAbsen = async (silentMode = false) => {
+      const p = appState.data.pengaturan;
+      if (p.absen_belum_notif_enabled === false) {
+        if (!silentMode) showToast('Fitur pengingat otomatis belum absen sedang dinonaktifkan oleh Admin.', 'info');
         return;
       }
-      belum.forEach((g) => {
-        kirimNotifWhatsAppOtomatis(g.no_wa, `Pengingat Presensi: Anda tercatat belum mengisi absensi kehadiran hari ini (${today}). Harap segera melakukan presensi atau mengajukan izin/dinas luar.`, g.agama);
-      });
-      showToast(`Pemberitahuan otomatis dikirim ke ${belum.length} guru yang belum absen.`, 'warning');
+      const hariIndo = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][new Date().getDay()];
+      const hariAktif = Array.isArray(p.hari_sekolah) && p.hari_sekolah.length ? p.hari_sekolah : ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      if (!hariAktif.includes(hariIndo)) {
+        if (!silentMode) showToast(`Hari ${hariIndo} tidak termasuk jadwal hari masuk sekolah.`, 'info');
+        return;
+      }
+
+      const now = new Date();
+      const [jM, mM] = (p.jam_masuk_guru || '08:00').split(':').map(Number);
+      const graceMin = Math.max(0, Number(p.absen_grace_menit ?? 30));
+      const batasMenit = (jM * 60 + mM) + graceMin;
+      const nowMenit = now.getHours() * 60 + now.getMinutes();
+      if (silentMode && nowMenit < batasMenit) return;
+
+      const today = now.toISOString().split('T')[0];
+      const wajibList = getWajibAbsenPersonnelList();
+      const sudahIds = new Set((appState.data.absensi_guru || []).filter((a) => a.tanggal === today).map((a) => a.guru_id));
+      const belum = wajibList.filter((g) => !sudahIds.has(g.id));
+
+      if (!belum.length) {
+        if (!silentMode) showToast('Seluruh personel wajib absen sudah mengisi presensi hari ini!', 'success');
+        return;
+      }
+
+      const namaBelum = [];
+      for (const g of belum) {
+        namaBelum.push(g.nama_lengkap);
+        const msg = renderWaTemplateText('absen_belum', {
+          nama: g.nama_lengkap,
+          tanggal: today,
+          jam: p.jam_masuk_guru || '08:00'
+        });
+        await kirimNotifWhatsAppOtomatis(g.no_wa, msg, g.agama);
+      }
+
+      const adminWa = getAdminNotifPhone();
+      if (adminWa) {
+        await kirimNotifWhatsAppOtomatis(
+          adminWa,
+          `Rekap Personel Belum Absen (${today} • Lewat batas ${p.jam_masuk_guru || '08:00'} + ${graceMin} menit):\n• ${namaBelum.join('\n• ')}`,
+          'Islam'
+        );
+      }
+
+      if (!silentMode) {
+        showToast(`Pemberitahuan otomatis dikirim ke ${belum.length} personel wajib absen & WA Admin.`, 'warning');
+      }
     };
 
     window.ajukanDinasLuarAtauIzinGuru = (e) => {
@@ -4091,6 +4208,11 @@
       const isAdminOrOp = u.role === 'super_admin' || u.role === 'operator';
       const allAbs = appState.data.absensi_guru || [];
       const guruList = (appState.data.pengguna || []).filter((x) => x.role === 'guru');
+      const allStaffList = (appState.data.pengguna || []).filter((x) => ['guru', 'operator', 'bendahara', 'tim_media'].includes(x.role) && x.is_active !== false);
+      const wajibIds = Array.isArray(p.absen_wajib_user_ids) && p.absen_wajib_user_ids.length
+        ? p.absen_wajib_user_ids
+        : guruList.map((g) => g.id);
+      const hariAktif = Array.isArray(p.hari_sekolah) && p.hari_sekolah.length ? p.hari_sekolah : ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
       const today = new Date().toISOString().split('T')[0];
       const filtered = allAbs.filter((a) => {
@@ -4155,23 +4277,68 @@
         </div>
 
         ${isAdminOrOp ? `
-        <form onsubmit="simpanKonfigurasiAbsenCepat(event)" class="os-card rounded-3xl p-5 space-y-3 text-xs">
+        <form onsubmit="simpanKonfigurasiAbsenCepat(event)" class="os-card rounded-3xl p-5 space-y-4 text-xs">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <h3 class="font-bold text-sm">Pengaturan Titik Koordinat GPS &amp; Jam Presensi</h3>
+            <div>
+              <h3 class="font-bold text-sm">Pengaturan Koordinat GPS, Jadwal Masuk, Personel Wajib Absen &amp; Notifikasi WA</h3>
+              <p class="text-[11px] text-slate-500">Tentukan siapa saja yang wajib absen, toleransi menit masuk (mis. 30 menit), nomor WA Admin penerima laporan, dan isi pesan otomatis.</p>
+            </div>
             <div class="flex flex-wrap gap-2">
               <button type="button" onclick="ambilLokasiKampusSekarang()" class="px-3.5 py-1.5 rounded-full bg-teal-600 text-white font-bold">Kunci Lokasi Kampus Saat Ini</button>
-              <button type="button" onclick="cekDanKirimWaGuruBelumAbsen()" class="px-3.5 py-1.5 rounded-full bg-amber-500 text-white font-bold">Kirim WA Guru Belum Absen</button>
+              <button type="button" onclick="cekDanKirimWaGuruBelumAbsen(false)" class="px-3.5 py-1.5 rounded-full bg-amber-500 text-white font-bold">Kirim WA Belum Absen Sekarang</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
             <div><label class="text-[10px] font-bold">Latitude</label><input type="text" id="abs-cfg-lat" value="${p.lokasi_lat}" class="w-full px-2.5 py-2 rounded-xl border font-mono" /></div>
             <div><label class="text-[10px] font-bold">Longitude</label><input type="text" id="abs-cfg-lng" value="${p.lokasi_lng}" class="w-full px-2.5 py-2 rounded-xl border font-mono" /></div>
             <div><label class="text-[10px] font-bold">Radius (m)</label><input type="number" id="abs-cfg-radius" value="${p.radius_absen_meter || 50}" class="w-full px-2.5 py-2 rounded-xl border" /></div>
             <div><label class="text-[10px] font-bold">Jam Masuk</label><input type="time" id="abs-cfg-masuk" value="${p.jam_masuk_guru || '08:00'}" class="w-full px-2.5 py-2 rounded-xl border" /></div>
+            <div><label class="text-[10px] font-bold">Toleransi (Menit)</label><input type="number" id="abs-cfg-grace" min="0" max="180" value="${p.absen_grace_menit ?? 30}" title="Misal 30 = setengah jam setelah jam masuk baru dianggap terlambat & kirim WA" class="w-full px-2.5 py-2 rounded-xl border font-bold" /></div>
             <div><label class="text-[10px] font-bold">Jam Pulang</label><input type="time" id="abs-cfg-pulang" value="${p.jam_pulang_guru || '15:00'}" class="w-full px-2.5 py-2 rounded-xl border" /></div>
-            <div><label class="text-[10px] font-bold">Batas Telat SP</label><input type="number" id="abs-cfg-sp" value="${p.batas_telat_sp || 3}" class="w-full px-2.5 py-2 rounded-xl border" /></div>
+            <div><label class="text-[10px] font-bold">Batas Telat SP</label><input type="number" id="abs-cfg-sp" min="1" value="${p.batas_telat_sp || 3}" class="w-full px-2.5 py-2 rounded-xl border" /></div>
+            <div><label class="text-[10px] font-bold">WA Admin Laporan</label><input type="tel" id="abs-cfg-wa-admin" value="${escapeHtml(p.wa_admin_notif || '')}" placeholder="628xxx" class="w-full px-2.5 py-2 rounded-xl border font-mono" /></div>
           </div>
-          <button type="submit" class="px-5 py-2 rounded-full bg-slate-900 text-white font-bold">Simpan Pengaturan GPS &amp; Jam</button>
+
+          <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-bold">Jadwal Hari Masuk Sekolah:</span>
+              <label class="inline-flex items-center gap-2 cursor-pointer font-bold text-blue-700 dark:text-sky-300">
+                <input type="checkbox" id="abs-cfg-belum-aktif" ${p.absen_belum_notif_enabled !== false ? 'checked' : ''} />
+                <span>Aktifkan Notifikasi WA Otomatis Jika Belum Absen (ke Personel &amp; Admin)</span>
+              </label>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              ${['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'].map((hr) => `<label class="inline-flex items-center gap-1.5 cursor-pointer"><input type="checkbox" value="${hr}" class="chk-hari-sekolah" ${hariAktif.includes(hr) ? 'checked' : ''} /><span>${hr}</span></label>`).join('')}
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900 space-y-2">
+            <p class="font-bold text-teal-900 dark:text-teal-200">Pilih Personel yang Wajib Absen (Guru &amp; Staf Terdaftar):</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-40 overflow-y-auto">
+              ${allStaffList.map((st) => `<label class="inline-flex items-center gap-2 p-2 rounded-xl bg-white dark:bg-slate-900 border cursor-pointer">
+                <input type="checkbox" value="${escapeHtml(st.id)}" class="chk-wajib-absen-user" ${wajibIds.includes(st.id) ? 'checked' : ''} />
+                <span class="truncate"><strong>${escapeHtml(st.nama_lengkap)}</strong> <span class="text-[10px] text-slate-400">(${escapeHtml(st.role)})</span></span>
+              </label>`).join('') || '<p class="text-slate-400">Belum ada akun guru/staf yang terdaftar.</p>'}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+            <div>
+              <label class="text-[10px] font-bold">Pesan WA Terlambat ({nama}, {tanggal}, {jam}, {menit})</label>
+              <textarea id="tpl-wa-telat" rows="2" class="w-full px-2.5 py-1.5 rounded-xl border mt-1">${escapeHtml((p.wa_templates || {}).absen_telat || defaultData.pengaturan.wa_templates.absen_telat)}</textarea>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold">Pesan WA Belum Absen ({nama}, {tanggal}, {jam})</label>
+              <textarea id="tpl-wa-belum" rows="2" class="w-full px-2.5 py-1.5 rounded-xl border mt-1">${escapeHtml((p.wa_templates || {}).absen_belum || defaultData.pengaturan.wa_templates.absen_belum)}</textarea>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold">Pesan WA Penerbitan SP ({nama}, {tanggal}, {jenis_sp}, {alasan})</label>
+              <textarea id="tpl-wa-sp" rows="2" class="w-full px-2.5 py-1.5 rounded-xl border mt-1">${escapeHtml((p.wa_templates || {}).absen_sp || defaultData.pengaturan.wa_templates.absen_sp)}</textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="px-5 py-2.5 rounded-full bg-slate-900 text-white font-bold">Simpan Pengaturan Presensi &amp; Automasi WA</button>
         </form>` : ''}
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
