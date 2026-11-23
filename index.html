@@ -518,54 +518,6 @@
         <span>Bersama Mewujudkan Pendidikan yang Inklusif, Berkualitas dan Berkelanjutan</span>
       </footer>
     </div>
-          </div>
-          <button onclick="toggleDesktopSidebar()" title="Ciutkan Sidebar" class="p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400"><i data-lucide="chevrons-left" class="w-4 h-4"></i></button>
-        </div>
-        <nav id="desktop-sidebar-nav" class="space-y-1 text-xs"></nav>
-      </div>
-      <div id="sidebar-bottom-widget" class="pt-3 border-t border-slate-100 dark:border-slate-800 sidebar-brand-text"></div>
-    </aside>
-
-    <div class="flex-1 min-w-0 flex flex-col">
-      <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <button onclick="toggleMobileDashDrawer()" class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-800"><i data-lucide="menu" class="w-5 h-5"></i></button>
-          <div class="min-w-0">
-            <h1 id="dash-header-title" class="font-display font-extrabold text-sm sm:text-base truncate">Dashboard</h1>
-            <p id="dash-header-subtitle" class="text-[11px] text-slate-500 truncate">Portal Akademik</p>
-          </div>
-        </div>
-
-        <div class="hidden md:block relative flex-1 max-w-md">
-          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-          <input type="text" id="global-dash-search" oninput="debouncedGlobalDashSearch(this.value)" placeholder="Cari siswa, modul, NISN, atau surat... (Ctrl K)" class="w-full pl-10 pr-12 py-2 rounded-full bg-slate-100/90 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-white dark:bg-slate-700 border text-[9px] font-bold text-slate-400">Ctrl K</span>
-          <div id="global-search-results" class="hidden absolute left-0 right-0 top-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto text-xs space-y-1"></div>
-        </div>
-
-        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <span id="network-sync-badge" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 text-[10px] font-bold border border-emerald-200/70">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span id="network-sync-text">Terhubung</span>
-          </span>
-          <button onclick="openChangePasswordModal(false)" title="Ganti Kata Sandi" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-            <i data-lucide="key-round" class="w-4 h-4"></i>
-          </button>
-          <div class="relative">
-            <button onclick="toggleNotificationPopover()" class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
-              <i data-lucide="bell" class="w-4 h-4"></i>
-              <span id="notif-bell-badge" class="hidden absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center">0</span>
-            </button>
-            <div id="notif-bell-popover" class="hidden absolute right-0 top-11 w-80 max-w-[90vw] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-3 z-50 text-xs space-y-2 max-h-96 overflow-y-auto"></div>
-          </div>
-          <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"><i data-lucide="sun-moon" class="w-4 h-4"></i></button>
-          <button onclick="backToPublicHome()" class="px-3 py-1.5 rounded-full bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-sky-300 text-xs font-bold">Web</button>
-          <button onclick="logoutPortal()" class="px-3 py-1.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold">Keluar</button>
-        </div>
-      </header>
-
-      <main id="dashboard-content-area" class="p-3 sm:p-6 lg:p-7 max-w-7xl w-full mx-auto space-y-5 animate-page-enter"></main>
-    </div>
 
     <!-- DRAWER MOBILE DASHBOARD -->
     <div id="mobile-dash-drawer" class="fixed inset-0 z-[95] bg-slate-950/60 backdrop-blur-sm hidden lg:hidden">
@@ -5857,23 +5809,24 @@
       }
       try {
         const cfg = appState.data.pengaturan;
-        cfg.nama_pkbm = document.getElementById('set-nama').value.trim();
-        cfg.kop_yayasan = document.getElementById('set-yayasan').value.trim();
-        cfg.kop_subjudul = document.getElementById('set-kop-sub').value.trim();
-        cfg.alamat = document.getElementById('set-alamat').value.trim();
-        cfg.penanggung_jawab = document.getElementById('set-kepsek').value.trim();
-        cfg.nuptk_pj = document.getElementById('set-nuptk').value.trim();
-        cfg.logo_yayasan_url = document.getElementById('set-logo-yys').value.trim();
-        cfg.logo_url = document.getElementById('set-logo-skl').value.trim();
-        cfg.ttd_kepsek_url = document.getElementById('set-ttd').value.trim();
-        cfg.stempel_url = document.getElementById('set-stempel').value.trim();
-        cfg.qris_url = document.getElementById('set-qris').value.trim();
-        cfg.bank_nama = document.getElementById('set-bank-nama').value.trim();
-        cfg.bank_no_rek = document.getElementById('set-bank-rek').value.trim();
-        cfg.bank_atas_nama = document.getElementById('set-bank-an').value.trim();
-        cfg.google_drive_folder_url = document.getElementById('set-gdrive').value.trim();
-        cfg.gemini_api_key = document.getElementById('set-gemini').value.trim();
-        cfg.wa_api_token = document.getElementById('set-wa').value.trim();
+        const getVal = (id) => (document.getElementById(id)?.value ?? '').trim();
+        cfg.nama_pkbm = getVal('set-nama') || cfg.nama_pkbm;
+        cfg.kop_yayasan = getVal('set-yayasan');
+        cfg.kop_subjudul = getVal('set-kop-sub');
+        cfg.alamat = getVal('set-alamat');
+        cfg.penanggung_jawab = getVal('set-kepsek');
+        cfg.nuptk_pj = getVal('set-nuptk');
+        cfg.logo_yayasan_url = getVal('set-logo-yys');
+        cfg.logo_url = getVal('set-logo-skl');
+        cfg.ttd_kepsek_url = getVal('set-ttd');
+        cfg.stempel_url = getVal('set-stempel');
+        cfg.qris_url = getVal('set-qris');
+        cfg.bank_nama = getVal('set-bank-nama');
+        cfg.bank_no_rek = getVal('set-bank-rek');
+        cfg.bank_atas_nama = getVal('set-bank-an');
+        cfg.google_drive_folder_url = getVal('set-gdrive');
+        cfg.gemini_api_key = getVal('set-gemini');
+        cfg.wa_api_token = getVal('set-wa');
 
         applySchoolLogos();
         renderPublicContent();
@@ -5881,6 +5834,7 @@
         logAktivitas('Memperbarui pengaturan sistem & identitas lembaga');
         showToast('Seluruh pengaturan sistem berhasil disimpan ke Supabase!', 'success');
       } catch (err) {
+        console.error('simpanPengaturanSistem error:', err);
         showToast(`Gagal menyimpan ke database: ${err?.message || 'Periksa koneksi atau izin Super Admin'}`, 'error');
       } finally {
         if (btn) {
@@ -5893,7 +5847,7 @@
     function renderSetInstansiTab(area) {
       const p = appState.data.pengaturan;
       area.innerHTML = `
-        <form onsubmit="simpanPengaturanSistem(event)" class="os-card rounded-3xl p-5 sm:p-6 space-y-4 text-xs">
+        <form id="form-set-instansi" novalidate onsubmit="simpanPengaturanSistem(event)" class="os-card rounded-3xl p-5 sm:p-6 space-y-4 text-xs">
           <h3 class="font-display font-extrabold text-base">Pengaturan Lembaga, 2 Logo Kop Surat, TTD/Stempel, QRIS &amp; Integrasi</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label class="font-bold">Nama Lembaga PKBM</label><input type="text" id="set-nama" value="${escapeHtml(p.nama_pkbm || '')}" class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
@@ -5931,12 +5885,12 @@
               <label class="font-bold">Gambar QRIS Pembayaran</label>
               <div class="flex gap-1.5 mt-1"><input type="text" id="set-qris" value="${escapeHtml(p.qris_url || '')}" class="flex-1 px-2.5 py-2 rounded-xl border" /><label class="px-3 py-2 rounded-xl bg-slate-100 font-bold cursor-pointer">Upload<input type="file" class="hidden" onchange="handleUploadGambarDirect(this,'set-qris',null,'QRIS')" /></label></div>
             </div>
-            <div><label class="font-bold">Folder Google Drive Kurikulum</label><input type="url" id="set-gdrive" value="${escapeHtml(p.google_drive_folder_url || '')}" class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
+            <div><label class="font-bold">Folder Google Drive Kurikulum</label><input type="text" id="set-gdrive" value="${escapeHtml(p.google_drive_folder_url || '')}" placeholder="https://drive.google.com/..." class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
             <div><label class="font-bold">Gemini AI API Key (Opsional Fallback)</label><input type="password" id="set-gemini" value="${escapeHtml(p.gemini_api_key || '')}" placeholder="AIzaSy..." class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
             <div><label class="font-bold">Fonnte WhatsApp API Token</label><input type="password" id="set-wa" value="${escapeHtml(p.wa_api_token || '')}" class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
           </div>
 
-          <button id="btn-simpan-pengaturan" type="submit" class="mobile-sticky-submit px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg">Simpan Seluruh Pengaturan</button>
+          <button id="btn-simpan-pengaturan" type="button" onclick="simpanPengaturanSistem(event)" class="mobile-sticky-submit px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg">Simpan Seluruh Pengaturan</button>
         </form>`;
     }
 
