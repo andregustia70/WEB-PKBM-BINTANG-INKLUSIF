@@ -68,13 +68,32 @@
     body.sidebar-collapsed #desktop-sidebar-aside .sidebar-label,
     body.sidebar-collapsed #desktop-sidebar-aside .sidebar-group-title,
     body.sidebar-collapsed #desktop-sidebar-aside .sidebar-brand-text { display: none; }
-    /* TEMA KHUSUS AKUN GURU (PUTIH & HIJAU TOSKA #0F9D8A) */
-    body.role-guru-theme #desktop-sidebar-aside { background: #ffffff; color: #0f172a; border-right: 1px solid #e2e8f0; }
-    .dark body.role-guru-theme #desktop-sidebar-aside { background: #0f172a; color: #e2e8f0; border-right-color: #1e293b; }
+    /* TEMA KHUSUS AKUN GURU (EDUFLOW DARK NAVY SIDEBAR #1E243B + UNGU #6C5CE7 & TOSKA #0F9D8A) */
+    body.role-guru-theme #desktop-sidebar-aside {
+      background: #1E243B !important;
+      color: #E2E8F0 !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    body.role-guru-theme #desktop-sidebar-aside .sidebar-group-title {
+      color: #94A3B8 !important;
+    }
+    body.role-guru-theme #desktop-sidebar-aside #dash-sidebar-school {
+      color: #FFFFFF !important;
+    }
+    body.role-guru-theme #desktop-sidebar-aside #dash-sidebar-role {
+      color: #5EEAD4 !important;
+    }
+    body.role-guru-theme .guru-nav-item {
+      color: #CBD5E1;
+    }
+    body.role-guru-theme .guru-nav-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
     body.role-guru-theme .guru-nav-active {
-      background: #0F9D8A !important;
+      background: linear-gradient(135deg, #6C5CE7 0%, #5B4BD6 100%) !important;
       color: #ffffff !important;
-      box-shadow: 0 6px 16px -6px rgba(15, 157, 138, 0.55);
+      box-shadow: 0 8px 18px -6px rgba(108, 92, 231, 0.65);
     }
     @keyframes pageFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .animate-page-enter { animation: pageFadeIn 0.24s ease-out; }
@@ -504,14 +523,14 @@
         <label class="inline-flex items-center gap-2"><input type="checkbox" id="remember-portal-cred" checked /><span>Simpan username &amp; password otomatis</span></label>
         <button type="submit" class="w-full py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold">Masuk Portal Sekarang</button>
         <div class="pt-2 border-t space-y-1.5">
-          <p class="text-[10px] font-bold text-slate-400 uppercase">Akses Cepat Akun Demo (Sandi: 123)</p>
+          <p class="text-[10px] font-bold text-slate-400 uppercase">Klik 1x untuk Langsung Masuk Akun Demo:</p>
           <div class="flex flex-wrap gap-1.5">
-            <button type="button" onclick="fillDemoLogin('guru1','123')" class="px-2.5 py-1 rounded-full bg-teal-50 text-teal-700 font-bold border border-teal-200">Guru</button>
-            <button type="button" onclick="fillDemoLogin('operator1','123')" class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 font-bold border border-blue-200">Operator</button>
-            <button type="button" onclick="fillDemoLogin('bendahara1','123')" class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 font-bold border border-amber-200">Bendahara</button>
-            <button type="button" onclick="fillDemoLogin('siswa1','123')" class="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200">Siswa</button>
-            <button type="button" onclick="fillDemoLogin('ortu1','123')" class="px-2.5 py-1 rounded-full bg-purple-50 text-purple-700 font-bold border border-purple-200">Orang Tua</button>
-            <button type="button" onclick="fillDemoLogin('media1','123')" class="px-2.5 py-1 rounded-full bg-pink-50 text-pink-700 font-bold border border-pink-200">Tim Media</button>
+            <button type="button" onclick="fillDemoLogin('guru1','123',true)" class="px-2.5 py-1 rounded-full bg-teal-50 text-teal-700 font-bold border border-teal-200 hover:bg-teal-100">Guru</button>
+            <button type="button" onclick="fillDemoLogin('operator1','123',true)" class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 font-bold border border-blue-200 hover:bg-blue-100">Operator</button>
+            <button type="button" onclick="fillDemoLogin('bendahara1','123',true)" class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 font-bold border border-amber-200 hover:bg-amber-100">Bendahara</button>
+            <button type="button" onclick="fillDemoLogin('siswa1','123',true)" class="px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200 hover:bg-indigo-100">Siswa</button>
+            <button type="button" onclick="fillDemoLogin('ortu1','123',true)" class="px-2.5 py-1 rounded-full bg-purple-50 text-purple-700 font-bold border border-purple-200 hover:bg-purple-100">Orang Tua</button>
+            <button type="button" onclick="fillDemoLogin('media1','123',true)" class="px-2.5 py-1 rounded-full bg-pink-50 text-pink-700 font-bold border border-pink-200 hover:bg-pink-100">Tim Media</button>
           </div>
         </div>
       </form>
@@ -596,6 +615,7 @@
     const DEFAULT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyc9RtMWiuycvNhzd9jCTZTdDeFH97QqWWOTJ69M3u0m9j2P950Dzy_6ZhVCdf_IyIEAQ/exec';
     const STORAGE_KEY = 'pkbm_bintang_inklusif_os_v11';
     const CRED_STORAGE_KEY = 'pkbm_bintang_cred_v11';
+    const SESSION_STORAGE_KEY = 'pkbm_bintang_active_session_v11';
 
     let supabase = null;
     try {
@@ -868,25 +888,81 @@
       }
     }
 
-    async function syncRecordToCloud(table, record, op = 'upsert') {
+    async function syncRecordToCloud(tableName, record, op = 'upsert') {
       saveLocalState();
       const scriptUrl = appState.data.pengaturan.apps_script_url;
       if (scriptUrl && scriptUrl.startsWith('https://')) {
         try {
           await fetch(scriptUrl, {
             method: 'POST',
-            body: JSON.stringify({ action: 'sync_row', table, op, record })
+            body: JSON.stringify({ action: 'sync_row', table: tableName, op, record })
           });
         } catch (e) {}
       }
       if (supabase && record) {
         try {
           if (op === 'delete' && record.id) {
-            await supabase.from(table).delete().eq('id', record.id);
+            await supabase.from(tableName).delete().eq('id', record.id);
           } else {
-            await supabase.from(table).upsert(record);
+            await supabase.from(tableName).upsert(record);
           }
         } catch (e) {}
+      }
+    }
+    window.syncRecordToCloud = syncRecordToCloud;
+
+    function saveRememberedCredentials(type, data) {
+      try {
+        const raw = localStorage.getItem(CRED_STORAGE_KEY);
+        const all = raw ? JSON.parse(raw) : {};
+        if (data === null) delete all[type];
+        else all[type] = data;
+        localStorage.setItem(CRED_STORAGE_KEY, JSON.stringify(all));
+      } catch (e) {}
+    }
+
+    function applyRememberedCredentials() {
+      try {
+        const raw = localStorage.getItem(CRED_STORAGE_KEY);
+        if (!raw) return;
+        const all = JSON.parse(raw);
+        if (all.portal) {
+          const uEl = document.getElementById('login-portal-user');
+          const pEl = document.getElementById('login-portal-pass');
+          if (uEl && all.portal.user) uEl.value = all.portal.user;
+          if (pEl && all.portal.pass) pEl.value = all.portal.pass;
+        }
+        if (all.admin) {
+          const eEl = document.getElementById('login-admin-email');
+          const pEl = document.getElementById('login-admin-pass');
+          if (eEl && all.admin.email) eEl.value = all.admin.email;
+          if (pEl && all.admin.pass) pEl.value = all.admin.pass;
+        }
+      } catch (e) {}
+    }
+
+    function saveActiveUserSession(user) {
+      try {
+        if (user) localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
+        else localStorage.removeItem(SESSION_STORAGE_KEY);
+      } catch (e) {}
+    }
+
+    function restoreActiveUserSession() {
+      try {
+        const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+        if (!raw) return false;
+        const savedUser = JSON.parse(raw);
+        if (!savedUser || !savedUser.role) return false;
+        if (savedUser.role === 'super_admin') {
+          enterDashboard(savedUser, true);
+          return true;
+        }
+        const freshUser = (appState.data.pengguna || []).find((x) => x.id === savedUser.id) || savedUser;
+        enterDashboard(freshUser, true);
+        return true;
+      } catch (e) {
+        return false;
       }
     }
 
@@ -1437,6 +1513,7 @@
     // 4. LOGIN, AUTENTIKASI & ROLE-BASED DASHBOARD ENGINE
     // =========================================================================
     window.openLoginModal = (mode = 'portal') => {
+      applyRememberedCredentials();
       switchLoginMode(mode);
       const m = document.getElementById('login-modal');
       if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
@@ -1459,39 +1536,82 @@
         tp?.classList.add('bg-blue-600', 'text-white'); ta?.classList.remove('bg-blue-600', 'text-white');
       }
     };
-    window.fillDemoLogin = (u, p) => {
+    window.fillDemoLogin = (u, p, autoSubmit = false) => {
       const uEl = document.getElementById('login-portal-user');
       const pEl = document.getElementById('login-portal-pass');
       if (uEl) uEl.value = u;
       if (pEl) pEl.value = p;
+      if (autoSubmit) {
+        const found = (appState.data.pengguna || []).find(
+          (x) => String(x.username || '').trim().toLowerCase() === String(u).toLowerCase() && String(x.password || '').trim() === String(p)
+        );
+        if (found) {
+          closeLoginModal();
+          enterDashboard(found);
+        }
+      }
     };
 
     window.handlePortalLogin = async (e) => {
-      e.preventDefault();
-      const u = document.getElementById('login-portal-user').value.trim().toLowerCase();
-      const p = document.getElementById('login-portal-pass').value.trim();
-      let found = (appState.data.pengguna || []).find(
-        (x) => (String(x.username || '').trim().toLowerCase() === u || String(x.nuptk || '').trim().toLowerCase() === u) && String(x.password || '').trim() === p
-      );
-      if (!found) {
-        await pullCloudDataOnInit();
-        found = (appState.data.pengguna || []).find(
-          (x) => (String(x.username || '').trim().toLowerCase() === u || String(x.nuptk || '').trim().toLowerCase() === u) && String(x.password || '').trim() === p
-        );
-      }
-      if (!found) {
-        showToast('Username/NUPTK atau kata sandi tidak cocok. Pastikan akun sudah disimpan.', 'error');
+      if (e) e.preventDefault();
+      const rawUser = document.getElementById('login-portal-user')?.value || '';
+      const rawPass = document.getElementById('login-portal-pass')?.value || '';
+      const u = rawUser.trim().toLowerCase();
+      const p = rawPass.trim();
+      if (!u || !p) {
+        showToast('Masukkan username/NISN/NUPTK dan kata sandi.', 'warning');
         return;
       }
+
+      // Dukung login email Super Admin bila pengguna mengetikkannya di tab portal
+      if (u === 'admin@pkbmbintang.sch.id' && p === 'admin123') {
+        closeLoginModal();
+        enterDashboard({
+          id: 'super-admin-1',
+          username: rawUser.trim(),
+          nama_lengkap: appState.data.pengaturan.penanggung_jawab || 'Super Admin PKBM',
+          role: 'super_admin'
+        });
+        return;
+      }
+
+      const matchAccount = (list) => (list || []).find((x) => {
+        const uname = String(x.username || '').trim().toLowerCase();
+        const nuptk = String(x.nuptk || '').trim().toLowerCase();
+        const pass = String(x.password || '').trim();
+        return (uname === u || (nuptk && nuptk === u)) && pass === p;
+      });
+
+      let found = matchAccount(appState.data.pengguna);
+      if (!found) {
+        await pullCloudDataOnInit();
+        found = matchAccount(appState.data.pengguna);
+      }
+      if (!found) {
+        showToast('Username/NUPTK atau kata sandi tidak cocok. Periksa kembali data akun Anda.', 'error');
+        return;
+      }
+
+      const remember = document.getElementById('remember-portal-cred')?.checked;
+      saveRememberedCredentials('portal', remember ? { user: rawUser.trim(), pass: p } : null);
       closeLoginModal();
       enterDashboard(found);
     };
 
     window.handleAdminLogin = (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-admin-email').value.trim();
-      const pass = document.getElementById('login-admin-pass').value.trim();
-      if (!email || !pass) return;
+      if (e) e.preventDefault();
+      const email = (document.getElementById('login-admin-email')?.value || '').trim();
+      const pass = (document.getElementById('login-admin-pass')?.value || '').trim();
+      if (!email || !pass) {
+        showToast('Masukkan email dan password Super Admin.', 'warning');
+        return;
+      }
+      if (pass.length < 4) {
+        showToast('Password Super Admin minimal 4 karakter.', 'error');
+        return;
+      }
+      const remember = document.getElementById('remember-admin-cred')?.checked;
+      saveRememberedCredentials('admin', remember ? { email, pass } : null);
       closeLoginModal();
       enterDashboard({
         id: 'super-admin-1',
@@ -1509,6 +1629,7 @@
 
     window.logoutPortal = () => {
       appState.currentUser = null;
+      saveActiveUserSession(null);
       document.body.classList.remove('role-guru-theme');
       backToPublicHome();
       showToast('Anda telah keluar dari portal.', 'info');
@@ -1617,13 +1738,19 @@
         { group: 'LAYANAN', id: 'tabungan_siswa', label: 'Buku Tabungan 3D', icon: 'book-open' },
         { group: 'LAYANAN', id: 'spp', label: 'Tagihan SPP & QRIS', icon: 'credit-card' }
       ];
-      if (role === 'siswa') studentMenus.push({ group: 'AKUN', id: 'biodata_siswa', label: 'Biodata & Kartu Pelajar', icon: 'id-card' });
+      if (role === 'siswa') {
+        studentMenus.push({ group: 'AKUN', id: 'biodata_siswa', label: 'Biodata & Kartu Pelajar', icon: 'id-card' });
+      }
+      if ((p.kaldik_roles || []).includes(role)) {
+        studentMenus.push({ group: 'AKADEMIK', id: 'kalender_akademik', label: 'Kalender Akademik', icon: 'calendar' });
+      }
       return studentMenus;
     }
 
-    function enterDashboard(user) {
+    function enterDashboard(user, silent = false) {
       appState.currentUser = user;
       appState.activeTab = 'overview';
+      saveActiveUserSession(user);
       document.getElementById('public-landing-view')?.classList.add('hidden');
       document.getElementById('dashboard-view')?.classList.remove('hidden');
 
@@ -1631,7 +1758,7 @@
       const roleLabels = {
         super_admin: 'SUPER ADMIN / KEPSEK',
         operator: 'OPERATOR ADMINISTRASI',
-        guru: 'WORKSPACE GURU & TUTOR',
+        guru: 'EDUFLOW • WORKSPACE GURU',
         bendahara: 'BENDAHARA LEMBAGA',
         tim_media: 'TIM MEDIA & PUBLIKASI',
         siswa: `WARGA BELAJAR • ${user.paket || ''}`,
@@ -1644,6 +1771,9 @@
       renderNotificationBell();
       renderMobileStudentBottomNav();
       switchDashboardTab('overview');
+      if (!silent) {
+        showToast(`Selamat datang, ${user.nama_lengkap}!`, 'success');
+      }
     }
 
     function renderSidebarMenus() {
@@ -1658,12 +1788,12 @@
           let groupHeader = '';
           if (m.group && m.group !== lastGroup) {
             lastGroup = m.group;
-            groupHeader = `<p class="sidebar-group-title text-[10px] font-extrabold uppercase tracking-wider px-3 pt-3 pb-1 ${isGuru ? 'text-teal-700/70' : 'text-slate-400'}">${m.group}</p>`;
+            groupHeader = `<p class="sidebar-group-title text-[10px] font-extrabold uppercase tracking-wider px-3 pt-3 pb-1 ${isGuru ? 'text-slate-400' : 'text-slate-400'}">${m.group}</p>`;
           }
           const isActive = appState.activeTab === m.id;
           const activeClass = isActive
             ? (isGuru ? 'guru-nav-active font-bold' : 'bg-blue-600 text-white font-bold shadow-md shadow-blue-600/20')
-            : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold';
+            : (isGuru ? 'guru-nav-item font-semibold' : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold');
           return `${groupHeader}
             <button onclick="switchDashboardTab('${m.id}'); ${isMobile ? 'toggleMobileDashDrawer();' : ''}" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition text-left ${activeClass}">
               <i data-lucide="${m.icon}" class="w-4 h-4 shrink-0"></i>
@@ -1679,10 +1809,10 @@
       if (mNav) mNav.innerHTML = buildHtml(true);
       if (bottomW) {
         if (isGuru) {
-          bottomW.innerHTML = `<div class="p-3 rounded-2xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 space-y-2">
-            <p class="text-[11px] font-extrabold text-teal-800 dark:text-teal-300">📍 Presensi GPS 50m</p>
-            <p class="text-[10px] text-teal-700 dark:text-teal-400">Wajib check-in dalam radius ${appState.data.pengaturan.radius_absen_meter || 50}m dari PKBM.</p>
-            <button onclick="switchDashboardTab('absensi')" class="w-full py-2 rounded-xl bg-[#0F9D8A] text-white text-[11px] font-bold">Absen Sekarang</button>
+          bottomW.innerHTML = `<div class="p-3 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-slate-200">
+            <p class="text-[11px] font-extrabold text-teal-300">📍 Presensi GPS 50m</p>
+            <p class="text-[10px] text-slate-300">Check-in dalam radius ${appState.data.pengaturan.radius_absen_meter || 50}m dari PKBM.</p>
+            <button onclick="switchDashboardTab('absensi')" class="w-full py-2 rounded-xl bg-[#0F9D8A] hover:bg-teal-600 text-white text-[11px] font-bold">Absen Sekarang</button>
           </div>`;
         } else {
           bottomW.innerHTML = `<div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border text-[11px]">
@@ -4200,11 +4330,14 @@
     window.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem('pkbm_dark') === '1') document.documentElement.classList.add('dark');
       loadLocalState();
+      applyRememberedCredentials();
       pullCloudDataOnInit();
       startLiveClockAndHijri();
       renderPublicContent();
       appState.heroTimer = setInterval(() => { nextHeroSlide(); }, 6000);
-      if (window.location.hash === '#tamu') navigatePublicPage('buku_tamu');
+      if (!restoreActiveUserSession() && window.location.hash === '#tamu') {
+        navigatePublicPage('buku_tamu');
+      }
       if (window.lucide) window.lucide.createIcons();
     });
   </script>
