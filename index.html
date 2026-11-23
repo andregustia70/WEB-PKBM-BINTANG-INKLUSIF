@@ -62,6 +62,33 @@
     .kaldik-cell { transition: background-color 0.2s ease, border-color 0.2s ease; }
     .walikelas-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
     .walikelas-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(11, 36, 71, 0.22); }
+    /* SIDEBAR NAVY DARK PREMIUM (REFERENSI VISUAL EDUCATION OS) */
+    #desktop-sidebar-aside {
+      background: linear-gradient(180deg, #071E42 0%, #0B2A5B 55%, #082046 100%);
+      color: #E2E8F0;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    #desktop-sidebar-aside .sidebar-group-title { color: rgba(148, 163, 184, 0.72); }
+    .os-nav-item { color: #CBD5E1; }
+    .os-nav-item:hover { background: rgba(255, 255, 255, 0.08); color: #FFFFFF; }
+    .os-nav-active {
+      background: linear-gradient(90deg, #1D63DC 0%, #2563EB 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 8px 20px -6px rgba(29, 99, 220, 0.7);
+    }
+    .os-banner-welcome {
+      background: linear-gradient(115deg, #E8F1FF 0%, #F4F8FF 48%, #CBE1FF 78%, #1E5BB8 100%);
+      border: 1px solid rgba(191, 219, 254, 0.9);
+      box-shadow: 0 12px 28px -12px rgba(15, 23, 42, 0.1);
+    }
+    .dark .os-banner-welcome {
+      background: linear-gradient(115deg, #0B2447 0%, #13315C 55%, #0F9D8A 100%);
+      border-color: rgba(51, 65, 85, 0.8);
+    }
+    .kpi-grad-blue { background: linear-gradient(135deg, #1E64D8 0%, #1549A8 100%); }
+    .kpi-grad-teal { background: linear-gradient(135deg, #0FA39A 0%, #0C7C8A 100%); }
+    .kpi-grad-purple { background: linear-gradient(135deg, #6E56CF 0%, #5338B8 100%); }
+    .kpi-grad-emerald { background: linear-gradient(135deg, #0EA874 0%, #098268 100%); }
     body.sidebar-collapsed #desktop-sidebar-aside { width: 5.2rem; }
     body.sidebar-collapsed #desktop-sidebar-aside .sidebar-label,
     body.sidebar-collapsed #desktop-sidebar-aside .sidebar-group-title,
@@ -423,15 +450,74 @@
   <!-- VIEW 2: DASHBOARD PORTAL INTERNAL — PREMIUM EDUCATION OS            -->
   <!-- =================================================================== -->
   <div id="dashboard-view" class="hidden flex-1 flex flex-col lg:flex-row min-h-screen w-full pb-20 lg:pb-0">
-    <aside id="desktop-sidebar-aside" class="hidden lg:flex lg:flex-col w-64 lg:sticky lg:top-0 lg:h-screen shrink-0 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 p-4 justify-between overflow-y-auto border-r border-slate-200/90 dark:border-slate-800 transition-all duration-200">
+    <aside id="desktop-sidebar-aside" class="hidden lg:flex lg:flex-col w-64 lg:sticky lg:top-0 lg:h-screen shrink-0 text-slate-200 p-4 justify-between overflow-y-auto transition-all duration-200">
       <div class="space-y-4">
-        <div class="flex items-center justify-between gap-2 px-1 py-1 border-b border-slate-100 dark:border-slate-800 pb-3">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <div id="dash-sidebar-logo-box" class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-[#0B2447] to-[#0F9D8A] text-white flex items-center justify-center shrink-0 overflow-hidden shadow-sm"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
-            <div class="min-w-0 sidebar-brand-text">
-              <p id="dash-sidebar-school" class="font-display font-extrabold text-xs text-slate-900 dark:text-white truncate">PKBM BINTANG INKLUSIF</p>
-              <p id="dash-sidebar-role" class="text-[10px] font-bold text-teal-600 dark:text-teal-400 truncate">PREMIUM EDUCATION OS</p>
+        <div class="flex flex-col items-center text-center gap-2 px-2 py-2 border-b border-white/10 pb-4">
+          <div id="dash-sidebar-logo-box" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-blue-500 to-teal-400 text-white flex items-center justify-center shrink-0 overflow-hidden shadow-lg ring-2 ring-white/20"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+          <div class="min-w-0 sidebar-brand-text">
+            <p id="dash-sidebar-school" class="font-display font-extrabold text-xs tracking-wide text-white leading-snug">PKBM BINTANG INKLUSIF</p>
+            <p id="dash-sidebar-role" class="text-[10px] font-semibold text-sky-300 mt-0.5 truncate">Education OS</p>
+          </div>
+        </div>
+        <nav id="desktop-sidebar-nav" class="space-y-1 text-xs"></nav>
+      </div>
+      <div id="sidebar-bottom-widget" class="pt-3 space-y-2.5 sidebar-brand-text"></div>
+    </aside>
+
+    <div class="flex-1 min-w-0 flex flex-col">
+      <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <button onclick="toggleMobileDashDrawer()" class="lg:hidden p-2 rounded-xl bg-slate-100 dark:bg-slate-800"><i data-lucide="menu" class="w-5 h-5"></i></button>
+          <button onclick="toggleDesktopSidebar()" title="Buka/Tutup Sidebar" class="hidden lg:inline-flex p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"><i data-lucide="menu" class="w-5 h-5"></i></button>
+          <div class="hidden sm:block relative flex-1 min-w-[230px] md:w-80 lg:w-96">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="global-dash-search" oninput="debouncedGlobalDashSearch(this.value)" placeholder="Cari siswa, guru, atau menu..." class="w-full pl-10 pr-16 py-2 rounded-full bg-slate-100/90 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-400">Ctrl + K</span>
+            <div id="global-search-results" class="hidden absolute left-0 right-0 top-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto text-xs space-y-1"></div>
+          </div>
+          <div class="sm:hidden min-w-0">
+            <h1 id="dash-header-title" class="font-display font-extrabold text-sm truncate">Dashboard</h1>
+            <p id="dash-header-subtitle" class="text-[10px] text-slate-500 truncate">Education OS</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <span id="network-sync-badge" class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 text-[10px] font-bold border border-emerald-200/70">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span id="network-sync-text">Terhubung</span>
+          </span>
+          <div class="relative">
+            <button onclick="toggleNotificationPopover()" class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <i data-lucide="bell" class="w-4 h-4"></i>
+              <span id="notif-bell-badge" class="hidden absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-rose-600 text-white text-[9px] font-bold flex items-center justify-center">0</span>
+            </button>
+            <div id="notif-bell-popover" class="hidden absolute right-0 top-11 w-80 max-w-[90vw] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-3 z-50 text-xs space-y-2 max-h-96 overflow-y-auto"></div>
+          </div>
+          <button onclick="toggleDarkMode()" title="Mode Gelap/Terang" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"><i data-lucide="moon" class="w-4 h-4"></i></button>
+          <button onclick="openChangePasswordModal(false)" title="Ganti Kata Sandi" class="hidden sm:inline-flex p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+            <i data-lucide="key-round" class="w-4 h-4"></i>
+          </button>
+          <div class="hidden md:flex items-center gap-2 pl-2.5 border-l border-slate-200 dark:border-slate-700 text-right leading-tight">
+            <div>
+              <p id="dash-live-date" class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Sen, 24 Nov 2026</p>
+              <p id="dash-live-time" class="text-xs font-extrabold text-slate-800 dark:text-white font-mono">00:05 WIB</p>
             </div>
+            <div class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <button onclick="backToPublicHome()" class="px-3 py-1.5 rounded-full bg-blue-50 dark:bg-slate-800 text-blue-700 dark:text-sky-300 text-xs font-bold">Web</button>
+          <button onclick="logoutPortal()" class="px-3 py-1.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold">Keluar</button>
+        </div>
+      </header>
+
+      <main id="dashboard-content-area" class="p-3 sm:p-5 lg:p-6 max-w-[1440px] w-full mx-auto space-y-5 animate-page-enter flex-1"></main>
+
+      <footer class="hidden lg:flex items-center justify-between px-6 py-3 border-t border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 text-[11px] text-slate-500">
+        <span><strong class="text-slate-700 dark:text-slate-300">PKBM BINTANG INKLUSIF</strong> &nbsp;|&nbsp; Premium Education OS</span>
+        <span>Bersama Mewujudkan Pendidikan yang Inklusif, Berkualitas dan Berkelanjutan</span>
+      </footer>
+    </div>
           </div>
           <button onclick="toggleDesktopSidebar()" title="Ciutkan Sidebar" class="p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400"><i data-lucide="chevrons-left" class="w-4 h-4"></i></button>
         </div>
@@ -787,15 +873,72 @@
     window.appState = appState;
 
     // =========================================================================
-    // 1. KEAMANAN HELPER, SANITASI & OPTIMASI JARINGAN / CACHE
+    // 2. JAM REAL-TIME, KALENDER HIJRIAH, LOGO & PWA MANIFEST
     // =========================================================================
-    function escapeHtml(val) {
-      return String(val ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
+    function formatTanggalHijriahIndonesia(dateObj) {
+      const bulanHijriahId = [
+        'Muharram',
+        'Safar',
+        'Rabiul Awal',
+        'Rabiul Akhir',
+        'Jumadil Awal',
+        'Jumadil Akhir',
+        'Rajab',
+        'Syaban',
+        'Ramadan',
+        'Syawal',
+        'Zulkaidah',
+        'Zulhijah'
+      ];
+      try {
+        const parts = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric'
+        }).formatToParts(dateObj);
+        const day = parts.find((p) => p.type === 'day')?.value || '';
+        const monthIdx = parseInt(parts.find((p) => p.type === 'month')?.value || '1', 10) - 1;
+        const year = (parts.find((p) => p.type === 'year')?.value || '').replace(/\D/g, '');
+        if (day && year && bulanHijriahId[monthIdx]) {
+          return `${day} ${bulanHijriahId[monthIdx]} ${year} H`;
+        }
+      } catch (e) {}
+      try {
+        const fallback = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }).format(dateObj);
+        return fallback.includes('H') ? fallback : `${fallback} H`;
+      } catch (e2) {
+        return 'Kalender Hijriah';
+      }
+    }
+
+    function startLiveClockAndHijri() {
+      const update = () => {
+        const now = new Date();
+        const wibEl = document.getElementById('live-clock-wib');
+        const hijriEl = document.getElementById('live-date-hijri');
+        const dashDateEl = document.getElementById('dash-live-date');
+        const dashTimeEl = document.getElementById('dash-live-time');
+        if (wibEl) {
+          const hariTgl = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+          const jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\./g, ':');
+          wibEl.textContent = `${hariTgl} • ${jam} WIB`;
+        }
+        if (dashDateEl) {
+          dashDateEl.textContent = now.toLocaleDateString('id-ID', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
+        }
+        if (dashTimeEl) {
+          dashTimeEl.textContent = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':') + ' WIB';
+        }
+        if (hijriEl) {
+          hijriEl.textContent = formatTanggalHijriahIndonesia(now);
+        }
+      };
+      update();
+      setInterval(update, 1000);
     }
 
     function debounceFn(fn, delay = 220) {
@@ -1206,7 +1349,7 @@
       if (!supabase) return;
       try {
         const [{ data: settingsData }, { data: jadwals }, { data: kaldik }, { data: struktur }, { data: berita }, { data: galeri }] = await Promise.all([
-          supabase.from('pengaturan_sekolah').select('nama_pkbm,kop_yayasan,kop_subjudul,logo_yayasan_url,logo_url,kop_logo_size,kop_text_color,ttd_size,stempel_size,kaldik_dokumen_url,kaldik_dokumen_nama,kaldik_roles,wali_kelas_assignments,buku_induk_guru_ids,guru_visible_menus,operator_visible_menus,ppdb_visible_roles,ppdb_form_config,tabungan_input_roles,sosmed_feed_visible,sosmed_posts,video_profil_judul,video_profil_desk,video_profil_url,tentang_judul,tentang_desk,tentang_foto,program_cards,hero_slides,alamat,penanggung_jawab,nuptk_pj,periode_aktif,pengumuman_publik,visi,misi,jam_masuk_guru,jam_pulang_guru,batas_telat_sp,google_drive_folder_url,ttd_kepsek_url,stempel_url,qris_url,bank_nama,bank_no_rek,bank_atas_nama,sosmed,lokasi_lat,lokasi_lng,radius_absen_meter').limit(1),
+          supabase.from('pengaturan_sekolah').select('id,nama_pkbm,kop_yayasan,kop_subjudul,logo_yayasan_url,logo_url,kop_logo_size,kop_text_color,ttd_size,stempel_size,kaldik_dokumen_url,kaldik_dokumen_nama,kaldik_roles,wali_kelas_assignments,buku_induk_guru_ids,guru_visible_menus,operator_visible_menus,ppdb_visible_roles,ppdb_form_config,tabungan_input_roles,sosmed_feed_visible,sosmed_posts,video_profil_judul,video_profil_desk,video_profil_url,tentang_judul,tentang_desk,tentang_foto,program_cards,hero_slides,alamat,penanggung_jawab,nuptk_pj,periode_aktif,pengumuman_publik,visi,misi,jam_masuk_guru,jam_pulang_guru,batas_telat_sp,google_drive_folder_url,ttd_kepsek_url,stempel_url,qris_url,bank_nama,bank_no_rek,bank_atas_nama,sosmed,lokasi_lat,lokasi_lng,radius_absen_meter').limit(1),
           supabase.from('jadwal_mapel').select(TABLE_SELECT_COLUMNS.jadwal_mapel).is('deleted_at', null).limit(100),
           supabase.from('kalender_akademik').select(TABLE_SELECT_COLUMNS.kalender_akademik).is('deleted_at', null).limit(100),
           supabase.from('struktur_sekolah').select('id,jabatan,nama,nuptk,foto_url').is('deleted_at', null).limit(50),
@@ -1228,93 +1371,218 @@
 
     async function syncPengaturanKeCloud() {
       saveLocalState();
-      await syncRecordToCloud('pengaturan_sekolah', appState.data.pengaturan, 'upsert');
+      setNetworkSyncStatus('syncing', 'Menyimpan Pengaturan...');
+      if (supabase) {
+        try {
+          const payload = Object.assign({}, appState.data.pengaturan, { updated_at: new Date().toISOString() });
+          if (payload.id) {
+            const { error } = await fetchWithRetry(() =>
+              supabase.from('pengaturan_sekolah').update(payload).eq('id', payload.id)
+            );
+            if (error) throw error;
+          } else {
+            const { data: existingRow } = await supabase.from('pengaturan_sekolah').select('id').limit(1).maybeSingle();
+            if (existingRow?.id) {
+              payload.id = existingRow.id;
+              appState.data.pengaturan.id = existingRow.id;
+              const { error } = await fetchWithRetry(() =>
+                supabase.from('pengaturan_sekolah').update(payload).eq('id', existingRow.id)
+              );
+              if (error) throw error;
+            } else {
+              const { data: inserted, error } = await fetchWithRetry(() =>
+                supabase.from('pengaturan_sekolah').insert(payload).select('id').single()
+              );
+              if (error) throw error;
+              if (inserted?.id) appState.data.pengaturan.id = inserted.id;
+            }
+          }
+          saveLocalState();
+          setNetworkSyncStatus('online', 'Supabase Tersinkron');
+        } catch (err) {
+          console.error('syncPengaturanKeCloud error:', err);
+          setNetworkSyncStatus('offline', 'Gagal Simpan Pengaturan');
+          throw err;
+        }
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderSkeletonCards(count = 4) {
+      return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
+        ${Array.from({ length: count }).map(() => `<div class="os-card rounded-3xl p-5 space-y-3"><div class="h-3 w-24 bg-slate-200 dark:bg-slate-800 rounded"></div><div class="h-8 w-20 bg-slate-200 dark:bg-slate-800 rounded"></div><div class="h-2.5 w-32 bg-slate-100 dark:bg-slate-800/70 rounded"></div></div>`).join('')}
+      </div>`;
+    }
+
+    function renderEmptyState(title, description) {
+      return `<div class="os-card rounded-3xl p-8 text-center space-y-2 max-w-xl mx-auto">
+        <p class="font-display font-extrabold text-base text-slate-800 dark:text-white">${escapeHtml(title)}</p>
+        <p class="text-xs text-slate-500 leading-relaxed">${escapeHtml(description)}</p>
+      </div>`;
+    }
+
+    function applySchoolLogos(logoUrl) {
+      const p = appState.data.pengaturan;
+      const url = logoUrl !== undefined ? logoUrl : p.logo_url;
+      ['nav-logo-box', 'footer-logo-box', 'dash-sidebar-logo-box'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (url) el.innerHTML = `<img src="${escapeHtml(url)}" alt="Logo" class="w-full h-full object-cover" />`;
+        else el.innerHTML = `<i data-lucide="graduation-cap" class="w-5 h-5"></i>`;
+      });
+      ['nav-school-name', 'footer-school-name', 'dash-sidebar-school'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = p.nama_pkbm || 'PKBM BINTANG INKLUSIF';
+      });
+      if (url) {
+        const appleIcon = document.getElementById('dynamic-apple-icon');
+        if (appleIcon) appleIcon.href = url;
+        try {
+          const manifest = {
+            name: p.nama_pkbm || 'PKBM Bintang Inklusif',
+            short_name: 'PKBM Bintang',
+            start_url: '.',
+            display: 'standalone',
+            background_color: '#0B2447',
+            theme_color: '#0B2447',
+            icons: [{ src: url, sizes: '192x192', type: 'image/png' }, { src: url, sizes: '512x512', type: 'image/png' }]
+          };
+          const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+          const mEl = document.getElementById('dynamic-manifest');
+          if (mEl) mEl.href = URL.createObjectURL(blob);
+        } catch (e) {}
+      }
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    window.toggleDarkMode = () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('pkbm_dark', document.documentElement.classList.contains('dark') ? '1' : '0');
+    };
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      appState.deferredPrompt = e;
+    });
+
+    window.triggerPwaInstall = async () => {
+      if (appState.deferredPrompt) {
+        appState.deferredPrompt.prompt();
+        await appState.deferredPrompt.userChoice;
+        appState.deferredPrompt = null;
+      } else {
+        showToast('Gunakan menu browser "Tambahkan ke Layar Utama / Install App" untuk memasang aplikasi.', 'info');
+      }
+    };
+
+    window.navigatePublicPage = (page) => {
+      document.querySelectorAll('.public-subpage').forEach((el) => el.classList.add('hidden'));
+      const target = document.getElementById(`public-page-${page}`);
+      if (target) target.classList.remove('hidden');
+      document.querySelectorAll('[data-public-nav]').forEach((btn) => {
+        const active = btn.getAttribute('data-public-nav') === page;
+        btn.classList.toggle('bg-blue-600', active);
+        btn.classList.toggle('text-white', active);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.toggleMobilePublicDrawer = () => {
+      document.getElementById('mobile-public-drawer')?.classList.toggle('hidden');
+    };
+
+    function renderHeroSlider() {
+      const slides = appState.data.pengaturan.hero_slides || defaultData.pengaturan.hero_slides;
+      if (!slides.length) return;
+      if (appState.heroIndex >= slides.length) appState.heroIndex = 0;
+      const cur = slides[appState.heroIndex];
+      const track = document.getElementById('hero-slider-track');
+      const cap = document.getElementById('hero-slide-caption');
+      const dots = document.getElementById('hero-slider-dots');
+      if (track) track.innerHTML = `<img src="${escapeHtml(optimizeImageUrl(cur.image, 1400))}" alt="${escapeHtml(cur.caption || '')}" class="w-full h-full object-cover transition-all duration-700" />`;
+      if (cap) cap.textContent = cur.caption || 'Dokumentasi Kampus';
+      if (dots) {
+        dots.innerHTML = slides.map((_, idx) => `<button onclick="appState.heroIndex=${idx}; renderHeroSlider();" class="h-2 rounded-full transition-all ${idx === appState.heroIndex ? 'w-5 bg-blue-600' : 'w-2 bg-slate-400'}"></button>`).join('');
+      }
     }
 
     const ALLOWED_UPLOAD_EXTENSIONS = {
-      image: ['jpg', 'jpeg', 'png', 'webp'],
-      document: ['pdf', 'jpg', 'jpeg', 'png', 'webp', 'doc', 'docx', 'xls', 'xlsx']
+      image: ['png', 'jpg', 'jpeg', 'webp'],
+      document: ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'doc', 'docx', 'xls', 'xlsx']
     };
 
     function validateClientFileBeforeUpload(file, kind = 'document') {
-      if (!file) return { valid: false, reason: 'Berkas tidak ditemukan.' };
-      if (file.size > 5 * 1024 * 1024) {
-        return { valid: false, reason: 'Ukuran berkas melebihi batas maksimal 5 MB.' };
-      }
+      if (!file) return { valid: false, reason: 'Tidak ada berkas yang dipilih.' };
+      if (file.size > 5 * 1024 * 1024) return { valid: false, reason: 'Ukuran berkas melebihi batas maksimal 5 MB.' };
       const ext = (file.name.split('.').pop() || '').toLowerCase();
       const allowed = ALLOWED_UPLOAD_EXTENSIONS[kind] || ALLOWED_UPLOAD_EXTENSIONS.document;
-      if (!allowed.includes(ext)) {
-        return { valid: false, reason: `Ekstensi .${ext} tidak diizinkan.` };
-      }
+      if (!allowed.includes(ext)) return { valid: false, reason: `Ekstensi .${ext} tidak diizinkan.` };
       return { valid: true, ext };
     }
 
-    async function uploadFileViaTrustedBackend(file, prefix, actionType, visibility = 'private') {
+    async function uploadFileViaTrustedBackend(file, prefix, actionType = 'upload_file', visibility = 'private') {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => resolve(ev.target.result);
+        reader.onerror = () => reject(new Error('Gagal membaca berkas dari perangkat.'));
+        reader.readAsDataURL(file);
+      });
+
       if (supabase && supabase.functions) {
         try {
-          const dataUrl = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
           const base64Data = String(dataUrl).split(',')[1];
+          const safeName = `${prefix}_${Date.now()}_${file.name.replace(/[^\w.\-]/g, '_')}`;
           const { data, error } = await supabase.functions.invoke('workspace-bridge', {
-            body: {
-              action: actionType,
-              visibility,
-              fileName: `${prefix}_${Date.now()}_${file.name.replace(/[^\w.-]/g, '_')}`,
-              mimeType: file.type,
-              base64Data
-            }
+            body: { action: actionType, fileName: safeName, mimeType: file.type, base64Data, visibility }
           });
-          if (!error && data && (data.url || data.storageRef)) {
+          if (!error && (data?.url || data?.storageRef)) {
             return data.url || data.storageRef;
           }
-        } catch (err) {}
+        } catch (e) {}
       }
 
       if (supabase && supabase.storage) {
         try {
           const bucket = visibility === 'public' ? 'pkbm-public-assets' : 'pkbm-private-vault';
-          const path = `${prefix.toLowerCase()}/${Date.now()}_${file.name.replace(/[^\w.-]/g, '_')}`;
-          const { error: upErr } = await supabase.storage.from(bucket).upload(path, file, { upsert: false });
+          const path = `${prefix.toLowerCase()}/${Date.now()}_${file.name.replace(/[^\w.\-]/g, '_')}`;
+          const { error: upErr } = await supabase.storage.from(bucket).upload(path, file, { upsert: true });
           if (!upErr) {
             if (visibility === 'public') {
               const { data: pub } = supabase.storage.from(bucket).getPublicUrl(path);
               if (pub?.publicUrl) return pub.publicUrl;
             } else {
-              return `supabase-private://${bucket}/${path}`;
+              const { data: signed } = await supabase.storage.from(bucket).createSignedUrl(path, 60 * 60 * 24 * 365);
+              if (signed?.signedUrl) return signed.signedUrl;
             }
           }
         } catch (stErr) {}
       }
 
-      if (file.size > MAX_INLINE_FILE_BYTES) {
-        throw new Error('Backend storage belum dikonfigurasi. Kompres file di bawah 750 KB.');
+      if (file.size <= MAX_INLINE_FILE_BYTES) {
+        return dataUrl;
       }
-      return await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+      throw new Error('Backend penyimpanan belum aktif untuk berkas di atas 750 KB.');
     }
 
     window.handleUploadGambarDirect = async (fileInput, targetInputId, previewBoxId, prefix = 'IMG') => {
       const file = fileInput?.files?.[0];
       const check = validateClientFileBeforeUpload(file, 'image');
-      if (!check.valid) {
-        showToast(check.reason, 'warning');
-        return;
-      }
-      const isPublic = ['LOGO', 'YAYASAN', 'BERITA', 'GALERI', 'HERO', 'QRIS'].includes(String(prefix).toUpperCase());
-      showToast('Mengunggah gambar secara aman...', 'info');
+      if (!check.valid) { showToast(check.reason, 'warning'); return; }
+      const isPublicAsset = ['LOGO', 'YAYASAN', 'BERITA', 'GALERI', 'HERO', 'QRIS'].includes(prefix.toUpperCase());
+      showToast('Mengunggah gambar...', 'info');
       try {
-        const finalUrl = await uploadFileViaTrustedBackend(file, prefix, 'upload_image', isPublic ? 'public' : 'private');
+        const finalUrl = await uploadFileViaTrustedBackend(file, prefix, 'upload_image', isPublicAsset ? 'public' : 'private');
         const targetEl = document.getElementById(targetInputId);
         if (targetEl) targetEl.value = finalUrl;
-        if (previewBoxId && finalUrl.startsWith('http')) {
+        if (previewBoxId) {
           const prev = document.getElementById(previewBoxId);
           if (prev) prev.innerHTML = `<img src="${escapeHtml(finalUrl)}" class="w-full h-full object-contain" />`;
         }
@@ -1327,16 +1595,13 @@
     window.handleUploadDokumenFileDirect = async (fileInput, targetInputId, prefix = 'DOK') => {
       const file = fileInput?.files?.[0];
       const check = validateClientFileBeforeUpload(file, 'document');
-      if (!check.valid) {
-        showToast(check.reason, 'warning');
-        return;
-      }
-      showToast(`Mengunggah ${file.name} ke penyimpanan privat...`, 'info');
+      if (!check.valid) { showToast(check.reason, 'warning'); return; }
+      showToast(`Mengunggah ${file.name}...`, 'info');
       try {
         const finalUrl = await uploadFileViaTrustedBackend(file, prefix, 'upload_file', 'private');
         const targetEl = document.getElementById(targetInputId);
         if (targetEl) targetEl.value = finalUrl;
-        showToast(`Berkas "${file.name}" tersimpan aman!`, 'success');
+        showToast(`Berkas "${file.name}" siap digunakan!`, 'success');
       } catch (err) {
         showToast(err.message || 'Gagal mengunggah dokumen.', 'error');
       }
@@ -1346,7 +1611,7 @@
       if (supabase && supabase.functions) {
         try {
           const { data, error } = await supabase.functions.invoke('gemini-assistant', { body: { prompt } });
-          if (!error && data?.text) return data.text.trim();
+          if (!error && data?.text) return String(data.text).trim();
         } catch (e) {}
       }
       const apiKey = appState.data.pengaturan.gemini_api_key;
@@ -1368,11 +1633,7 @@
     async function renderChartSafe(canvasId, config) {
       const el = document.getElementById(canvasId);
       if (!el) return;
-      try {
-        await ensureChartJsLoaded();
-      } catch (e) {
-        return;
-      }
+      await ensureChartJsLoaded();
       if (!window.Chart) return;
       if (appState.charts[canvasId]) {
         try { appState.charts[canvasId].destroy(); } catch (e) {}
@@ -1414,119 +1675,6 @@
       return Array.from(map.values());
     }
 
-    function renderSkeletonCards(count = 4) {
-      return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
-        ${Array.from({ length: count }).map(() => `<div class="os-card rounded-3xl p-5 space-y-3"><div class="h-3 w-24 bg-slate-200 dark:bg-slate-800 rounded"></div><div class="h-7 w-16 bg-slate-200 dark:bg-slate-800 rounded"></div><div class="h-2.5 w-32 bg-slate-100 dark:bg-slate-800/70 rounded"></div></div>`).join('')}
-      </div>`;
-    }
-
-    function renderEmptyState(title, desc) {
-      return `<div class="os-card rounded-3xl p-8 text-center space-y-2">
-        <div class="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-500 mx-auto flex items-center justify-center"><i data-lucide="inbox" class="w-5 h-5"></i></div>
-        <p class="font-display font-bold text-sm">${escapeHtml(title)}</p>
-        <p class="text-xs text-slate-500 max-w-md mx-auto">${escapeHtml(desc)}</p>
-      </div>`;
-    }
-
-    // =========================================================================
-    // 2. JAM REAL-TIME, KALENDER HIJRIAH, LOGO & PWA MANIFEST
-    // =========================================================================
-    function startLiveClockAndHijri() {
-      const update = () => {
-        const now = new Date();
-        const wibEl = document.getElementById('live-clock-wib');
-        const hijriEl = document.getElementById('live-date-hijri');
-        if (wibEl) {
-          const hariTgl = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-          const jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\./g, ':');
-          wibEl.textContent = `${hariTgl} • ${jam} WIB`;
-        }
-        if (hijriEl) {
-          try {
-            const hStr = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', { day: 'numeric', month: 'long', year: 'numeric' }).format(now);
-            hijriEl.textContent = hStr;
-          } catch (e) {
-            hijriEl.textContent = 'Kalender Hijriah';
-          }
-        }
-      };
-      update();
-      setInterval(update, 1000);
-    }
-
-    function applySchoolLogos(logoUrl) {
-      const p = appState.data.pengaturan;
-      const url = logoUrl !== undefined ? logoUrl : p.logo_url;
-      ['nav-logo-box', 'footer-logo-box', 'dash-sidebar-logo-box'].forEach((id) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (url) el.innerHTML = `<img src="${escapeHtml(url)}" alt="Logo" class="w-full h-full object-cover" />`;
-        else el.innerHTML = `<i data-lucide="graduation-cap" class="w-5 h-5"></i>`;
-      });
-      ['nav-school-name', 'footer-school-name', 'dash-sidebar-school'].forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = p.nama_pkbm || 'PKBM BINTANG INKLUSIF';
-      });
-      if (url) {
-        const appleIcon = document.getElementById('dynamic-apple-icon');
-        if (appleIcon) appleIcon.href = url;
-      }
-      if (window.lucide) window.lucide.createIcons();
-    }
-
-    window.toggleDarkMode = () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('pkbm_dark', document.documentElement.classList.contains('dark') ? '1' : '0');
-    };
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      appState.deferredPrompt = e;
-    });
-
-    window.triggerPwaInstall = async () => {
-      if (appState.deferredPrompt) {
-        appState.deferredPrompt.prompt();
-        await appState.deferredPrompt.userChoice;
-        appState.deferredPrompt = null;
-      } else {
-        showToast('Gunakan menu browser "Tambahkan ke Layar Utama / Install App" untuk memasang aplikasi.', 'info');
-      }
-    };
-
-    // =========================================================================
-    // 3. PORTAL PUBLIK, BUKU TAMU & PPDB
-    // =========================================================================
-    window.navigatePublicPage = (page) => {
-      document.querySelectorAll('.public-subpage').forEach((el) => el.classList.add('hidden'));
-      const target = document.getElementById(`public-page-${page}`);
-      if (target) target.classList.remove('hidden');
-      document.querySelectorAll('[data-public-nav]').forEach((btn) => {
-        const active = btn.getAttribute('data-public-nav') === page;
-        btn.classList.toggle('bg-blue-600', active);
-        btn.classList.toggle('text-white', active);
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    window.toggleMobilePublicDrawer = () => {
-      document.getElementById('mobile-public-drawer')?.classList.toggle('hidden');
-    };
-
-    function renderHeroSlider() {
-      const slides = appState.data.pengaturan.hero_slides || defaultData.pengaturan.hero_slides;
-      if (!slides.length) return;
-      if (appState.heroIndex >= slides.length) appState.heroIndex = 0;
-      const cur = slides[appState.heroIndex];
-      const track = document.getElementById('hero-slider-track');
-      const cap = document.getElementById('hero-slide-caption');
-      const dots = document.getElementById('hero-slider-dots');
-      if (track) track.innerHTML = `<img src="${escapeHtml(optimizeImageUrl(cur.image, 1400))}" alt="${escapeHtml(cur.caption || '')}" class="w-full h-full object-cover transition-all duration-700" />`;
-      if (cap) cap.textContent = cur.caption || 'Dokumentasi Kampus';
-      if (dots) {
-        dots.innerHTML = slides.map((_, idx) => `<button onclick="appState.heroIndex=${idx}; renderHeroSlider();" class="h-2 rounded-full transition-all ${idx === appState.heroIndex ? 'w-5 bg-blue-600' : 'w-2 bg-slate-400'}"></button>`).join('');
-      }
-    }
     window.renderHeroSlider = renderHeroSlider;
     window.nextHeroSlide = () => {
       const len = (appState.data.pengaturan.hero_slides || []).length || 1;
@@ -2067,10 +2215,10 @@
           }
           const isActive = appState.activeTab === m.id;
           const activeClass = isActive
-            ? (isGuru ? 'guru-nav-active font-bold' : 'bg-[#0B2447] text-white font-bold shadow-md shadow-slate-900/20')
-            : (isGuru ? 'guru-nav-item font-semibold' : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold');
+            ? (isGuru ? 'guru-nav-active font-bold' : 'os-nav-active font-bold')
+            : (isGuru ? 'guru-nav-item font-semibold' : (isMobile ? 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold' : 'os-nav-item font-semibold'));
           return `${groupHeader}
-            <button onclick="switchDashboardTab('${m.id}'); ${isMobile ? 'toggleMobileDashDrawer();' : ''}" class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition text-left ${activeClass}">
+            <button onclick="switchDashboardTab('${m.id}'); ${isMobile ? 'toggleMobileDashDrawer();' : ''}" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left ${activeClass}">
               <i data-lucide="${m.icon}" class="w-4 h-4 shrink-0"></i>
               <span class="sidebar-label truncate">${escapeHtml(m.label)}</span>
             </button>`;
@@ -2083,17 +2231,44 @@
       if (dNav) dNav.innerHTML = buildHtml(false);
       if (mNav) mNav.innerHTML = buildHtml(true);
       if (bottomW) {
+        const initials = String(u.nama_lengkap || 'P').split(' ').slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+        const roleDisplay = {
+          super_admin: 'Super Admin',
+          operator: 'Operator',
+          guru: 'Tutor / Guru',
+          bendahara: 'Bendahara',
+          tim_media: 'Tim Media',
+          siswa: 'Warga Belajar',
+          orang_tua: 'Orang Tua'
+        }[u.role] || u.role;
+
         if (isGuru) {
-          bottomW.innerHTML = `<div class="p-3 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-slate-200">
-            <p class="text-[11px] font-extrabold text-teal-300">Presensi GPS 50m</p>
-            <p class="text-[10px] text-slate-300">Radius ${appState.data.pengaturan.radius_absen_meter || 50}m dari titik PKBM.</p>
-            <button onclick="switchDashboardTab('absensi')" class="w-full py-2 rounded-xl bg-[#0F9D8A] hover:bg-teal-600 text-white text-[11px] font-bold">Absen Sekarang</button>
-          </div>`;
+          bottomW.innerHTML = `
+            <div class="p-3.5 rounded-2xl bg-gradient-to-br from-teal-600/30 to-blue-600/20 border border-white/10 space-y-2 text-slate-100">
+              <p class="text-[11px] font-extrabold text-teal-300">Presensi GPS 50m</p>
+              <p class="text-[10px] text-slate-300">Radius ${appState.data.pengaturan.radius_absen_meter || 50}m dari titik PKBM.</p>
+              <button onclick="switchDashboardTab('absensi')" class="w-full py-2 rounded-xl bg-[#0F9D8A] hover:bg-teal-600 text-white text-[11px] font-bold">Absen Sekarang</button>
+            </div>
+            <div class="p-2.5 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full bg-teal-500 text-white font-extrabold text-xs flex items-center justify-center shrink-0">${escapeHtml(initials)}</div>
+              <div class="min-w-0">
+                <p class="font-bold text-xs text-white truncate">${escapeHtml(u.nama_lengkap)}</p>
+                <p class="text-[10px] text-slate-300 truncate">${escapeHtml(roleDisplay)}</p>
+              </div>
+            </div>`;
         } else {
-          bottomW.innerHTML = `<div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border text-[11px]">
-            <p class="font-bold truncate">${escapeHtml(u.nama_lengkap)}</p>
-            <p class="text-[10px] text-slate-400 truncate">${escapeHtml(u.username)}</p>
-          </div>`;
+          bottomW.innerHTML = `
+            <div class="p-3.5 rounded-2xl bg-gradient-to-br from-blue-600/40 via-indigo-600/30 to-teal-500/30 border border-white/15 text-center space-y-2">
+              <p class="font-display font-extrabold text-xs text-white leading-snug">Pendidikan Inklusif<br/>untuk Semua</p>
+              <button onclick="switchDashboardTab('ilp_inklusi')" class="px-3.5 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white text-[10px] font-bold transition">Bersama Kita Bisa</button>
+            </div>
+            <div class="p-2.5 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-full bg-blue-500 text-white font-extrabold text-xs flex items-center justify-center shrink-0">${escapeHtml(initials)}</div>
+              <div class="min-w-0 flex-1">
+                <p class="font-bold text-xs text-white truncate">${escapeHtml(u.nama_lengkap)}</p>
+                <p class="text-[10px] text-sky-300 truncate">${escapeHtml(roleDisplay)}</p>
+              </div>
+            </div>`;
         }
       }
       if (window.lucide) window.lucide.createIcons();
@@ -2347,86 +2522,198 @@
       const sppCountUnpaid = sum ? sum.spp_unpaid_count : sppList.filter((x) => x.status !== 'Lunas').length;
       const kasMasuk = kasList.filter((k) => k.jenis === 'Pemasukan').reduce((a, b) => a + Number(b.nominal || 0), 0);
       const kasKeluar = kasList.filter((k) => k.jenis === 'Pengeluaran').reduce((a, b) => a + Number(b.nominal || 0), 0);
+      const saldoBersih = Math.max(0, kasMasuk - kasKeluar);
+      const tabunganMasuk = (appState.data.tabungan_siswa || []).filter((t) => t.jenis === 'Setor').reduce((a, b) => a + Number(b.nominal || 0), 0);
+      const sppLunasNominal = sppList.filter((s) => s.status === 'Lunas').reduce((a, b) => a + Number(b.nominal || 0), 0);
+      const lainnyaNominal = Math.max(0, saldoBersih - sppLunasNominal - tabunganMasuk);
+      const totalKeuRingkasan = Math.max(1, sppLunasNominal + tabunganMasuk + lainnyaNominal);
+      const pctSpp = Math.round((sppLunasNominal / totalKeuRingkasan) * 100);
+      const pctTab = Math.round((tabunganMasuk / totalKeuRingkasan) * 100);
+      const pctLain = Math.max(0, 100 - pctSpp - pctTab);
       const ilpCount = (appState.data.individual_learning_plans || []).length;
+      const bannerFoto = optimizeImageUrl(appState.data.pengaturan.tentang_foto || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80', 900);
+
+      const year = appState.kaldikYear;
+      const month = appState.kaldikMonth;
+      const monthName = new Date(year, month, 1).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+      const firstDayMon = (new Date(year, month, 1).getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const todayNum = (new Date().getMonth() === month && new Date().getFullYear() === year) ? new Date().getDate() : -1;
+      const kaldikEvents = appState.data.kalender_akademik || [];
+      let miniCalCells = '';
+      for (let i = 0; i < firstDayMon; i++) miniCalCells += `<span class="text-slate-300 dark:text-slate-600 py-1">-</span>`;
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const hasEv = kaldikEvents.some((ev) => ev.tanggal_mulai === dStr);
+        const isToday = d === todayNum;
+        miniCalCells += `<button onclick="switchDashboardTab('kalender_akademik')" class="w-7 h-7 mx-auto rounded-full text-[11px] font-bold flex items-center justify-center transition ${isToday ? 'bg-blue-600 text-white shadow' : hasEv ? 'bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-200' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}">${d}</button>`;
+      }
+
+      const sparkSvg = `<svg viewBox="0 0 90 28" class="w-20 h-7 opacity-75 shrink-0"><path d="M2 24 L20 16 L36 20 L54 10 L70 14 L88 4" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
       area.innerHTML = `
-        <div class="os-hero-navy rounded-3xl p-6 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div class="space-y-1">
-            <span class="px-3 py-1 rounded-full bg-white/15 text-teal-200 text-[10px] font-extrabold tracking-wider">PREMIUM EDUCATION OS • RINGKASAN EKSEKUTIF</span>
-            <h2 class="font-display font-extrabold text-xl sm:text-2xl">${getTimeGreetingId()}, ${escapeHtml(u.nama_lengkap)}</h2>
-            <p class="text-xs text-sky-100/90">${escapeHtml(appState.data.pengaturan.nama_pkbm)} • Periode ${escapeHtml(appState.data.pengaturan.periode_aktif || '2026/2027')}</p>
+        <!-- HERO WELCOME BANNER -->
+        <div class="os-banner-welcome rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div class="lg:col-span-7 p-6 sm:p-7 space-y-2">
+            <h2 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white">Selamat Datang, ${escapeHtml(u.nama_lengkap)}!</h2>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-sky-100">Semoga hari ini penuh dengan semangat untuk pendidikan yang lebih inklusif.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <button onclick="switchDashboardTab('ilp_inklusi')" class="px-4 py-2 rounded-full bg-[#0F9D8A] hover:bg-teal-700 text-white text-xs font-bold shadow">ILP Inklusi (${ilpCount})</button>
+              <button onclick="switchDashboardTab('buku_induk')" class="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow">+ Warga Belajar</button>
+              <button onclick="switchDashboardTab('persuratan')" class="px-4 py-2 rounded-full bg-white/90 dark:bg-slate-800 text-slate-800 dark:text-white text-xs font-bold border">Surat AI</button>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="switchDashboardTab('ilp_inklusi')" class="px-4 py-2.5 rounded-full bg-[#0F9D8A] hover:bg-teal-600 text-white text-xs font-bold shadow">ILP Inklusi (${ilpCount})</button>
-            <button onclick="switchDashboardTab('buku_induk')" class="px-4 py-2.5 rounded-full bg-white text-[#0B2447] text-xs font-bold shadow">+ Warga Belajar</button>
-            <button onclick="switchDashboardTab('persuratan')" class="px-4 py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-bold">Surat AI</button>
-            <button onclick="switchDashboardTab('spp')" class="px-4 py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-bold">Tagihan SPP</button>
+          <div class="hidden lg:block lg:col-span-5 h-44 relative overflow-hidden">
+            <img src="${escapeHtml(bannerFoto)}" alt="Kampus PKBM" class="w-full h-full object-cover object-center" />
+            <div class="absolute inset-0 bg-gradient-to-r from-[#CBE1FF] via-transparent to-transparent dark:from-[#13315C]"></div>
           </div>
         </div>
 
-        ${anns.length ? `<div class="space-y-2">${anns.slice(0, 2).map((a) => `
-          <div class="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 flex items-start gap-3">
-            <i data-lucide="megaphone" class="w-4 h-4 text-amber-600 mt-0.5 shrink-0"></i>
-            <div class="text-xs"><p class="font-extrabold text-amber-900 dark:text-amber-300">${escapeHtml(a.judul)} <span class="font-normal text-amber-700">(${escapeHtml(a.tanggal)})</span></p><p class="text-amber-800 dark:text-amber-200 mt-0.5">${escapeHtml(a.isi)}</p></div>
+        ${anns.length ? `<div class="space-y-2">${anns.slice(0, 1).map((a) => `
+          <div class="p-3.5 rounded-2xl bg-amber-50/95 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 text-xs"><i data-lucide="megaphone" class="w-4 h-4 text-amber-600 shrink-0"></i><span><strong>${escapeHtml(a.judul)}:</strong> ${escapeHtml(a.isi)}</span></div>
+            <span class="text-[10px] font-mono text-amber-700 shrink-0">${escapeHtml(a.tanggal)}</span>
           </div>`).join('')}</div>` : ''}
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="os-card rounded-3xl p-5 space-y-1 border-t-4 border-t-[#0B2447]">
-            <p class="text-xs font-semibold text-slate-500">Warga Belajar Aktif</p>
-            <p class="font-display font-extrabold text-3xl text-[#0B2447] dark:text-white">${totalSiswa}</p>
-            <p class="text-[11px] text-teal-600 font-bold">Paket A: ${pktA} • B: ${pktB} • C: ${pktC}</p>
+        <!-- 4 KARTU KPI GRADIEN -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div onclick="switchDashboardTab('buku_induk')" class="kpi-grad-blue rounded-3xl p-5 text-white shadow-lg cursor-pointer hover:translate-y-[-2px] transition flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center shrink-0"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+              <div class="min-w-0">
+                <p class="text-xs text-blue-100 font-medium">Total Siswa</p>
+                <p class="font-display font-extrabold text-2xl sm:text-3xl tracking-tight">${totalSiswa.toLocaleString('id-ID')}</p>
+                <p class="text-[11px] text-emerald-200 font-bold mt-0.5">A:${pktA} • B:${pktB} • C:${pktC}</p>
+              </div>
+            </div>
+            ${sparkSvg}
           </div>
-          <div class="os-card rounded-3xl p-5 space-y-1 border-t-4 border-t-blue-600">
-            <p class="text-xs font-semibold text-slate-500">Tutor &amp; Pendidik</p>
-            <p class="font-display font-extrabold text-3xl text-blue-600">${totalGuru}</p>
-            <p class="text-[11px] text-slate-400 font-semibold">Geofencing GPS ${appState.data.pengaturan.radius_absen_meter || 50}m</p>
+
+          <div onclick="switchDashboardTab('absensi')" class="kpi-grad-teal rounded-3xl p-5 text-white shadow-lg cursor-pointer hover:translate-y-[-2px] transition flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center shrink-0"><i data-lucide="users" class="w-6 h-6"></i></div>
+              <div class="min-w-0">
+                <p class="text-xs text-teal-100 font-medium">Total Guru</p>
+                <p class="font-display font-extrabold text-2xl sm:text-3xl tracking-tight">${totalGuru.toLocaleString('id-ID')}</p>
+                <p class="text-[11px] text-emerald-100 font-bold mt-0.5">GPS ${appState.data.pengaturan.radius_absen_meter || 50}m Aktif</p>
+              </div>
+            </div>
+            ${sparkSvg}
           </div>
-          <div class="os-card rounded-3xl p-5 space-y-1 border-t-4 border-t-[#0F9D8A]">
-            <p class="text-xs font-semibold text-slate-500">Pendaftar PPDB</p>
-            <p class="font-display font-extrabold text-3xl text-[#0F9D8A]">${totalPpdb}</p>
-            <p class="text-[11px] text-emerald-600 font-bold">${ppdbAcc} Terverifikasi Diterima</p>
+
+          <div onclick="switchDashboardTab('rekap_ppdb')" class="kpi-grad-purple rounded-3xl p-5 text-white shadow-lg cursor-pointer hover:translate-y-[-2px] transition flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center shrink-0"><i data-lucide="user-plus" class="w-6 h-6"></i></div>
+              <div class="min-w-0">
+                <p class="text-xs text-purple-100 font-medium">Pendaftar PPDB</p>
+                <p class="font-display font-extrabold text-2xl sm:text-3xl tracking-tight">${totalPpdb.toLocaleString('id-ID')}</p>
+                <p class="text-[11px] text-emerald-200 font-bold mt-0.5">${ppdbAcc} Diterima</p>
+              </div>
+            </div>
+            ${sparkSvg}
           </div>
-          <div class="os-card rounded-3xl p-5 space-y-1 border-t-4 border-t-indigo-600">
-            <p class="text-xs font-semibold text-slate-500">Ringkasan Keuangan</p>
-            <p class="font-display font-extrabold text-2xl sm:text-3xl text-indigo-600">${formatShortRupiah(kasMasuk - kasKeluar)}</p>
-            <p class="text-[11px] text-rose-600 font-semibold">Piutang SPP: ${formatShortRupiah(sppUnpaid)} (${sppCountUnpaid})</p>
+
+          <div onclick="switchDashboardTab('keuangan')" class="kpi-grad-emerald rounded-3xl p-5 text-white shadow-lg cursor-pointer hover:translate-y-[-2px] transition flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center shrink-0"><i data-lucide="wallet" class="w-6 h-6"></i></div>
+              <div class="min-w-0">
+                <p class="text-xs text-emerald-100 font-medium">Saldo Keuangan</p>
+                <p class="font-display font-extrabold text-xl sm:text-2xl tracking-tight truncate">${formatShortRupiah(saldoBersih)}</p>
+                <p class="text-[11px] text-amber-100 font-bold mt-0.5">Piutang SPP: ${formatShortRupiah(sppUnpaid)}</p>
+              </div>
+            </div>
+            ${sparkSvg}
           </div>
         </div>
 
+        <!-- BARIS TENGAH: GRAFIK KEHADIRAN, PERKEMBANGAN SISWA & KALENDER AKADEMIK -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <div class="lg:col-span-7 os-card rounded-3xl p-5 space-y-3">
+          <div class="lg:col-span-4 os-card rounded-3xl p-5 space-y-3">
             <div class="flex items-center justify-between">
-              <h3 class="font-display font-extrabold text-sm">Grafik Kehadiran Peserta Didik (Data Aktual)</h3>
-              <span class="text-[11px] font-bold text-teal-600">Rekap Presensi</span>
+              <div class="flex items-center gap-2"><i data-lucide="calendar-check" class="w-4 h-4 text-blue-600"></i><h3 class="font-display font-extrabold text-sm">Grafik Kehadiran</h3></div>
+              <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-500">Rekap Aktif</span>
             </div>
-            <div class="h-60"><canvas id="chart-overview-attendance"></canvas></div>
+            <div class="h-52"><canvas id="chart-overview-attendance"></canvas></div>
           </div>
+
           <div class="lg:col-span-5 os-card rounded-3xl p-5 space-y-3">
-            <h3 class="font-display font-extrabold text-sm">Sebaran Peserta Didik per Program</h3>
-            <div class="h-60"><canvas id="chart-overview-donut"></canvas></div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><i data-lucide="trending-up" class="w-4 h-4 text-teal-600"></i><h3 class="font-display font-extrabold text-sm">Perkembangan Siswa</h3></div>
+              <span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-500">Per Program</span>
+            </div>
+            <div class="h-52"><canvas id="chart-overview-donut"></canvas></div>
+          </div>
+
+          <div class="lg:col-span-3 os-card rounded-3xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-blue-600"></i><h3 class="font-display font-extrabold text-sm">Kalender Akademik</h3></div>
+              <button onclick="switchDashboardTab('kalender_akademik')" class="text-[11px] font-bold text-blue-600 hover:underline">Detail</button>
+            </div>
+            <div class="flex items-center justify-between text-xs font-bold text-blue-700 dark:text-sky-300">
+              <button onclick="appState.kaldikMonth=(appState.kaldikMonth+11)%12; switchDashboardTab('overview');" class="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">‹</button>
+              <span>${escapeHtml(monthName)}</span>
+              <button onclick="appState.kaldikMonth=(appState.kaldikMonth+1)%12; switchDashboardTab('overview');" class="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800">›</button>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400">
+              <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center">${miniCalCells}</div>
+            ${kaldikEvents[0] ? `<div class="p-2.5 rounded-2xl bg-blue-50 dark:bg-slate-800 text-[11px] flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-600 shrink-0"></span><span class="truncate font-semibold">${escapeHtml(kaldikEvents[0].judul)}</span></div>` : ''}
           </div>
         </div>
 
+        <!-- BARIS BAWAH: RINGKASAN KEUANGAN, NOTIFIKASI PENTING & AKTIVITAS TERBARU -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <div class="lg:col-span-6 os-card rounded-3xl p-5 space-y-3">
+          <div class="lg:col-span-4 os-card rounded-3xl p-5 space-y-3">
             <div class="flex items-center justify-between">
-              <h3 class="font-display font-extrabold text-sm">Kalender Kegiatan Terdekat</h3>
-              <button onclick="switchDashboardTab('kalender_akademik')" class="text-xs font-bold text-blue-600">Kelola →</button>
+              <div class="flex items-center gap-2"><i data-lucide="wallet" class="w-4 h-4 text-blue-600"></i><h3 class="font-display font-extrabold text-sm">Ringkasan Keuangan</h3></div>
+              <button onclick="switchDashboardTab('keuangan')" class="text-[11px] font-bold text-blue-600 hover:underline">Lihat Detail →</button>
             </div>
-            <div class="space-y-2 text-xs">
-              ${(appState.data.kalender_akademik || []).slice(0, 4).map((k) => `<div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border flex items-center justify-between gap-2">
-                <div><p class="font-bold">${escapeHtml(k.judul)}</p><p class="text-[10px] text-slate-400">${escapeHtml(k.kategori || 'Agenda')} • ${escapeHtml(k.paket || 'Semua Paket')}</p></div>
-                <span class="font-mono font-bold text-blue-600 shrink-0">${escapeHtml(k.tanggal_mulai)}</span>
-              </div>`).join('') || '<p class="text-slate-400 py-4 text-center">Belum ada agenda kalender akademik.</p>'}
+            <div class="grid grid-cols-2 items-center gap-3">
+              <div class="h-36"><canvas id="chart-overview-finance"></canvas></div>
+              <div class="space-y-2 text-xs">
+                <div class="flex items-center justify-between"><span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>SPP</span><strong>${pctSpp}%</strong></div>
+                <div class="flex items-center justify-between"><span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>Tabungan</span><strong>${pctTab}%</strong></div>
+                <div class="flex items-center justify-between"><span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>Lainnya</span><strong>${pctLain}%</strong></div>
+                <p class="text-[11px] text-emerald-600 font-bold pt-1">Kas Masuk: ${formatShortRupiah(kasMasuk)}</p>
+              </div>
             </div>
           </div>
-          <div class="lg:col-span-6 os-card rounded-3xl p-5 space-y-3">
-            <h3 class="font-display font-extrabold text-sm">Aktivitas Sistem Terbaru</h3>
-            <div class="space-y-2 text-xs max-h-56 overflow-y-auto">
-              ${(appState.data.log_aktivitas || []).slice(0, 6).map((l) => `<div class="flex items-center justify-between py-2 border-b last:border-none gap-2">
-                <span><strong>${escapeHtml(l.aktor)}</strong> — ${escapeHtml(l.aksi)}</span>
+
+          <div class="lg:col-span-4 os-card rounded-3xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><i data-lucide="bell" class="w-4 h-4 text-blue-600"></i><h3 class="font-display font-extrabold text-sm">Notifikasi Penting</h3></div>
+              <button onclick="switchDashboardTab('pemberitahuan_admin')" class="text-[11px] font-bold text-blue-600 hover:underline">Lihat Semua →</button>
+            </div>
+            <div class="space-y-2.5 text-xs">
+              <div onclick="switchDashboardTab('spp')" class="p-2.5 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 flex items-start gap-2.5 cursor-pointer">
+                <span class="w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-[11px] font-bold shrink-0">!</span>
+                <div class="min-w-0 flex-1"><p class="font-bold truncate">Tagihan SPP Berjalan</p><p class="text-[11px] text-slate-500 truncate">${sppCountUnpaid} tagihan belum lunas (${formatShortRupiah(sppUnpaid)})</p></div>
+              </div>
+              <div onclick="switchDashboardTab('rekap_ppdb')" class="p-2.5 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 flex items-start gap-2.5 cursor-pointer">
+                <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0"><i data-lucide="file-check" class="w-3.5 h-3.5"></i></span>
+                <div class="min-w-0 flex-1"><p class="font-bold truncate">Verifikasi Berkas PPDB</p><p class="text-[11px] text-slate-500 truncate">${ppdbList.filter((x) => x.status_ppdb !== 'Diterima').length} pendaftar menunggu verifikasi</p></div>
+              </div>
+              <div class="p-2.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50 flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[11px] font-bold shrink-0">✓</span>
+                <div class="min-w-0 flex-1"><p class="font-bold truncate">Sinkronisasi Supabase Aktif</p><p class="text-[11px] text-slate-500 truncate">Single Source of Truth &amp; RLS terproteksi</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 os-card rounded-3xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-blue-600"></i><h3 class="font-display font-extrabold text-sm">Aktivitas Terbaru</h3></div>
+              <span class="text-[10px] font-bold text-slate-400">Audit Log</span>
+            </div>
+            <div class="space-y-2 text-xs max-h-48 overflow-y-auto">
+              ${(appState.data.log_aktivitas || []).slice(0, 5).map((l) => `<div class="flex items-center justify-between py-1.5 border-b last:border-none gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 font-extrabold text-[10px] flex items-center justify-center shrink-0">${escapeHtml((l.aktor || 'S').charAt(0).toUpperCase())}</span>
+                  <div class="min-w-0"><p class="font-bold truncate">${escapeHtml(l.aktor)}</p><p class="text-[10px] text-slate-500 truncate">${escapeHtml(l.aksi)}</p></div>
+                </div>
                 <span class="font-mono text-[10px] text-slate-400 shrink-0">${escapeHtml(l.waktu)}</span>
-              </div>`).join('') || '<p class="text-slate-400 py-4 text-center">Belum ada riwayat aktivitas tercatat.</p>'}
+              </div>`).join('') || '<p class="text-slate-400 py-6 text-center">Belum ada aktivitas terbaru.</p>'}
             </div>
           </div>
         </div>
@@ -2469,21 +2756,45 @@
       const aCount = absList.filter((a) => a.status === 'Alpa').length;
 
       renderChartSafe('chart-overview-attendance', {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: ['Hadir', 'Izin', 'Sakit', 'Alpa'],
-          datasets: [{ label: 'Catatan Kehadiran', data: [hCount, iCount, sCount, aCount], backgroundColor: ['#0F9D8A', '#2563EB', '#F59E0B', '#E11D48'], borderRadius: 10 }]
+          datasets: [{
+            label: 'Siswa',
+            data: [hCount, iCount, sCount, aCount],
+            borderColor: '#1D63DC',
+            backgroundColor: 'rgba(29, 99, 220, 0.12)',
+            tension: 0.35,
+            fill: true,
+            pointRadius: 4
+          }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
       });
 
       renderChartSafe('chart-overview-donut', {
-        type: 'doughnut',
+        type: 'bar',
         data: {
           labels: ['Paket A (SD)', 'Paket B (SMP)', 'Paket C (SMA)'],
-          datasets: [{ data: [pktA, pktB, pktC], backgroundColor: ['#0B2447', '#2563EB', '#0F9D8A'], borderWidth: 0 }]
+          datasets: [
+            { label: 'Aktif', data: [pktA, pktB, pktC], backgroundColor: '#1D63DC', borderRadius: 8 },
+            { label: 'ILP Inklusi', data: [
+              (appState.data.individual_learning_plans || []).filter((x) => x.paket === 'Paket A').length,
+              (appState.data.individual_learning_plans || []).filter((x) => x.paket === 'Paket B').length,
+              (appState.data.individual_learning_plans || []).filter((x) => x.paket === 'Paket C').length
+            ], backgroundColor: '#0FA39A', borderRadius: 8 }
+          ]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+      });
+
+      renderChartSafe('chart-overview-finance', {
+        type: 'doughnut',
+        data: {
+          labels: ['SPP', 'Tabungan', 'Lainnya'],
+          datasets: [{ data: [sppLunasNominal || 1, tabunganMasuk || 0, lainnyaNominal || 0], backgroundColor: ['#1D63DC', '#0FA39A', '#FBBF24'], borderWidth: 0 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false } } }
       });
     }
 
@@ -5468,18 +5779,19 @@
 
         <div class="os-card rounded-3xl p-4 sm:p-5 overflow-x-auto">
           <table class="w-full text-xs">
-            <thead><tr class="border-b text-left text-slate-400"><th class="py-2">Nama Pengguna</th><th>Peran</th><th>Lingkup / Kelas</th><th>Identitas Login &amp; Status</th><th>Aksi Keamanan</th></tr></thead>
+            <thead><tr class="border-b text-left text-slate-400"><th class="py-2">Nama Pengguna</th><th>Peran</th><th>Mapel / Jabatan / Kelas</th><th>Identitas Login</th><th>Status</th><th>Aksi</th></tr></thead>
             <tbody>
               ${list.map((u) => `<tr class="border-b">
                 <td class="py-2.5 font-bold">${escapeHtml(u.nama_lengkap)}</td>
                 <td><span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold uppercase text-[10px]">${escapeHtml(u.role)}</span></td>
                 <td>${escapeHtml(u.bidang_mapel || u.jabatan_staf || (u.paket ? `${u.paket} • ${u.kelas}` : '-'))}</td>
-                <td class="font-mono"><span class="font-bold">${escapeHtml(u.username)}</span><br/><span class="text-[10px] ${u.is_active === false ? 'text-rose-600' : 'text-emerald-600'}">${u.is_active === false ? 'Nonaktif' : (u.auth_user_id ? 'Auth Terverifikasi' : 'Menunggu Aktivasi')}</span></td>
+                <td class="font-mono"><span class="font-bold text-slate-800 dark:text-slate-100">${escapeHtml(u.username)}</span><br/><span class="text-[10px] text-slate-400">${escapeHtml(u.email || '-')}</span></td>
+                <td><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${u.is_active === false ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">${u.is_active === false ? 'Nonaktif' : 'Aktif'}</span></td>
                 <td>
                   <div class="flex flex-wrap gap-1.5">
                     <button onclick="kirimResetPasswordPengguna('${escapeHtml(u.email || '')}','${escapeHtml(u.id)}')" class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 font-bold">Reset Sandi</button>
                     <button onclick="appState.editingUserId='${escapeHtml(u.id)}'; switchDashboardTab('users');" class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 font-bold">Edit</button>
-                    <button onclick="toggleStatusAktifPengguna('${escapeHtml(u.id)}', ${u.is_active === false ? 'true' : 'false'})" class="px-2.5 py-1 rounded-full ${u.is_active === false ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-600'} font-bold">${u.is_active === false ? 'Aktifkan' : 'Nonaktifkan'}</button>
+                    <button onclick="toggleStatusAktifPengguna('${escapeHtml(u.id)}', ${u.is_active === false})" class="px-2.5 py-1 rounded-full bg-slate-100 font-bold">${u.is_active === false ? 'Aktifkan' : 'Nonaktifkan'}</button>
                   </div>
                 </td>
               </tr>`).join('')}
@@ -5512,7 +5824,7 @@
     function renderCmsKontenTab(area) {
       const p = appState.data.pengaturan;
       area.innerHTML = `
-        <form onsubmit="event.preventDefault(); p.video_profil_judul=document.getElementById('cms-v-judul').value; p.video_profil_desk=document.getElementById('cms-v-desk').value; p.video_profil_url=document.getElementById('cms-v-url').value; p.sosmed_feed_visible=document.getElementById('cms-sm-vis').checked; syncPengaturanKeCloud(); showToast('Konten video & sosmed diperbarui!','success');" class="os-card rounded-3xl p-5 space-y-3 text-xs">
+        <form onsubmit="event.preventDefault(); const cfg=appState.data.pengaturan; cfg.video_profil_judul=document.getElementById('cms-v-judul').value; cfg.video_profil_desk=document.getElementById('cms-v-desk').value; cfg.video_profil_url=document.getElementById('cms-v-url').value; cfg.sosmed_feed_visible=document.getElementById('cms-sm-vis').checked; renderPublicContent(); syncPengaturanKeCloud().then(()=>showToast('Konten video & sosmed diperbarui!','success')).catch(err=>showToast(err.message,'error'));" class="os-card rounded-3xl p-5 space-y-3 text-xs">
           <h3 class="font-bold text-sm">Video Profil Beranda &amp; Feed Instagram / TikTok</h3>
           <input type="text" id="cms-v-judul" value="${escapeHtml(p.video_profil_judul || '')}" placeholder="Judul Video Profil" class="w-full px-3 py-2 rounded-xl border" />
           <input type="text" id="cms-v-desk" value="${escapeHtml(p.video_profil_desk || '')}" placeholder="Deskripsi Video Profil" class="w-full px-3 py-2 rounded-xl border" />
@@ -5536,10 +5848,52 @@
         </form>`;
     }
 
+    window.simpanPengaturanSistem = async (e) => {
+      if (e) e.preventDefault();
+      const btn = document.getElementById('btn-simpan-pengaturan');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Menyimpan...';
+      }
+      try {
+        const cfg = appState.data.pengaturan;
+        cfg.nama_pkbm = document.getElementById('set-nama').value.trim();
+        cfg.kop_yayasan = document.getElementById('set-yayasan').value.trim();
+        cfg.kop_subjudul = document.getElementById('set-kop-sub').value.trim();
+        cfg.alamat = document.getElementById('set-alamat').value.trim();
+        cfg.penanggung_jawab = document.getElementById('set-kepsek').value.trim();
+        cfg.nuptk_pj = document.getElementById('set-nuptk').value.trim();
+        cfg.logo_yayasan_url = document.getElementById('set-logo-yys').value.trim();
+        cfg.logo_url = document.getElementById('set-logo-skl').value.trim();
+        cfg.ttd_kepsek_url = document.getElementById('set-ttd').value.trim();
+        cfg.stempel_url = document.getElementById('set-stempel').value.trim();
+        cfg.qris_url = document.getElementById('set-qris').value.trim();
+        cfg.bank_nama = document.getElementById('set-bank-nama').value.trim();
+        cfg.bank_no_rek = document.getElementById('set-bank-rek').value.trim();
+        cfg.bank_atas_nama = document.getElementById('set-bank-an').value.trim();
+        cfg.google_drive_folder_url = document.getElementById('set-gdrive').value.trim();
+        cfg.gemini_api_key = document.getElementById('set-gemini').value.trim();
+        cfg.wa_api_token = document.getElementById('set-wa').value.trim();
+
+        applySchoolLogos();
+        renderPublicContent();
+        await syncPengaturanKeCloud();
+        logAktivitas('Memperbarui pengaturan sistem & identitas lembaga');
+        showToast('Seluruh pengaturan sistem berhasil disimpan ke Supabase!', 'success');
+      } catch (err) {
+        showToast(`Gagal menyimpan ke database: ${err?.message || 'Periksa koneksi atau izin Super Admin'}`, 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Simpan Seluruh Pengaturan';
+        }
+      }
+    };
+
     function renderSetInstansiTab(area) {
       const p = appState.data.pengaturan;
       area.innerHTML = `
-        <form onsubmit="event.preventDefault(); p.nama_pkbm=document.getElementById('set-nama').value; p.kop_yayasan=document.getElementById('set-yayasan').value; p.kop_subjudul=document.getElementById('set-kop-sub').value; p.alamat=document.getElementById('set-alamat').value; p.penanggung_jawab=document.getElementById('set-kepsek').value; p.nuptk_pj=document.getElementById('set-nuptk').value; p.logo_yayasan_url=document.getElementById('set-logo-yys').value; p.logo_url=document.getElementById('set-logo-skl').value; p.ttd_kepsek_url=document.getElementById('set-ttd').value; p.stempel_url=document.getElementById('set-stempel').value; p.qris_url=document.getElementById('set-qris').value; p.bank_nama=document.getElementById('set-bank-nama').value; p.bank_no_rek=document.getElementById('set-bank-rek').value; p.bank_atas_nama=document.getElementById('set-bank-an').value; p.google_drive_folder_url=document.getElementById('set-gdrive').value; p.gemini_api_key=document.getElementById('set-gemini').value; p.wa_api_token=document.getElementById('set-wa').value; applySchoolLogos(); syncPengaturanKeCloud(); showToast('Seluruh pengaturan sistem tersimpan!','success');" class="os-card rounded-3xl p-5 sm:p-6 space-y-4 text-xs">
+        <form onsubmit="simpanPengaturanSistem(event)" class="os-card rounded-3xl p-5 sm:p-6 space-y-4 text-xs">
           <h3 class="font-display font-extrabold text-base">Pengaturan Lembaga, 2 Logo Kop Surat, TTD/Stempel, QRIS &amp; Integrasi</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label class="font-bold">Nama Lembaga PKBM</label><input type="text" id="set-nama" value="${escapeHtml(p.nama_pkbm || '')}" class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
@@ -5582,7 +5936,7 @@
             <div><label class="font-bold">Fonnte WhatsApp API Token</label><input type="password" id="set-wa" value="${escapeHtml(p.wa_api_token || '')}" class="w-full px-3 py-2 rounded-xl border mt-1" /></div>
           </div>
 
-          <button type="submit" class="mobile-sticky-submit px-6 py-3 rounded-full bg-blue-600 text-white font-bold shadow-lg">Simpan Seluruh Pengaturan</button>
+          <button id="btn-simpan-pengaturan" type="submit" class="mobile-sticky-submit px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg">Simpan Seluruh Pengaturan</button>
         </form>`;
     }
 
