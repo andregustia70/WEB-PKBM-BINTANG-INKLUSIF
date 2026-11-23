@@ -5410,6 +5410,34 @@
       window.XLSX.writeFile(wb, `Buku_Induk_PKBM_${new Date().toISOString().split('T')[0]}.xlsx`);
     };
 
+    window.downloadTemplateBukuIndukExcel = async () => {
+      await ensureXlsxLoaded();
+      if (!window.XLSX) { showToast('Library XLSX gagal dimuat.', 'error'); return; }
+      const sampleRows = [
+        {
+          no_induk: '2026001',
+          nisn: '0081122334',
+          nik: '1375011205080001',
+          nama_lengkap: 'Rizky Pratama',
+          paket: 'Paket C',
+          kelas: 'Kelas 10',
+          rombel: 'C-10 Pagi',
+          jalur_belajar: 'Online',
+          asal_sekolah: 'SMPN 2 Bukittinggi',
+          nama_ayah: 'Hendra Pratama',
+          nama_ibu: 'Dewi Anggraini',
+          no_wa: '6281234567890',
+          alamat: 'Jl. Pendidikan No. 5, Bukittinggi',
+          status_siswa: 'Aktif'
+        }
+      ];
+      const ws = window.XLSX.utils.json_to_sheet(sampleRows);
+      const wb = window.XLSX.utils.book_new();
+      window.XLSX.utils.book_append_sheet(wb, ws, 'Template_Buku_Induk');
+      window.XLSX.writeFile(wb, 'Template_Import_Buku_Induk_PKBM.xlsx');
+      showToast('Template Excel Buku Induk berhasil diunduh!', 'success');
+    };
+
     window.importBukuIndukExcel = async (fileInput) => {
       const file = fileInput?.files?.[0];
       if (!file) return;
@@ -5502,6 +5530,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2">
             <h3 class="font-bold text-sm">+ Tambah Data Buku Induk Warga Belajar</h3>
             <div class="flex flex-wrap gap-2">
+              <button type="button" onclick="downloadTemplateBukuIndukExcel()" class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white font-bold">Unduh Template</button>
               <label class="px-3.5 py-1.5 rounded-full bg-blue-600 text-white font-bold cursor-pointer">Import Excel<input type="file" accept=".xlsx,.xls" class="hidden" onchange="importBukuIndukExcel(this)" /></label>
               <button type="button" onclick="exportBukuIndukExcel()" class="px-3.5 py-1.5 rounded-full bg-emerald-600 text-white font-bold">Export Excel</button>
             </div>
